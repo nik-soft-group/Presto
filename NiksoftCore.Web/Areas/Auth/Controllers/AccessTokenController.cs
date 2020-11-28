@@ -29,7 +29,7 @@ namespace NiksoftCore.Web.Areas.Auth.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetToken([FromForm] string usename, [FromForm] string password)
+        public IActionResult GetToken([FromForm] string usename, [FromForm] string password)
         {
             User user = UserManager.FindByNameAsync(usename).Result;
 
