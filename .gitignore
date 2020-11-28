@@ -1,0 +1,6 @@
+/DataAccess/NiksoftCore.DataModel/obj/*
+/NiksoftCore.Web/obj/*
+/NiksoftCore.Web/Properties/*
+/.vs/NiksoftCore/v16/*
+/DataAccess/NiksoftCore.DataModel/bin/*
+/NiksoftCore.Web/bin/D*
