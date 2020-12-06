@@ -1,20 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NiksoftCore.Utilities.Controllers;
 using NiksoftCore.ViewModel;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace NiksoftCore.Web.Controllers
+namespace NiksoftCore.SystemBase.Controllers.Home
 {
-    public class HomeController : Controller
+    public class Home : NikController
     {
         private IConfiguration Config { get; }
-        private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger, IConfiguration Configuration)
+        private readonly ILogger<Home> _logger;
+        public Home(ILogger<Home> logger, IConfiguration Configuration)
         {
             Config = Configuration;
             _logger = logger;
@@ -34,6 +31,11 @@ namespace NiksoftCore.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult CustomPage()
+        {
+            return View("Privacy");
         }
     }
 }
