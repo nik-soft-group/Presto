@@ -44,26 +44,20 @@ namespace NiksoftCore.Web
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
-
                 options.User.RequireUniqueEmail = false;
-            });
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "";
-                options.SlidingExpiration = true;
             });
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenOptions:Key"]));
 
-            services.AddAuthentication(option =>
-            {
-                option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            services.AddAuthentication().AddCookie(options => {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/Auth/Account/Login";
+                options.AccessDeniedPath = "/Auth/Account/Forbidden/";
+                options.SlidingExpiration = true;
             }).AddJwtBearer(options =>
             {
+                options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {

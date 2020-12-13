@@ -1,28 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using NiksoftCore.DataModel;
+using NiksoftCore.Utilities.Controllers;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace NiksoftCore.Web.Areas.Auth.Controllers
+namespace NiksoftCore.SystemBase.Controllers.General.User
 {
-    [Route("/Auth/api/[controller]")]
-    [ApiController]
-    public class AccessTokenController : ControllerBase
+    [Route("/api/auth/[controller]")]
+    public class AccessToken : NikApi
     {
         public IConfiguration Configuration { get; }
 
-        private readonly UserManager<User> UserManager;
+        private readonly UserManager<DataModel.User> UserManager;
 
-        public AccessTokenController(IConfiguration configuration, UserManager<User> userManager)
+        public AccessToken(IConfiguration configuration, UserManager<DataModel.User> userManager)
         {
             Configuration = configuration;
             UserManager = userManager;
@@ -31,14 +26,14 @@ namespace NiksoftCore.Web.Areas.Auth.Controllers
         [HttpPost]
         public IActionResult GetToken([FromForm] string usename, [FromForm] string password)
         {
-            User user = UserManager.FindByNameAsync(usename).Result;
+            DataModel.User user = UserManager.FindByNameAsync(usename).Result;
 
             if (user == null)
             {
                 return Ok(new { status = 403, message = "access denaid" });
             }
 
-            var isTrust =  UserManager.CheckPasswordAsync(user, password).Result;
+            var isTrust = UserManager.CheckPasswordAsync(user, password).Result;
 
             if (!isTrust)
             {
@@ -66,11 +61,12 @@ namespace NiksoftCore.Web.Areas.Auth.Controllers
             var accessToken = tokenHandler.WriteToken(token);
 
             // Returns the 'access_token' and the type in lower case
-            return Ok(new { 
+            return Ok(new
+            {
                 create = nowTime.ToString(),
                 expair = nowTime.AddDays(lifeDaies).ToString(),
-                token = accessToken, 
-                type = "bearer" 
+                token = accessToken,
+                type = "bearer"
             });
         }
     }

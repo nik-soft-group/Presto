@@ -2,11 +2,7 @@
 
 namespace NiksoftCore.Utilities.Controllers
 {
-    public class NikController : Controller
+    public class NikApi : ControllerBase
     {
-        public NikController()
-        {
-
-        }
     }
 }

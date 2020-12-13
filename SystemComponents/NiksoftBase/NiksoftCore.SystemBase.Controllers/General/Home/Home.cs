@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NiksoftCore.Utilities.Controllers;
 using NiksoftCore.ViewModel;
 using System.Diagnostics;
 
-namespace NiksoftCore.SystemBase.Controllers.Home
+namespace NiksoftCore.SystemBase.Controllers.General.Home
 {
     public class Home : NikController
     {
@@ -22,6 +23,7 @@ namespace NiksoftCore.SystemBase.Controllers.Home
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
