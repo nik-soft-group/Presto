@@ -6,24 +6,19 @@ namespace NiksoftCore.SystemBase.Service
 {
     public class SystemBaseDbContext : NikDbContext, ISystemUnitOfWork
     {
-        private string conString;
 
         public SystemBaseDbContext(string connectionString) : base(connectionString)
         {
-            conString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(conString);
         }
 
         DbSet<SystemSetting> SystemSettings { get; set; }
+        DbSet<PortalLanguage> PortalLanguages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new SystemSettingMap());
+            builder.ApplyConfiguration(new PortalLanguageMap());
         }
     }
 }

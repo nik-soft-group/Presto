@@ -6,19 +6,17 @@ using System.Linq.Expressions;
 
 namespace NiksoftCore.SystemBase.Service
 {
-    public interface ISystemSettingService : IDataService<SystemSetting>
+    public interface IPortalLanguageService : IDataService<PortalLanguage>
     {
-
     }
 
-
-    public class SystemSettingService : DataService<SystemSetting>, ISystemSettingService
+    public class PortalLanguageService : DataService<PortalLanguage>, IPortalLanguageService
     {
-        public SystemSettingService(ISystemUnitOfWork uow) : base(uow)
+        public PortalLanguageService(ISystemUnitOfWork uow) : base(uow)
         {
         }
 
-        public override IList<SystemSetting> GetPartOptional(List<Expression<Func<SystemSetting, bool>>> predicate, int startIndex, int pageSize)
+        public override IList<PortalLanguage> GetPartOptional(List<Expression<Func<PortalLanguage, bool>>> predicate, int startIndex, int pageSize)
         {
             var query = TEntity.Where(predicate[0]);
             for (int i = 1; i < predicate.Count; i++)

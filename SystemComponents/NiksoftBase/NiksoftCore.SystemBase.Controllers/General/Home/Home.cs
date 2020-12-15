@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities.Controllers;
 using NiksoftCore.ViewModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NiksoftCore.SystemBase.Controllers.General.Home
@@ -20,16 +21,26 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
         {
             Config = Configuration;
             _logger = logger;
-            iSystemBaseService = new SystemBaseService();
+            iSystemBaseService = new SystemBaseService(Configuration);
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string lang)
         {
-            //ISystemUnitOfWork uow = new SystemBaseDbContext();
-            //ISystemSettingService iSystemSettingServ = new SystemSettingService(uow);
-            //var x = iSystemSettingServ.GetPart(x => true, 0, 20);
-            var data = iSystemBaseService.iSystemSettingServ.GetPart(x => true, 0, 20);
-            return View();
+            List<LanguageViewModel> views = new List<LanguageViewModel>();
+            views.Add(new LanguageViewModel { 
+                ShortName = "en",
+                ViewName = "Index",
+                IsDefault = true
+            });
+
+            views.Add(new LanguageViewModel
+            {
+                ShortName = "fa",
+                ViewName = "FaIndex",
+                IsDefault = true
+            });
+
+            return View(GetViewName(lang, views));
         }
 
         [Authorize]
@@ -48,5 +59,19 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
         {
             return View("Privacy");
         }
+
+        private string GetViewName(string queryLang, List<LanguageViewModel> views)
+        {
+            if (!string.IsNullOrEmpty(queryLang))
+            {
+                var defaultView = views.Find(x => x.ShortName == queryLang);
+                return defaultView.ViewName;
+            }
+
+            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
+            var viewItem = views.Find(x => x.ShortName == defaultLang.ShortName);
+            return viewItem.ViewName;
+        }
+
     }
 }

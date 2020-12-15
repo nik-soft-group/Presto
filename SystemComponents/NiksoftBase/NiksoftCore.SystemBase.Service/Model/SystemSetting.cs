@@ -11,5 +11,6 @@
         public bool Enabled { get; set; }
         public string SettingKey { get; set; }
         public string GroupKey { get; set; }
+        public int PortalId { get; set; }
     }
 }
