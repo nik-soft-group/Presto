@@ -100,7 +100,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             }
 
             LoginRequest model = new LoginRequest();
-            return View(GetViewName(lang, "Register"), model);
+            return View(GetViewName(lang, "Login"), model);
         }
 
         [HttpPost]
