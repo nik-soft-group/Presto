@@ -13,19 +13,22 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
     {
         private IConfiguration Config { get; }
         private readonly ILogger<Home> _logger;
-        public ISystemSettingService iServ { get; set; }
+        public ISystemBaseService iSystemBaseService { get; set; }
 
 
-        public Home(ILogger<Home> logger, IConfiguration Configuration, ISystemSettingService _iServ)
+        public Home(ILogger<Home> logger, IConfiguration Configuration)
         {
             Config = Configuration;
             _logger = logger;
-            iServ = _iServ;
+            iSystemBaseService = new SystemBaseService();
         }
 
         public IActionResult Index()
         {
-            var data = iServ.GetPart(x => true, 0, 20);
+            //ISystemUnitOfWork uow = new SystemBaseDbContext();
+            //ISystemSettingService iSystemSettingServ = new SystemSettingService(uow);
+            //var x = iSystemSettingServ.GetPart(x => true, 0, 20);
+            var data = iSystemBaseService.iSystemSettingServ.GetPart(x => true, 0, 20);
             return View();
         }
 

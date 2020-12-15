@@ -147,11 +147,11 @@ namespace NiksoftCore.Web
         }
 
 
-        private static IServiceProvider BuildDependencyInjectionProvider(IServiceCollection services)
-        {
-            var builder = ServiceContainer.GetServcie(services);
-            IContainer applicationContainer = builder.Build();
-            return new AutofacServiceProvider(applicationContainer);
-        }
+        //private static IServiceProvider BuildDependencyInjectionProvider(IServiceCollection services)
+        //{
+        //    var builder = ServiceContainer.GetServcie(services);
+        //    IContainer applicationContainer = builder.Build();
+        //    return new AutofacServiceProvider(applicationContainer);
+        //}
     }
 }
