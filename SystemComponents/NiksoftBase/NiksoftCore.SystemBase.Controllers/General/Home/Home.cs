@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities.Controllers;
 using NiksoftCore.ViewModel;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NiksoftCore.SystemBase.Controllers.General.Home
@@ -26,21 +25,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
 
         public IActionResult Index([FromQuery] string lang)
         {
-            List<LanguageViewModel> views = new List<LanguageViewModel>();
-            views.Add(new LanguageViewModel { 
-                ShortName = "en",
-                ViewName = "Index",
-                IsDefault = true
-            });
-
-            views.Add(new LanguageViewModel
-            {
-                ShortName = "fa",
-                ViewName = "FaIndex",
-                IsDefault = true
-            });
-
-            return View(GetViewName(lang, views));
+            return View(GetViewName(lang, "Index"));
         }
 
         [Authorize]
@@ -60,17 +45,26 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
             return View("Privacy");
         }
 
-        private string GetViewName(string queryLang, List<LanguageViewModel> views)
+        private string GetViewName(string queryLang, string baseName)
         {
+            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
             if (!string.IsNullOrEmpty(queryLang))
             {
-                var defaultView = views.Find(x => x.ShortName == queryLang);
-                return defaultView.ViewName;
+                if (queryLang.ToLower() == "en")
+                {
+                    return baseName;
+                }
+
+                var defaultView = iSystemBaseService.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
+                return defaultView.ShortName + baseName;
             }
 
-            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
-            var viewItem = views.Find(x => x.ShortName == defaultLang.ShortName);
-            return viewItem.ViewName;
+            if (defaultLang.ShortName.ToLower() == "en")
+            {
+                return baseName;
+            }
+
+            return defaultLang.ShortName + baseName;
         }
 
     }
