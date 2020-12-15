@@ -18,9 +18,26 @@ namespace NiksoftCore.SystemBase.Controllers.Panel
             Config = Configuration;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string lang)
         {
-            return View();
+            return View(GetViewName(new string[] { lang, "Index", "FaIndex" }));
+        }
+
+        private string GetViewName(string[] names)
+        {
+            string lang = names[0];
+            if (string.IsNullOrEmpty(lang))
+            {
+                return names[1];
+            }
+            else if (lang == "fa")
+            {
+                return names[2];
+            }
+            else
+            {
+                return names[1];
+            }
         }
     }
 }

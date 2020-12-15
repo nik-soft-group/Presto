@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\..\DataAccess\NiksoftCore.DataModel\NiksoftCore.DataModel.csproj" />
     <ProjectReference Include="..\..\..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
     <ProjectReference Include="..\..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
+    <ProjectReference Include="..\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
   </ItemGroup>
 
 </Project>

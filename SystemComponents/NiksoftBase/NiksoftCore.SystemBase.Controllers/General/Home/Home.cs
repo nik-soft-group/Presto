@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities.Controllers;
 using NiksoftCore.ViewModel;
 using System.Diagnostics;
@@ -12,14 +13,19 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
     {
         private IConfiguration Config { get; }
         private readonly ILogger<Home> _logger;
-        public Home(ILogger<Home> logger, IConfiguration Configuration)
+        public ISystemSettingService iServ { get; set; }
+
+
+        public Home(ILogger<Home> logger, IConfiguration Configuration, ISystemSettingService _iServ)
         {
             Config = Configuration;
             _logger = logger;
+            iServ = _iServ;
         }
 
         public IActionResult Index()
         {
+            var data = iServ.GetPart(x => true, 0, 20);
             return View();
         }
 

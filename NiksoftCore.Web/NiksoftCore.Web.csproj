@@ -141,6 +141,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0" />
@@ -176,8 +178,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAccess\NiksoftCore.DataAccess\NiksoftCore.DataAccess.csproj" />
     <ProjectReference Include="..\DataAccess\NiksoftCore.DataModel\NiksoftCore.DataModel.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Controllers\NiksoftCore.SystemBase.Controllers.csproj" />
+    <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
     <ProjectReference Include="..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
     <ProjectReference Include="..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
   </ItemGroup>

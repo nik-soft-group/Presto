@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,11 +13,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using NiksoftCore.DataAccess;
 using NiksoftCore.DataModel;
+using NiksoftCore.SystemBase.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -139,6 +144,14 @@ namespace NiksoftCore.Web
 
 
             });
+        }
+
+
+        private static IServiceProvider BuildDependencyInjectionProvider(IServiceCollection services)
+        {
+            var builder = ServiceContainer.GetServcie(services);
+            IContainer applicationContainer = builder.Build();
+            return new AutofacServiceProvider(applicationContainer);
         }
     }
 }
