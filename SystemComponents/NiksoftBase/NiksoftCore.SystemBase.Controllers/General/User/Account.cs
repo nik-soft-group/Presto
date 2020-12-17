@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
-using NiksoftCore.Utilities.Controllers;
-using NiksoftCore.Utilities.Extentions;
 using NiksoftCore.ViewModel.User;
 using System.Linq;
 using System.Security.Claims;

@@ -145,7 +145,7 @@ html {
 }
 
 * {
-    font-family: 'Poppins';
+    /*! font-family: 'Poppins'; */
 }
 
 nav{
@@ -253,19 +253,22 @@ input:-webkit-autofill {
 }
 
 .page-title{
-   display: table-cell;
-   vertical-align: middle;
+   /*! display: table-cell; */
+   /*! vertical-align: middle; */
    text-align: center;
    z-index: 2;
    position: relative;
 }
 
 .page-title h1{
-   font-size: 75px;
-   color: #fff;
+   font-size: 45px;
+   color: #737373;
    font-weight: bold;
-   letter-spacing: -3px;
-   margin-bottom: 20px;
+   letter-spacing: -1px;
+   margin-bottom: 30px;
+   border-bottom: 2px solid #d9d9d9;
+   padding-bottom: 10px;
+   display: inline-block;
 }
 
 
@@ -1443,3 +1446,32 @@ a.site-button{
 }
 
 
+.btn-dark {
+  background: #333;
+  color: #fff;
+}
+
+.btn-40 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.btn-50 {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.btn-full {
+  display: block;
+  width: 100%;
+}
+
+.btn-br-0 {
+  border-radius: 0;
+}
+
+.control-label {
+  color: #6f6f6f;
+  font-weight: 400;
+  margin-bottom: 5px;
+}

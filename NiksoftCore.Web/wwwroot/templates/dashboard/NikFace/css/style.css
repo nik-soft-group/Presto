@@ -4346,6 +4346,11 @@ body.fixed-left-void {
     right: 0;
     left: auto;
   }
+  
+  .navbar-left .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
 }
 
 /*

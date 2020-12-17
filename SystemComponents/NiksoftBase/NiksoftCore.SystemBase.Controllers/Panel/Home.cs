@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
-using NiksoftCore.Utilities.Controllers;
-using NiksoftCore.ViewModel;
-using System.Collections.Generic;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel
 {

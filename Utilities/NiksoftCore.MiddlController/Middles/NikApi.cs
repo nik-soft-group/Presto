@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace NiksoftCore.Utilities.Controllers
+namespace NiksoftCore.MiddlController.Middles
 {
     public class NikApi : ControllerBase
     {
