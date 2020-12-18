@@ -2,65 +2,44 @@
 @model NiksoftCore.ViewModel.User.UserRegisterRequest
 @{
     ViewData["Title"] = "ثبت نام";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Auth/Views/Shared/_FaLayout.cshtml";
 }
 <div class="container">
-    <h1>Register</h1>
+    <div class="page-title">
+        <h1 class="text-center">ورود به سامانه</h1>
+    </div>
     @Html.ValidationSummary()
     <form action="/Auth/Account/Register" method="post">
-
         <div class="registerdiv">
-            <div class="form-group col-sm-12">
-                <label asp-for="@Model.Name" class="col-lg-3 control-label"></label>
-                <br>
-                <div class="col-lg-9">
-                    @Html.TextBoxFor(m => m.Name, new { placeholder = "First Name", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Name)
-                </div>
-            </div>
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="form-group">
+                        <label for="txtEmail" class="control-label">ایمیل</label>
+                        @Html.TextBoxFor(m => m.Email, new { placeholder = "ایمیل", @class = "form-control", @id = "txtEmail" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
 
+                    <div class="form-group">
+                        <label for="txtPhone" class="control-label">تلفن همراه</label>
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { placeholder = "تلفن", @class = "form-control", @id = "txtPhone" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber)
+                    </div>
 
-            <div class="form-group col-sm-12">
-                <label asp-for="@Model.Email" class="col-lg-3 control-label"></label>
-                <br>
-                <div class="col-lg-9">
-                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Email)
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="txtPasword" class="control-label">رمزعبور</label>
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "رمزعبور", @class = "form-control", @id = "txtPasword" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
 
-            <div class="form-group col-sm-12">
-                <label asp-for="@Model.PhoneNumber" class="col-lg-3 control-label"></label>
-                <br>
-                <div class="col-lg-9">
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { placeholder = "Phone Number", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.PhoneNumber)
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="txtPasswordConf" class="control-label">تکرار رمزعبور</label>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "تکرار رمزعبور", @class = "form-control", @id = "txtPasword" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
 
-
-            <div class="form-group col-sm-12">
-                <label asp-for="@Model.Password" class="col-lg-3 control-label"></label>
-                <br>
-                <div class="col-lg-9">
-                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Password)
-                </div>
-            </div>
-
-            <div class="form-group col-sm-12">
-                <label asp-for="@Model.ConfirmPassword" class="col-lg-3 control-label"></label>
-                <br>
-                <div class="col-lg-9">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-12 btn-submit">
-                    <button type="submit" class="btn btn-success">Sign Up</button>
-
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-dark btn-full btn-br-0">ثبت نام</button>
+                    </div>
                 </div>
             </div>
         </div>

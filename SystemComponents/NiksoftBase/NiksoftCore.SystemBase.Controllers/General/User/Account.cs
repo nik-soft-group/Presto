@@ -17,12 +17,14 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         private readonly UserManager<DataModel.User> userManager;
         private readonly SignInManager<DataModel.User> signInManager;
         public ISystemBaseService iSystemBaseService { get; set; }
+        private PortalLanguage defaultLang;
 
         public Account(UserManager<DataModel.User> userManager, SignInManager<DataModel.User> signInManager, IConfiguration Configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             iSystemBaseService = new SystemBaseService(Configuration);
+            defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
         [HttpGet, AllowAnonymous]
@@ -47,13 +49,13 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
             if (ModelState.IsValid)
             {
-                var userCheck = await userManager.FindByEmailAsync(request.Email);
+                var userCheck = await userManager.FindByNameAsync(request.PhoneNumber);
                 if (userCheck == null)
                 {
                     var user = new DataModel.User
                     {
-                        UserName = request.Email,
-                        NormalizedUserName = request.Email,
+                        UserName = request.PhoneNumber,
+                        NormalizedUserName = request.PhoneNumber,
                         Email = request.Email,
                         PhoneNumber = request.PhoneNumber,
                         EmailConfirmed = true,
@@ -62,7 +64,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                     var result = await userManager.CreateAsync(user, request.Password);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Login");
+                        return Redirect("/Auth/Account/Login");
                     }
                     else
                     {
@@ -111,21 +113,35 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(model.Email);
+                var user = await userManager.FindByEmailAsync(model.Username);
                 if (user != null && !user.EmailConfirmed)
                 {
-                    ModelState.AddModelError("message", "Email not confirmed yet");
+                    if (defaultLang.ShortName.ToLower() == "fa")
+                        ModelState.AddModelError("message", "این نام کابری هنوز تایید نشده است");
+                    else
+                        ModelState.AddModelError("message", "Email not confirmed yet");
+
                     return View(GetViewName(lang, "Login"), model);
 
                 }
+
+                if (user == null)
+                {
+                    user = await userManager.FindByNameAsync(model.Username);
+                }
+
                 if (await userManager.CheckPasswordAsync(user, model.Password) == false)
                 {
-                    ModelState.AddModelError("message", "Invalid credentials");
+                    if (defaultLang.ShortName.ToLower() == "fa")
+                        ModelState.AddModelError("message", "این کاربری نا معتبر است");
+                    else
+                        ModelState.AddModelError("message", "Invalid credentials");
+
                     return View(GetViewName(lang, "Login"), model);
 
                 }
 
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
+                var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
 
                 if (result.Succeeded)
                 {
@@ -138,7 +154,11 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 }
                 else
                 {
-                    ModelState.AddModelError("message", "Invalid login attempt");
+                    if (defaultLang.ShortName.ToLower() == "fa")
+                        ModelState.AddModelError("message", "ورود نا معتبر");
+                    else
+                        ModelState.AddModelError("message", "Invalid login attempt");
+
                     return View(GetViewName(lang, "Login"), model);
                 }
             }
@@ -153,7 +173,6 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
         private string GetViewName(string queryLang, string baseName)
         {
-            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
             if (!string.IsNullOrEmpty(queryLang))
             {
                 if (queryLang.ToLower() == "en")

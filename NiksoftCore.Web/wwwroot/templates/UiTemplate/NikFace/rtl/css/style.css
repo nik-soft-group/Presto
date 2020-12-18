@@ -1447,7 +1447,12 @@ a.site-button{
 
 
 .btn-dark {
-  background: #333;
+  background: #2d2d2d;
+  color: #fff;
+}
+
+.btn-dark:hover {
+  background: #444;
   color: #fff;
 }
 
