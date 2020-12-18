@@ -8,4 +8,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataAccess\NiksoftCore.DataModel\NiksoftCore.DataModel.csproj" />
+    <ProjectReference Include="..\..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
+    <ProjectReference Include="..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
+    <ProjectReference Include="..\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

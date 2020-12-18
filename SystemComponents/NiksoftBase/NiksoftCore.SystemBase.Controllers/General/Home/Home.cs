@@ -11,14 +11,10 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
 {
     public class Home : NikController
     {
-        private IConfiguration Config { get; }
         private readonly ILogger<Home> _logger;
-        public ISystemBaseService iSystemBaseService { get; set; }
 
-
-        public Home(ILogger<Home> logger, IConfiguration Configuration)
+        public Home(ILogger<Home> logger, IConfiguration Configuration) : base(Configuration)
         {
-            Config = Configuration;
             _logger = logger;
             iSystemBaseService = new SystemBaseService(Configuration);
         }

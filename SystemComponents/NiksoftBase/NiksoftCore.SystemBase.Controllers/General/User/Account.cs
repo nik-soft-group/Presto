@@ -16,15 +16,12 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
     {
         private readonly UserManager<DataModel.User> userManager;
         private readonly SignInManager<DataModel.User> signInManager;
-        public ISystemBaseService iSystemBaseService { get; set; }
-        private PortalLanguage defaultLang;
 
-        public Account(UserManager<DataModel.User> userManager, SignInManager<DataModel.User> signInManager, IConfiguration Configuration)
+        public Account(UserManager<DataModel.User> userManager, SignInManager<DataModel.User> signInManager, IConfiguration Configuration): base(Configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             iSystemBaseService = new SystemBaseService(Configuration);
-            defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
         [HttpGet, AllowAnonymous]

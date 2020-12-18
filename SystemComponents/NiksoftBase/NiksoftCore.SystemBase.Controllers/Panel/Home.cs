@@ -10,12 +10,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel
     [Area("Panel")]
     public class Home : NikController
     {
-        private IConfiguration Config { get; }
-        public ISystemBaseService iSystemBaseService { get; set; }
 
-        public Home(IConfiguration Configuration)
+        public Home(IConfiguration Configuration): base(Configuration)
         {
-            Config = Configuration;
             iSystemBaseService = new SystemBaseService(Configuration);
         }
 

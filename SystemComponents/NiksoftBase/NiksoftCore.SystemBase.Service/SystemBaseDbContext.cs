@@ -13,12 +13,14 @@ namespace NiksoftCore.SystemBase.Service
 
         DbSet<SystemSetting> SystemSettings { get; set; }
         DbSet<PortalLanguage> PortalLanguages { get; set; }
+        DbSet<PanelMenu> PanelMenus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new SystemSettingMap());
             builder.ApplyConfiguration(new PortalLanguageMap());
+            builder.ApplyConfiguration(new PanelMenuMap());
         }
     }
 }

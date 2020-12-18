@@ -6,12 +6,14 @@ namespace NiksoftCore.SystemBase.Service
     {
         ISystemSettingService iSystemSettingServ { get; set; }
         IPortalLanguageService iPortalLanguageServ { get; set; }
+        IPanelMenuService iPanelMenuService { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
     {
         public ISystemSettingService iSystemSettingServ { get; set; }
         public IPortalLanguageService iPortalLanguageServ { get; set; }
+        public IPanelMenuService iPanelMenuService { get; set; }
 
         private IConfiguration Config { get; }
 
@@ -20,6 +22,7 @@ namespace NiksoftCore.SystemBase.Service
             ISystemUnitOfWork uow = new SystemBaseDbContext(Configuration.GetConnectionString("SystemBase"));
             iSystemSettingServ = new SystemSettingService(uow);
             iPortalLanguageServ = new PortalLanguageService(uow);
+            iPanelMenuService = new PanelMenuService(uow);
         }
 
 
