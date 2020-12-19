@@ -1,11 +1,11 @@
 ﻿
 @model NiksoftCore.ViewModel.User.UserRegisterRequest
 @{
-    ViewData["Title"] = "ثبت نام";
-    Layout = "~/Areas/Auth/Views/Shared/_FaLayout.cshtml";
+    ViewData["Title"] = "ایجاد نقش";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
 }
 <div class="page-title">
-    <h1 class="text-center">ورود به سامانه</h1>
+    <h1 class="text-center">ایجاد نقش</h1>
 </div>
 @Html.ValidationSummary()
 <form action="/Auth/Account/Register" method="post">
@@ -43,4 +43,3 @@
         </div>
     </div>
 </form>
-
