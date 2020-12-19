@@ -12,7 +12,10 @@
     <link rel="shortcut icon" href="~/templates/dashboard/NikFace/images/favicon.png">
     <link rel="stylesheet" href="~/templates/dashboard/NikFace/plugins/morris/morris.css">
     <link href="~/templates/dashboard/NikFace/css/rtl/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/templates/dashboard/NikFace/css/icons.css" rel="stylesheet" type="text/css">
+    @*<link href="~/templates/dashboard/NikFace/css/icons.css" rel="stylesheet" type="text/css">*@
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/fontawesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/brands.css" rel="stylesheet" type="text/css">
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/solid.css" rel="stylesheet" type="text/css">
     <link href="~/templates/dashboard/NikFace/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="rtl-body fixed-left">
@@ -30,7 +33,7 @@
                     <ul class="list-inline menu-left mb-0">
                         <li class="float-left">
                             <button class="button-menu-mobile open-left waves-light waves-effect">
-                                <i class="mdi mdi-menu"></i>
+                                <i class="fas fa-bars"></i>
                             </button>
                         </li>
                         <li class="hide-phone app-search float-left d-none">
@@ -84,7 +87,9 @@
                             </ul>
                         </li>
                         <li class="d-none d-sm-block">
-                            <a href="#" id="btn-fullscreen" class="waves-effect waves-light notification-icon-box"><i class="mdi mdi-fullscreen"></i></a>
+                            <a href="#" id="btn-fullscreen" class="waves-effect waves-light notification-icon-box">
+                                <i class="fas fa-compress"></i>
+                            </a>
                         </li>
 
                         <li class="dropdown">
@@ -154,7 +159,7 @@
     <script src="~/templates/dashboard/NikFace/js/jquery.scrollTo.min.js"></script>
     <script src="~/templates/dashboard/NikFace/plugins/morris/morris.min.js"></script>
     <script src="~/templates/dashboard/NikFace/plugins/raphael/raphael-min.js"></script>
-    <script src="~/templates/dashboard/NikFace/pages/dashborad.js"></script>
+    @*<script src="~/templates/dashboard/NikFace/pages/dashborad.js"></script>*@
     <script src="~/templates/dashboard/NikFace/js/app.js"></script>
     @RenderSection("Scripts", required: false)
 

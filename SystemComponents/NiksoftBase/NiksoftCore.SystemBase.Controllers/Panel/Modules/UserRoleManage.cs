@@ -32,6 +32,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         public IActionResult Index([FromQuery] string lang)
         {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+
             if (lang == "fa" || defaultLang.ShortName.ToLower() == "fa")
                 ViewBag.PageTitle = "مدیریت نقش ها";
             else
@@ -44,6 +47,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public IActionResult Create([FromQuery] string lang)
         {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+
             if (lang == "fa" || defaultLang.ShortName.ToLower() == "fa")
                 ViewBag.PageTitle = "ایجاد نقش";
             else
@@ -56,9 +62,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Create([FromQuery] string lang, RoleRequest request)
         {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+
             if (string.IsNullOrEmpty(request.Name))
             {
-                if (lang.ToLower() == "fa" || defaultLang.ShortName == "fa")
+                if (lang == "fa" || defaultLang.ShortName == "fa")
                     AddError("نام نقش کاربری باید مقدار داشته باشد");
                 else
                     AddError("Role name can not be null");
@@ -83,6 +92,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public IActionResult Edit([FromQuery] string lang, int Id)
         {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+
             var theRole = roleManager.Roles.First(x => x.Id == Id);
             var request = new RoleRequest
             {
@@ -96,9 +108,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Edit([FromQuery] string lang, RoleRequest request)
         {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+
             if (request.Id < 1)
             {
-                if (lang.ToLower() == "fa" || defaultLang.ShortName == "fa")
+                if (lang == "fa" || defaultLang.ShortName == "fa")
                     AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید");
                 else
                     AddError("Edit feild, please try agan");
@@ -113,7 +128,16 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var theRole = roleManager.Roles.First(x => x.Id == request.Id);
             theRole.Name = request.Name;
             await roleManager.UpdateAsync(theRole);
-            return View(GetViewName(lang, "Edit"), request);
+
+            return Redirect("/Panel/UserRoleManage");
+        }
+
+
+        public async Task<IActionResult> Remove(int Id)
+        {
+            var theRole = roleManager.Roles.First(x => x.Id == Id);
+            await roleManager.DeleteAsync(theRole);
+            return Redirect("/Panel/UserRoleManage");
         }
 
 

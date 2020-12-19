@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "پنل مدیریت - مدیریت منو ها";
+    Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
+    var contents = (List<NiksoftCore.SystemBase.Service.PanelMenu>)ViewBag.Contents;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/PanelMenuManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">عنوان</th>
+                <th class="text-primary text-center">لینک</th>
+                <th class="text-primary text-center">آیتم ها</th>
+                <th class="text-primary text-center" width="50px">وضعیت</th>
+                <th class="text-primary text-center" width="100px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Title</td>
+                <td>@item.Link</td>
+                <td>
+                    <a href="/Panel/PanelMenuItemManage/@item.Id" class="btn btn-outline-info btn-sm">
+                        زیرمنو ها
+                    </a>
+                </td>
+                <td>
+                    @if (item.Enabled)
+                    {
+                        <a href="/Panel/PanelMenuManage/Enable?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                            <i class="fas fa-check"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Panel/PanelMenuManage/Enable?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    }
+
+                </td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a href="/Panel/PanelMenuManage/Edit?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="/Panel/PanelMenuManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

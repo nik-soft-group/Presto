@@ -11,7 +11,7 @@ namespace NiksoftCore.SystemBase.Service
         public string Controller { get; set; }
         public bool Enabled { get; set; }
         public int Ordering { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         public virtual PanelMenu Parent { get; set; }
         public virtual ICollection<PanelMenu> Childs { get; set; }

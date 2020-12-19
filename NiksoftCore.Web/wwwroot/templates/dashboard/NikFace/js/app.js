@@ -148,9 +148,9 @@ wow.init(), $(document).ready(function () {
 	})
 });
 var Menufunction = [];
-$("body").bind("cut copy paste", function (e) {
-	e.preventDefault()
-}), 
+// $("body").bind("cut copy paste", function (e) {
+	// e.preventDefault()
+// }), 
 // $("body").on("contextmenu", function (e) {
 	// return !1
 // }), 

@@ -3,7 +3,10 @@
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var roles = (List<NiksoftCore.DataModel.Role>)ViewBag.Roles;
 }
-
+<div class="btn-group">
+    <a href="/Panel/UserRoleManage/Create" class="btn btn-success btn-sm"><i class="fal fa-plus"></i></a>
+</div>
+<br />
 <div class="table-responsive">
     <table class="table table-bordered table-striped table-light">
         <thead>
@@ -20,9 +23,13 @@
                     <td>@item.Id</td>
                     <td>@item.Name</td>
                     <td>
-                        <div class="btn-group-vertical">
-                            <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/UserRoleManage/Edit?Id=@item.Id" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Panel/UserRoleManage/Remove?Id=@item.Id" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
                         </div>
                     </td>
                 </tr>
