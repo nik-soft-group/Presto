@@ -23,13 +23,13 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
             defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
-        public async Task<IViewComponentResult> LoadWidget()
+        public IViewComponentResult Invoke()
         {
             if (User.Identity.IsAuthenticated)
             {
-                var thisUser = await userManager.GetUserAsync(HttpContext.User);
+                //var thisUser = userManager.GetUserAsync(HttpContext.User).Result;
 
-                ViewBag.Menus = iSystemBaseService.iPanelMenuService.GetPart(x => x.Enabled, 0, 50);
+                ViewBag.Menus = iSystemBaseService.iPanelMenuService.GetPart(x => x.Enabled, 0, 50).ToList();
             }
 
             
