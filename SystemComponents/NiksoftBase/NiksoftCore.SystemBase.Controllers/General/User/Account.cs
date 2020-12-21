@@ -21,7 +21,6 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            iSystemBaseService = new SystemBaseService(Configuration);
         }
 
         [HttpGet, AllowAnonymous]
@@ -177,7 +176,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                     return baseName;
                 }
 
-                var defaultView = iSystemBaseService.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
+                var defaultView = ISystemBaseServ.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
                 return defaultView.ShortName + baseName;
             }
 

@@ -28,6 +28,11 @@
                     @Html.ValidationMessageFor(m => m.Link)
                 </div>
                 <div class="form-group">
+                    <label for="txtIcon" class="control-label">Icon</label>
+                    @Html.TextBoxFor(m => m.Icon, new { placeholder = "Icon", @class = "form-control", @id = "txtIcon" })
+                    @Html.ValidationMessageFor(m => m.Icon)
+                </div>
+                <div class="form-group">
                     <label for="txtController" class="control-label">Controller</label>
                     @Html.TextBoxFor(m => m.Controller, new { placeholder = "Controller", @class = "form-control", @id = "txtController" })
                     @Html.ValidationMessageFor(m => m.Controller)

@@ -52,16 +52,16 @@ namespace NiksoftCore.DataAccess
         public virtual IList<T> GetPartOptional(List<Expression<Func<T, bool>>> predicate, int startIndex, int size)
         {
             var query = TEntity.Where(predicate[0]);
-            for (int i = 1; i < predicate.Count; i++)
+            foreach (var cond in predicate)
             {
-                query = query.Where(predicate[i]);
+                query = query.Where(cond);
             }
-            return query.Skip(startIndex).Take(size).AsNoTracking().ToList();
+            return query.Skip(startIndex).Take(size).ToList();
         }
 
         public virtual IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size)
         {
-            return TEntity.Where(predicate).Skip(startIndex).Take(size).AsNoTracking().ToList();
+            return TEntity.Where(predicate).Skip(startIndex).Take(size).ToList();
         }
 
 

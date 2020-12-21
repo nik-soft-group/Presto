@@ -3867,7 +3867,20 @@ body.fixed-left .side-menu.left {
   vertical-align: middle;
 }
 
-#sidebar-menu > ul > li > a > i {
+
+.rtl-body #sidebar-menu > ul > li > a > i {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 17px;
+  margin-right: 3px;
+  margin-left: 10px;
+  text-align: center;
+  vertical-align: middle;
+  width: 20px;
+  color: #5f7187;
+}
+
+.ltr-body #sidebar-menu > ul > li > a > i {
   display: inline-block;
   font-size: 18px;
   line-height: 17px;
@@ -3878,7 +3891,6 @@ body.fixed-left .side-menu.left {
   width: 20px;
   color: #5f7187;
 }
-
 #sidebar-menu > ul > li > a > i.i-right {
   float: right;
   margin: 3px 0 0 0;

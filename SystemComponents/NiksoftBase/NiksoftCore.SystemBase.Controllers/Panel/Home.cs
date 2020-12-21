@@ -11,19 +11,22 @@ namespace NiksoftCore.SystemBase.Controllers.Panel
     public class Home : NikController
     {
 
-        public Home(IConfiguration Configuration): base(Configuration)
+        public Home(IConfiguration Configuration) : base(Configuration)
         {
-            iSystemBaseService = new SystemBaseService(Configuration);
         }
 
         public IActionResult Index([FromQuery] string lang)
         {
+            if (defaultLang.ShortName.ToLower() == "fa")
+                ViewBag.PageTitle = "داشبورد";
+            else
+                ViewBag.PageTitle = "Dashboard";
             return View(GetViewName(lang, "Index"));
         }
 
         private string GetViewName(string queryLang, string baseName)
         {
-            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
+            var defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
             if (!string.IsNullOrEmpty(queryLang))
             {
                 if (queryLang.ToLower() == "en")
@@ -31,7 +34,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel
                     return baseName;
                 }
 
-                var defaultView = iSystemBaseService.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
+                var defaultView = ISystemBaseServ.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
                 return defaultView.ShortName + baseName;
             }
 

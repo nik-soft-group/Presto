@@ -16,7 +16,6 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
         public Home(ILogger<Home> logger, IConfiguration Configuration) : base(Configuration)
         {
             _logger = logger;
-            iSystemBaseService = new SystemBaseService(Configuration);
         }
 
         public IActionResult Index([FromQuery] string lang)
@@ -43,7 +42,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
 
         private string GetViewName(string queryLang, string baseName)
         {
-            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
+            var defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
             if (!string.IsNullOrEmpty(queryLang))
             {
                 if (queryLang.ToLower() == "en")
@@ -51,7 +50,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
                     return baseName;
                 }
 
-                var defaultView = iSystemBaseService.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
+                var defaultView = ISystemBaseServ.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
                 return defaultView.ShortName + baseName;
             }
 

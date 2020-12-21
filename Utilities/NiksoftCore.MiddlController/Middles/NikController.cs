@@ -9,7 +9,7 @@ namespace NiksoftCore.MiddlController.Middles
     public class NikController : Controller
     {
         public IConfiguration Config { get; }
-        public ISystemBaseService iSystemBaseService { get; set; }
+        public ISystemBaseService ISystemBaseServ { get; set; }
 
         public List<NikMessage> Messages;
         public PortalLanguage defaultLang;
@@ -18,8 +18,8 @@ namespace NiksoftCore.MiddlController.Middles
         {
             Config = Configuration;
             Messages = new List<NikMessage>();
-            iSystemBaseService = new SystemBaseService(Configuration);
-            defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
+            ISystemBaseServ = new SystemBaseService(Configuration);
+            defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
         public void AddError(string message)

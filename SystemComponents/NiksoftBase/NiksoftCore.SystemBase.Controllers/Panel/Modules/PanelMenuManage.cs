@@ -31,7 +31,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 ViewBag.PageTitle = "Menu Management";
 
-            ViewBag.Contents = iSystemBaseService.iPanelMenuService.GetPart(x => x.ParentId == null, 0, 20).ToList();
+            ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == null, 0, 20).OrderBy(x => x.Ordering).ToList();
             return View(GetViewName(lang, "Index"));
         }
 
@@ -68,14 +68,17 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     AddError("Title can not be null");
             }
 
-            if (Messages.Where(x => x.Type == MessageType.Error).Count() > 0)
+            if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
                 return View(GetViewName(lang, "Create"), request);
             }
 
-            iSystemBaseService.iPanelMenuService.Add(request);
-            await iSystemBaseService.iPanelMenuService.SaveChangesAsync();
+            request.Enabled = true;
+            request.Ordering = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null) + 1;
+
+            ISystemBaseServ.iPanelMenuService.Add(request);
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
 
             return Redirect("/Panel/PanelMenuManage");
 
@@ -90,7 +93,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            var theMenu = iSystemBaseService.iPanelMenuService.Find(x => x.Id == Id);
+            var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
             return View(GetViewName(lang, "Edit"), theMenu);
         }
 
@@ -110,16 +113,19 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     AddError("Edit feild, please try agan");
             }
 
-            if (Messages.Where(x => x.Type == MessageType.Error).Count() > 0)
+            if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
                 return View(GetViewName(lang, "Create"), request);
             }
 
-            var theMenu = iSystemBaseService.iPanelMenuService.Find(x => x.Id == request.Id);
+            var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == request.Id);
             theMenu.Title = request.Title;
             theMenu.Link = request.Link;
-            await iSystemBaseService.iPanelMenuService.SaveChangesAsync();
+            theMenu.Icon = request.Icon;
+            theMenu.Controller = request.Controller;
+            theMenu.Description = request.Description;
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
 
             return Redirect("/Panel/PanelMenuManage");
         }
@@ -127,9 +133,17 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         public async Task<IActionResult> Remove(int Id)
         {
-            var theRole = iSystemBaseService.iPanelMenuService.Find(x => x.Id == Id);
-            iSystemBaseService.iPanelMenuService.Remove(theRole);
-            await iSystemBaseService.iPanelMenuService.SaveChangesAsync();
+            var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            ISystemBaseServ.iPanelMenuService.Remove(theMenu);
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
+            return Redirect("/Panel/PanelMenuManage");
+        }
+
+        public async Task<IActionResult> Enable(int Id)
+        {
+            var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            theMenu.Enabled = !theMenu.Enabled;
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
             return Redirect("/Panel/PanelMenuManage");
         }
 

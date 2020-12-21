@@ -13,14 +13,14 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
     public class WPanelMenu : ViewComponent
     {
         private readonly UserManager<DataModel.User> userManager;
-        public ISystemBaseService iSystemBaseService { get; set; }
-        private PortalLanguage defaultLang;
+        public ISystemBaseService ISystemBaseServ { get; set; }
+        private readonly PortalLanguage defaultLang;
 
         public WPanelMenu(IConfiguration Configuration, UserManager<DataModel.User> userManager)
         {
             this.userManager = userManager;
-            iSystemBaseService = new SystemBaseService(Configuration);
-            defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
+            ISystemBaseServ = new SystemBaseService(Configuration);
+            defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
         public IViewComponentResult Invoke()
@@ -29,7 +29,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
             {
                 //var thisUser = userManager.GetUserAsync(HttpContext.User).Result;
 
-                ViewBag.Menus = iSystemBaseService.iPanelMenuService.GetPart(x => x.Enabled, 0, 50).ToList();
+                ViewBag.Menus = ISystemBaseServ.iPanelMenuService.GetPart(x => x.Enabled && x.ParentId == null, 0, 50).ToList();
             }
 
             

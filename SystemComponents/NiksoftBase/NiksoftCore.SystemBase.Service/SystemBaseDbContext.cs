@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using NiksoftCore.DataAccess;
 
 namespace NiksoftCore.SystemBase.Service
@@ -11,9 +10,14 @@ namespace NiksoftCore.SystemBase.Service
         {
         }
 
-        DbSet<SystemSetting> SystemSettings { get; set; }
-        DbSet<PortalLanguage> PortalLanguages { get; set; }
-        DbSet<PanelMenu> PanelMenus { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
+        public DbSet<SystemSetting> SystemSettings { get; set; }
+        public DbSet<PortalLanguage> PortalLanguages { get; set; }
+        public DbSet<PanelMenu> PanelMenus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

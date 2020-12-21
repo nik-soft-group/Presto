@@ -27,7 +27,6 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            iSystemBaseService = new SystemBaseService(Configuration);
         }
 
         public IActionResult Index([FromQuery] string lang)
@@ -74,7 +73,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
             }
 
-            if (Messages.Where(x => x.Type == MessageType.Error).Count() > 0)
+            if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
                 return View(GetViewName(lang, "Create"), request);
@@ -119,7 +118,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     AddError("Edit feild, please try agan");
             }
 
-            if (Messages.Where(x => x.Type == MessageType.Error).Count() > 0)
+            if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
                 return View(GetViewName(lang, "Create"), request);
@@ -143,7 +142,6 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         private string GetViewName(string queryLang, string baseName)
         {
-            var defaultLang = iSystemBaseService.iPortalLanguageServ.Find(x => x.IsDefault);
             if (!string.IsNullOrEmpty(queryLang))
             {
                 if (queryLang.ToLower() == "en")
@@ -151,7 +149,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     return baseName;
                 }
 
-                var defaultView = iSystemBaseService.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
+                var defaultView = ISystemBaseServ.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
                 return defaultView.ShortName + baseName;
             }
 
