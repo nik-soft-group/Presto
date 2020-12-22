@@ -39,6 +39,16 @@ namespace NiksoftCore.MiddlController.Middles
             });
         }
 
+        public string GetViewName(string queryLang, string baseName)
+        {
+            if (queryLang.ToLower() == "en")
+            {
+                return baseName;
+            }
+
+            return defaultLang.ShortName + baseName;
+        }
+
 
     }
 }

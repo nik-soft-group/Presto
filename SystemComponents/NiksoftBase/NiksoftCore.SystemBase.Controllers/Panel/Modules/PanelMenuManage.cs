@@ -146,16 +146,5 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
             return Redirect("/Panel/PanelMenuManage");
         }
-
-
-        private string GetViewName(string queryLang, string baseName)
-        {
-            if (queryLang.ToLower() == "en")
-            {
-                return baseName;
-            }
-
-            return defaultLang.ShortName + baseName;
-        }
     }
 }

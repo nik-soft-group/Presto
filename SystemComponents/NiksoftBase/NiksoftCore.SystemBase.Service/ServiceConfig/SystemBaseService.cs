@@ -7,6 +7,7 @@ namespace NiksoftCore.SystemBase.Service
         ISystemSettingService iSystemSettingServ { get; set; }
         IPortalLanguageService iPortalLanguageServ { get; set; }
         IPanelMenuService iPanelMenuService { get; set; }
+        IUserProfileService iUserProfileServ { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
@@ -14,6 +15,7 @@ namespace NiksoftCore.SystemBase.Service
         public ISystemSettingService iSystemSettingServ { get; set; }
         public IPortalLanguageService iPortalLanguageServ { get; set; }
         public IPanelMenuService iPanelMenuService { get; set; }
+        public IUserProfileService iUserProfileServ { get; set; }
 
         private IConfiguration Config { get; }
 
@@ -23,6 +25,7 @@ namespace NiksoftCore.SystemBase.Service
             iSystemSettingServ = new SystemSettingService(uow);
             iPortalLanguageServ = new PortalLanguageService(uow);
             iPanelMenuService = new PanelMenuService(uow);
+            iUserProfileServ = new UserProfileService(uow);
         }
 
 

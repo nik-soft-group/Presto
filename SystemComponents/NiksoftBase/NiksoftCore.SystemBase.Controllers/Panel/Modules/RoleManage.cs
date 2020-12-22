@@ -3,25 +3,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
-using NiksoftCore.SystemBase.Service;
 using NiksoftCore.ViewModel.SystemBase;
 using NiksoftCore.ViewModel.User;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 {
     [Area("Panel")]
     [Authorize]
-    public class UserRoleManage : NikController
+    public class RoleManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
         private readonly RoleManager<DataModel.Role> roleManager;
 
-        public UserRoleManage(IConfiguration Configuration,
+        public RoleManage(IConfiguration Configuration,
             UserManager<DataModel.User> userManager,
             RoleManager<DataModel.Role> roleManager) : base(Configuration)
         {
@@ -29,23 +25,19 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             this.roleManager = roleManager;
         }
 
-        public IActionResult Index([FromQuery] string lang, int Id)
+        public IActionResult Index([FromQuery] string lang)
         {
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
 
             if (lang == "fa" || defaultLang.ShortName.ToLower() == "fa")
-                ViewBag.PageTitle = "مدیریت نقش های کاربر";
+                ViewBag.PageTitle = "مدیریت نقش ها";
             else
                 ViewBag.PageTitle = "User role manager";
-            ViewBag.User = userManager.Users.Where(x => x.Id == Id).ToList().First();
-            ViewBag.Profile = ISystemBaseServ.iUserProfileServ.Find(x => x.UserId == Id);
-            //ViewBag.UserRoles = roleManager.Use.Where(x => x.)
 
+            ViewBag.Roles = roleManager.Roles.Where(x => true).ToList();
             return View(GetViewName(lang, "Index"));
         }
-
-
 
         [HttpGet]
         public IActionResult Create([FromQuery] string lang)
