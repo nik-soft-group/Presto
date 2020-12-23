@@ -19,6 +19,9 @@ namespace NiksoftCore.SystemBase.Service
         public DbSet<PortalLanguage> PortalLanguages { get; set; }
         public DbSet<PanelMenu> PanelMenus { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +29,9 @@ namespace NiksoftCore.SystemBase.Service
             builder.ApplyConfiguration(new PortalLanguageMap());
             builder.ApplyConfiguration(new PanelMenuMap());
             builder.ApplyConfiguration(new UserProfileMap());
+            builder.ApplyConfiguration(new CountryMap());
+            builder.ApplyConfiguration(new ProvinceMap());
+            builder.ApplyConfiguration(new CityMap());
         }
     }
 }

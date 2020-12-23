@@ -7,6 +7,8 @@ namespace NiksoftCore.DataAccess
 {
     public interface IDataService<T> : IDisposable where T : class
     {
+        int Update(T entity);
+        Task<int> UpdateAsync(T entity);
         void Add(T entity);
 
         void Remove(T entity);

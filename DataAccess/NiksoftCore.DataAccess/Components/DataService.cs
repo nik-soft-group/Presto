@@ -19,6 +19,17 @@ namespace NiksoftCore.DataAccess
             TEntity = _uow.Set<T>();
         }
 
+        public int Update(T entity) {
+            TEntity.Update(entity);
+            return SaveChanges();
+        }
+
+        public async Task<int> UpdateAsync(T entity)
+        {
+            TEntity.Update(entity);
+            return await SaveChangesAsync();
+        }
+
         public virtual void Add(T entity)
         {
             TEntity.Add(entity);

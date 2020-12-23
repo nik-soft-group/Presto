@@ -2,25 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.SystemBase.Service;
-using System;
+using NiksoftCore.ViewModel.SystemBase;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
 {
     public class WPanelMenu : ViewComponent
     {
-        private readonly UserManager<DataModel.User> userManager;
+        public IConfiguration Config { get; }
         public ISystemBaseService ISystemBaseServ { get; set; }
-        private readonly PortalLanguage defaultLang;
+        private readonly UserManager<DataModel.User> userManager;
+
+        public List<NikMessage> Messages;
+        public PortalLanguage defaultLang;
 
         public WPanelMenu(IConfiguration Configuration, UserManager<DataModel.User> userManager)
         {
-            this.userManager = userManager;
+            Config = Configuration;
+            Messages = new List<NikMessage>();
             ISystemBaseServ = new SystemBaseService(Configuration);
             defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
+            this.userManager = userManager;
         }
 
         public IViewComponentResult Invoke()

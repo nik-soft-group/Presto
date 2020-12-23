@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="General\Factories\" />
+    <Folder Include="Panel\Business\" />
   </ItemGroup>
 
   <ItemGroup>

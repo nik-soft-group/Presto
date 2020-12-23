@@ -41,6 +41,11 @@ namespace NiksoftCore.MiddlController.Middles
 
         public string GetViewName(string queryLang, string baseName)
         {
+            if (string.IsNullOrEmpty(queryLang))
+            {
+                queryLang = defaultLang.ShortName;
+            }
+
             if (queryLang.ToLower() == "en")
             {
                 return baseName;

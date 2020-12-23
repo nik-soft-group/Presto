@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Panel.Forms
 {
+    [Area("Panel")]
     public class LegalForm : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
@@ -22,25 +23,32 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Forms
             iITCFServ = new ITCFService(Configuration);
         }
 
-        public IActionResult Index([FromQuery] string lang)
+        public async Task<IActionResult> Index([FromQuery] string lang)
         {
-            var thisUser = userManager.GetUserAsync(HttpContext.User);
+            var thisUser = await userManager.GetUserAsync(HttpContext.User);
             var userForm = iITCFServ.IUserLegalFormServ.Find(x => x.UserId == thisUser.Id);
             if (userForm == null)
             {
                 userForm = new UserLegalForm();
+                userForm.UserId = thisUser.Id;
             }
 
-            ViewBag.userForm = userForm;
-
-            return View(GetViewName(lang, "Index"));
+            return View(GetViewName(lang, "Index"), userForm);
         }
 
         [HttpPost]
         public async Task<IActionResult> Index([FromQuery] string lang, UserLegalForm request)
         {
-
-            return View();
+            if (request.Id == 0)
+            {
+                iITCFServ.IUserLegalFormServ.Add(request);
+                iITCFServ.IUserLegalFormServ.SaveChanges();
+            }
+            else
+            {
+                await iITCFServ.IUserLegalFormServ.UpdateAsync(request);
+            }
+            return View(GetViewName(lang, "Index"), request);
         }
     }
 }
