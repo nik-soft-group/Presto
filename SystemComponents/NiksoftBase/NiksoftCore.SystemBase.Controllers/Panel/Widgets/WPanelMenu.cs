@@ -5,6 +5,7 @@ using NiksoftCore.SystemBase.Service;
 using NiksoftCore.ViewModel.SystemBase;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
 {
@@ -26,11 +27,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
             this.userManager = userManager;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             if (User.Identity.IsAuthenticated)
             {
-                //var thisUser = userManager.GetUserAsync(HttpContext.User).Result;
+                var thisUser = await userManager.GetUserAsync(HttpContext.User);
+
 
                 ViewBag.Menus = ISystemBaseServ.iPanelMenuService.GetPart(x => x.Enabled && x.ParentId == null, 0, 50).ToList();
             }

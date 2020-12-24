@@ -25,6 +25,8 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Forms
 
         public async Task<IActionResult> Index([FromQuery] string lang)
         {
+            ViewBag.PageTitle = "فرم نیازمندی های بازرگانی";
+            ViewBag.Title = "فرم نیازمندی های بازرگانی";
             var thisUser = await userManager.GetUserAsync(HttpContext.User);
             var userForm = iITCFServ.IUserLegalFormServ.Find(x => x.UserId == thisUser.Id);
             if (userForm == null)

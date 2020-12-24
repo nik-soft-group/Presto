@@ -4,7 +4,7 @@
     var roles = (List<NiksoftCore.DataModel.Role>)ViewBag.Roles;
 }
 <div class="btn-group">
-    <a href="/Panel/UserRoleManage/Create" class="btn btn-success btn-sm"><i class="fal fa-plus"></i></a>
+    <a href="/Panel/RoleManage/Create" class="btn btn-success btn-sm"><i class="fal fa-plus"></i></a>
 </div>
 <br />
 <div class="table-responsive">
@@ -24,10 +24,10 @@
                     <td>@item.Name</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/UserRoleManage/Edit?Id=@item.Id" class="btn btn-warning btn-sm">
+                            <a href="/Panel/RoleManage/Edit?Id=@item.Id" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/Panel/UserRoleManage/Remove?Id=@item.Id" class="btn btn-danger btn-sm">
+                            <a href="/Panel/RoleManage/Remove?Id=@item.Id" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>

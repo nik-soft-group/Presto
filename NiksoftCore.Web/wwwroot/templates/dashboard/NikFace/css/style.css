@@ -3598,7 +3598,7 @@ File: Menu
 }
 
 .dropdown-menu-lg .media p {
-  color: #98a4b9;
+  color: #4d5662;
 }
 
 .dropdown-menu-lg .media-heading, .dropdown-menu-lg p {
@@ -4355,8 +4355,8 @@ body.fixed-left-void {
 
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
-    right: 0;
-    left: auto;
+    left: 0;
+    right: auto;
   }
   
   .navbar-left .dropdown-menu {

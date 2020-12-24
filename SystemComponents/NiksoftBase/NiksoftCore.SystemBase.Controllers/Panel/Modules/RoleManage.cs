@@ -80,7 +80,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 Name = request.Name
             });
 
-            return Redirect("/Panel/UserRoleManage");
+            return Redirect("/Panel/RoleManage");
 
         }
 
@@ -125,7 +125,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             theRole.Name = request.Name;
             await roleManager.UpdateAsync(theRole);
 
-            return Redirect("/Panel/UserRoleManage");
+            return Redirect("/Panel/RoleManage");
         }
 
 
@@ -133,7 +133,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         {
             var theRole = roleManager.Roles.First(x => x.Id == Id);
             await roleManager.DeleteAsync(theRole);
-            return Redirect("/Panel/UserRoleManage");
+            return Redirect("/Panel/RoleManage");
         }
 
 

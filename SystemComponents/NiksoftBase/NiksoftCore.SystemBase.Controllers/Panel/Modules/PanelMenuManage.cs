@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
+using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel.SystemBase;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,8 +20,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         }
 
-        public IActionResult Index([FromQuery] string lang)
+        public IActionResult Index([FromQuery] string lang, int part)
         {
+            var total = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null);
+            var pager = new Pagination(total, 20, part);
+            ViewBag.Pager = pager;
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
@@ -31,7 +36,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 ViewBag.PageTitle = "Menu Management";
 
-            ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == null, 0, 20).OrderBy(x => x.Ordering).ToList();
+            ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == null, pager.StartIndex, pager.PageSize).OrderBy(x => x.Ordering).ToList();
+
             return View(GetViewName(lang, "Index"));
         }
 
