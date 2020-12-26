@@ -109,20 +109,6 @@ namespace NiksoftCore.Web
 
             app.UseStaticFiles();
 
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(
-            //    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\templates")),
-            //    RequestPath = new PathString("/templates")
-            //});
-
-            //app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(
-            //    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\templates")),
-            //    RequestPath = new PathString("/templates")
-            //});
-
             app.UseRouting();
 
             app.UseAuthentication();
@@ -140,7 +126,7 @@ namespace NiksoftCore.Web
                 );
 
                 endpoints.MapRazorPages();
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
 
             });
         }
