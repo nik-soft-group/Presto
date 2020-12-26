@@ -35,8 +35,6 @@ namespace NiksoftCore.Web
             Configuration = configuration;
         }
 
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
@@ -100,7 +98,6 @@ namespace NiksoftCore.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -126,17 +123,9 @@ namespace NiksoftCore.Web
                 );
 
                 endpoints.MapRazorPages();
-                //endpoints.MapControllers();
 
             });
         }
 
-
-        //private static IServiceProvider BuildDependencyInjectionProvider(IServiceCollection services)
-        //{
-        //    var builder = ServiceContainer.GetServcie(services);
-        //    IContainer applicationContainer = builder.Build();
-        //    return new AutofacServiceProvider(applicationContainer);
-        //}
     }
 }
