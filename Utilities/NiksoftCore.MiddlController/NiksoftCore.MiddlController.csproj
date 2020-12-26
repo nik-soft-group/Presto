@@ -19,4 +19,8 @@
     <ProjectReference Include="..\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Routing\" />
+  </ItemGroup>
+
 </Project>

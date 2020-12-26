@@ -40,27 +40,5 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
             return View("Privacy");
         }
 
-        private string GetViewName(string queryLang, string baseName)
-        {
-            var defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
-            if (!string.IsNullOrEmpty(queryLang))
-            {
-                if (queryLang.ToLower() == "en")
-                {
-                    return baseName;
-                }
-
-                var defaultView = ISystemBaseServ.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
-                return defaultView.ShortName + baseName;
-            }
-
-            if (defaultLang.ShortName.ToLower() == "en")
-            {
-                return baseName;
-            }
-
-            return defaultLang.ShortName + baseName;
-        }
-
     }
 }

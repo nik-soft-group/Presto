@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
-using NiksoftCore.MiddlController.Routing;
-using NiksoftCore.SystemBase.Service;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel
 {

@@ -140,8 +140,7 @@ namespace NiksoftCore.Web
                 );
 
                 endpoints.MapRazorPages();
-
-
+                endpoints.MapControllers();
 
             });
         }
