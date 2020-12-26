@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.SystemBase.Service;
-using NiksoftCore.ViewModel.SystemBase;
+using NiksoftCore.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

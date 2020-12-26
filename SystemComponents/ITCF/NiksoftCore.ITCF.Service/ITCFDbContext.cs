@@ -19,6 +19,9 @@ namespace NiksoftCore.ITCF.Service
         public DbSet<BusinessCategory> BusinessCategories { get; set; }
         public DbSet<IndustrialPark> IndustrialParks { get; set; }
         public DbSet<Business> Businesses { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<City> Cities { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -27,7 +30,10 @@ namespace NiksoftCore.ITCF.Service
             builder.ApplyConfiguration(new BusinessCategoryMap());
             builder.ApplyConfiguration(new IndustrialParkMap());
             builder.ApplyConfiguration(new BusinessMap());
-            
+            builder.ApplyConfiguration(new CountryMap());
+            builder.ApplyConfiguration(new ProvinceMap());
+            builder.ApplyConfiguration(new CityMap());
+
         }
     }
 }

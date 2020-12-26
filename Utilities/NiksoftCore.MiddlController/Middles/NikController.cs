@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.SystemBase.Service;
-using NiksoftCore.ViewModel.SystemBase;
+using NiksoftCore.ViewModel;
 using System.Collections.Generic;
 
 namespace NiksoftCore.MiddlController.Middles
@@ -22,19 +22,21 @@ namespace NiksoftCore.MiddlController.Middles
             defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
-        public void AddError(string message)
+        public void AddError(string message, string lang)
         {
             Messages.Add(new NikMessage { 
                 Message = message,
+                Language = lang,
                 Type = MessageType.Error
             });
         }
 
-        public void AddSuccess(string message)
+        public void AddSuccess(string message, string lang)
         {
             Messages.Add(new NikMessage
             {
                 Message = message,
+                Language = lang,
                 Type = MessageType.Success
             });
         }

@@ -12,6 +12,7 @@ namespace NiksoftCore.DataAccess
     {
         protected IUnitOfWork _uow;
         protected DbSet<T> TEntity;
+        public IQueryable<T> Entities { get; set; }
 
         protected DataService(IUnitOfWork uow)
         {
@@ -75,11 +76,53 @@ namespace NiksoftCore.DataAccess
             return TEntity.Where(predicate).Skip(startIndex).Take(size).ToList();
         }
 
+        public virtual IList<T> GetAll(Expression<Func<T, bool>> predicate)
+        {
+            return TEntity.Where(predicate).ToList();
+        }
+
+        public virtual IList<T> GetAll(List<Expression<Func<T, bool>>> predicate)
+        {
+            var query = TEntity.Where(predicate[0]);
+            foreach (var cond in predicate)
+            {
+                query = query.Where(cond);
+            }
+            return query.ToList();
+        }
+
+        public virtual IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem)
+        {
+            return TEntity.Where(predicate).Select(selectItem).ToList();
+        }
+
+        public virtual IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicate, Expression<Func<T, TResult>> selectItem)
+        {
+            var query = TEntity.Where(predicate[0]);
+            foreach (var cond in predicate)
+            {
+                query = query.Where(cond);
+            }
+            return query.Select(selectItem).ToList();
+        }
 
         public List<Expression<Func<T, bool>>> ExpressionMaker()
         {
             return new List<Expression<Func<T, bool>>>();
         }
+
+
+        public IQueryable<TResult> QueryMaker<TResult>(Func<IQueryable<T>, IQueryable<TResult>> queryFunction)
+        {
+            return queryFunction(TEntity);
+        }
+
+        public IList<TResult> QueryRun<TResult>(IQueryable<TResult> queryFunction)
+        {
+            return queryFunction.ToList();
+        }
+
+
 
         public int ExecSqlCommand(string command)
         {

@@ -1,4 +1,4 @@
-﻿namespace NiksoftCore.ViewModel.SystemBase
+﻿namespace NiksoftCore.ViewModel
 {
     public enum MessageType
     {

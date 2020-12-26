@@ -190,6 +190,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\lib\noty\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />
   </ItemGroup>
 

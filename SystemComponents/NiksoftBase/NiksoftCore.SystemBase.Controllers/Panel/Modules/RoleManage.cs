@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
-using NiksoftCore.ViewModel.SystemBase;
+using NiksoftCore.ViewModel;
 using NiksoftCore.ViewModel.User;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,9 +63,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (string.IsNullOrEmpty(request.Name))
             {
                 if (lang == "fa" || defaultLang.ShortName == "fa")
-                    AddError("نام نقش کاربری باید مقدار داشته باشد");
+                    AddError("نام نقش کاربری باید مقدار داشته باشد", "fa");
                 else
-                    AddError("Role name can not be null");
+                    AddError("Role name can not be null", "en");
 
             }
 
@@ -110,9 +110,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (request.Id < 1)
             {
                 if (lang == "fa" || defaultLang.ShortName == "fa")
-                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید");
+                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
                 else
-                    AddError("Edit feild, please try agan");
+                    AddError("Edit feild, please try agan", "en");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))

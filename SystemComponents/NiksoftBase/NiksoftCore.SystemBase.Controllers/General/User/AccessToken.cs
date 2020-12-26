@@ -7,6 +7,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.General.User
 {
@@ -24,16 +25,16 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         }
 
         [HttpPost]
-        public IActionResult GetToken([FromForm] string usename, [FromForm] string password)
+        public async Task<IActionResult> GetToken([FromForm] string usename, [FromForm] string password)
         {
-            DataModel.User user = UserManager.FindByNameAsync(usename).Result;
+            DataModel.User user = await UserManager.FindByNameAsync(usename);
 
             if (user == null)
             {
                 return Ok(new { status = 403, message = "access denaid" });
             }
 
-            var isTrust = UserManager.CheckPasswordAsync(user, password).Result;
+            var isTrust = await UserManager.CheckPasswordAsync(user, password);
 
             if (!isTrust)
             {

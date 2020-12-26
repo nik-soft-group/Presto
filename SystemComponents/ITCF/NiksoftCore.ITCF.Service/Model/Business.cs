@@ -17,6 +17,9 @@
         public int CatgoryId { get; set; }
         public int CreatorId { get; set; }
 
+        public virtual Country Country { get; set; }
+        public virtual Province Province { get; set; }
+        public virtual City City { get; set; }
         public virtual BusinessCategory Category { get; set; }
         public virtual IndustrialPark IndustrialPark { get; set; }
     }

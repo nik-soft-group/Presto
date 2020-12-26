@@ -25,6 +25,14 @@ namespace NiksoftCore.DataAccess
 
         IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size);
 
+        IList<T> GetAll(Expression<Func<T, bool>> predicate);
+
+        IList<T> GetAll(List<Expression<Func<T, bool>>> predicate);
+
+        IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem);
+
+        IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicate, Expression<Func<T, TResult>> selectItem);
+
         List<Expression<Func<T, bool>>> ExpressionMaker();
 
         int ExecSqlCommand(string command);

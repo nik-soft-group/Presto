@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities;
-using NiksoftCore.ViewModel.SystemBase;
+using NiksoftCore.ViewModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -69,9 +69,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (string.IsNullOrEmpty(request.Title))
             {
                 if (lang == "fa")
-                    AddError("نام باید مقدار داشته باشد");
+                    AddError("نام باید مقدار داشته باشد", "fa");
                 else
-                    AddError("Title can not be null");
+                    AddError("Title can not be null", "en");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))
@@ -114,9 +114,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (request.Id < 1)
             {
                 if (lang == "fa")
-                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید");
+                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
                 else
-                    AddError("Edit feild, please try agan");
+                    AddError("Edit feild, please try agan", "en");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))

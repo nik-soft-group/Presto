@@ -8,6 +8,9 @@ namespace NiksoftCore.ITCF.Service
         IBusinessService IBusinessServ { get; set; }
         IBusinessCategoryService IBusinessCategoryServ { get; set; }
         IIndustrialParkService IIndustrialParkServ { get; set; }
+        ICountryService iCountryServ { get; set; }
+        IProvinceService iProvinceServ { get; set; }
+        ICityService iCityServ { get; set; }
     }
 
     public class ITCFService : IITCFService
@@ -16,6 +19,9 @@ namespace NiksoftCore.ITCF.Service
         public IBusinessService IBusinessServ { get; set; }
         public IBusinessCategoryService IBusinessCategoryServ { get; set; }
         public IIndustrialParkService IIndustrialParkServ { get; set; }
+        public ICountryService iCountryServ { get; set; }
+        public IProvinceService iProvinceServ { get; set; }
+        public ICityService iCityServ { get; set; }
 
         private IConfiguration Config { get; }
 
@@ -26,7 +32,9 @@ namespace NiksoftCore.ITCF.Service
             IBusinessServ = new BusinessService(uow);
             IBusinessCategoryServ = new BusinessCategoryService(uow);
             IIndustrialParkServ = new IndustrialParkService(uow);
-
+            iCountryServ = new CountryService(uow);
+            iProvinceServ = new ProvinceService(uow);
+            iCityServ = new CityService(uow);
         }
 
 
