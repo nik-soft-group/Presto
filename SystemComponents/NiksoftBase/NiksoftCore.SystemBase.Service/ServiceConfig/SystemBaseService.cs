@@ -25,9 +25,9 @@ namespace NiksoftCore.SystemBase.Service
 
         private IConfiguration Config { get; }
 
-        public SystemBaseService(IConfiguration Configuration)
+        public SystemBaseService(string connection)
         {
-            ISystemUnitOfWork uow = new SystemBaseDbContext(Configuration.GetConnectionString("SystemBase"));
+            ISystemUnitOfWork uow = new SystemBaseDbContext(connection);
             iSystemSettingServ = new SystemSettingService(uow);
             iPortalLanguageServ = new PortalLanguageService(uow);
             iPanelMenuService = new PanelMenuService(uow);

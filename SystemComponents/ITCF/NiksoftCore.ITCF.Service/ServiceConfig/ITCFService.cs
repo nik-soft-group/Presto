@@ -23,8 +23,6 @@ namespace NiksoftCore.ITCF.Service
         public IProvinceService iProvinceServ { get; set; }
         public ICityService iCityServ { get; set; }
 
-        private IConfiguration Config { get; }
-
         public ITCFService(IConfiguration Configuration)
         {
             IITCFUnitOfWork uow = new ITCFDbContext(Configuration.GetConnectionString("SystemBase"));
