@@ -127,5 +127,13 @@ namespace NiksoftCore.Web
             });
         }
 
+        //private static IServiceProvider DepInjectionProvider(IServiceCollection services) {
+        //    var builder = new ContainerBuilder();
+        //    builder.Populate(services);
+        //    builder.RegisterType<SystemBaseService>().As<ISystemBaseService>();
+        //    IContainer applicationContainer = builder.Build();
+        //    return new AutofacServiceProvider(applicationContainer);
+        //}
+
     }
 }
