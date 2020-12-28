@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace NiksoftCore.SystemBase.Service
+﻿namespace NiksoftCore.SystemBase.Service
 {
     public interface ISystemBaseService
     {
@@ -11,6 +9,7 @@ namespace NiksoftCore.SystemBase.Service
         ICountryService iCountryServ { get; set; }
         IProvinceService iProvinceServ { get; set; }
         ICityService iCityServ { get; set; }
+        ISystemFileService iSystemFileServ { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
@@ -22,8 +21,7 @@ namespace NiksoftCore.SystemBase.Service
         public ICountryService iCountryServ { get; set; }
         public IProvinceService iProvinceServ { get; set; }
         public ICityService iCityServ { get; set; }
-
-        private IConfiguration Config { get; }
+        public ISystemFileService iSystemFileServ { get; set; }
 
         public SystemBaseService(string connection)
         {
@@ -35,6 +33,7 @@ namespace NiksoftCore.SystemBase.Service
             iCountryServ = new CountryService(uow);
             iProvinceServ = new ProvinceService(uow);
             iCityServ = new CityService(uow);
+            iSystemFileServ = new SystemFileService(uow);
         }
 
 

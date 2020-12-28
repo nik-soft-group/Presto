@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.ITCF.Conltroller.Panel.Forms
 {
     [Area("Panel")]
+    [Authorize]
     public class LegalForm : NikController
     {
         private readonly UserManager<DataModel.User> userManager;

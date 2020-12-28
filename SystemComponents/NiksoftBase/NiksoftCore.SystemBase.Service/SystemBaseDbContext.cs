@@ -22,6 +22,7 @@ namespace NiksoftCore.SystemBase.Service
         public DbSet<Country> Countries { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<SystemFile> SystemFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,6 +33,7 @@ namespace NiksoftCore.SystemBase.Service
             builder.ApplyConfiguration(new CountryMap());
             builder.ApplyConfiguration(new ProvinceMap());
             builder.ApplyConfiguration(new CityMap());
+            builder.ApplyConfiguration(new SystemFileMap());
         }
     }
 }

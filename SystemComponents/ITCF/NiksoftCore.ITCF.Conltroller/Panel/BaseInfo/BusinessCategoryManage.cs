@@ -6,21 +6,22 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
-using NiksoftCore.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
 {
     [Area("Panel")]
     [Authorize]
-    public class IndParkManage : NikController
+    public class BusinessCategoryManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
         public IITCFService iITCFServ { get; set; }
 
-        public IndParkManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
+        public BusinessCategoryManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
         {
             this.userManager = userManager;
             iITCFServ = new ITCFService(Configuration);
@@ -33,18 +34,18 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            var total = iITCFServ.IIndustrialParkServ.Count(x => true);
+            var total = iITCFServ.IBusinessCategoryServ.Count(x => true);
             var pager = new Pagination(total, 20, part);
             ViewBag.Pager = pager;
 
-            
+
 
             if (lang == "fa")
-                ViewBag.PageTitle = "مدیریت شهرک صنعتی";
+                ViewBag.PageTitle = "مدیریت دسته بندی ها";
             else
-                ViewBag.PageTitle = "Industrial Park Management";
+                ViewBag.PageTitle = "Business Category Management";
 
-            ViewBag.Contents = iITCFServ.IIndustrialParkServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
+            ViewBag.Contents = iITCFServ.IBusinessCategoryServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
 
             return View(GetViewName(lang, "Index"));
         }
@@ -58,18 +59,17 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 lang = defaultLang.ShortName.ToLower();
 
             if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد شهرک صنعتی";
+                ViewBag.PageTitle = "ایجاد دسته بندی";
             else
-                ViewBag.PageTitle = "Create Industrial Park";
+                ViewBag.PageTitle = "Create Business Category";
 
-            var request = new IndustrialPark();
-            request.ProvinceId = 0;
+            var request = new BusinessCategory();
             DropDownBinder(request);
             return View(GetViewName(lang, "Create"), request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, IndustrialPark request)
+        public async Task<IActionResult> Create([FromQuery] string lang, BusinessCategory request)
         {
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -83,9 +83,9 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 return View(GetViewName(lang, "Create"), request);
             }
 
-            iITCFServ.IIndustrialParkServ.Add(request);
-            await iITCFServ.IIndustrialParkServ.SaveChangesAsync();
-            return Redirect("/Panel/IndParkManage");
+            iITCFServ.IBusinessCategoryServ.Add(request);
+            await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
+            return Redirect("/Panel/BusinessCategoryManage");
 
         }
 
@@ -98,17 +98,17 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 lang = defaultLang.ShortName.ToLower();
 
             if (lang == "fa")
-                ViewBag.PageTitle = "بروزرسانی شهرک صنعتی";
+                ViewBag.PageTitle = "بروزرسانی دسته بندی";
             else
-                ViewBag.PageTitle = "Update Industrial Park";
+                ViewBag.PageTitle = "Update Business Category";
 
-            var request = iITCFServ.IIndustrialParkServ.Find(x => x.Id == Id);
+            var request = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
             DropDownBinder(request);
             return View(GetViewName(lang, "Edit"), request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery] string lang, IndustrialPark request)
+        public async Task<IActionResult> Edit([FromQuery] string lang, BusinessCategory request)
         {
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -130,39 +130,38 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 return View(GetViewName(lang, "Create"), request);
             }
 
-            var theContent = iITCFServ.IIndustrialParkServ.Find(x => x.Id == request.Id);
+            var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == request.Id);
             theContent.Title = request.Title;
-            theContent.CountryId = request.CountryId;
-            theContent.ProvinceId = request.ProvinceId;
-            theContent.CityId = request.CityId;
-            theContent.Address = request.Address;
-            theContent.Location = request.Location;
-            await iITCFServ.IIndustrialParkServ.SaveChangesAsync();
+            theContent.Description = request.Description;
+            theContent.Icone = request.Icone;
+            theContent.Image = request.Image;
+            theContent.ParentId = request.ParentId;
+            await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
 
-            return Redirect("/Panel/IndParkManage");
+            return Redirect("/Panel/BusinessCategoryManage");
         }
 
 
         public async Task<IActionResult> Remove(int Id)
         {
-            var theMenu = iITCFServ.IIndustrialParkServ.Find(x => x.Id == Id);
-            iITCFServ.IIndustrialParkServ.Remove(theMenu);
-            await iITCFServ.IIndustrialParkServ.SaveChangesAsync();
-            return Redirect("/Panel/IndParkManage");
+            var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
+            iITCFServ.IBusinessCategoryServ.Remove(theContent);
+            await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
+            return Redirect("/Panel/BusinessCategoryManage");
         }
 
         public async Task<IActionResult> Enable(int Id)
         {
-            var theMenu = iITCFServ.IIndustrialParkServ.Find(x => x.Id == Id);
-            //theMenu.Enabled = !theMenu.Enabled;
-            await iITCFServ.IIndustrialParkServ.SaveChangesAsync();
+            var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
+            //theContent.Enabled = !theContent.Enabled;
+            await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
             return Redirect("/Panel/IndParkManage");
         }
 
-        private void DropDownBinder(IndustrialPark request)
+        private void DropDownBinder(BusinessCategory request)
         {
-            var countries = iITCFServ.iCountryServ.GetPart(x => true, 0, 200);
-            ViewBag.Country = new SelectList(countries, "Id", "Title", request?.CountryId);
+            var categories = iITCFServ.IBusinessCategoryServ.GetPart(x => true, 0, 200);
+            ViewBag.Country = new SelectList(categories, "Id", "Title", request?.ParentId);
 
             //var provinces = iITCFServ.iProvinceServ.GetPart(x => true, 0, 40);
             //ViewBag.Province = new SelectList(provinces, "Id", "Title", request?.CountryId);
@@ -171,51 +170,15 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             //ViewBag.Province = new SelectList(provinces, "Id", "Title", request?.CountryId);
         }
 
-        private bool FormVlide(string lang, IndustrialPark request)
+        private bool FormVlide(string lang, BusinessCategory request)
         {
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
                 if (lang == "fa")
-                    AddError("نام باید مقدار داشته باشد", "fa");
+                    AddError("عنوان باید مقدار داشته باشد", "fa");
                 else
                     AddError("Title can not be null", "en");
-                result = false;
-            }
-
-            if (request.CountryId == 0)
-            {
-                if (lang == "fa")
-                    AddError("کشور را انتخاب نمایید", "fa");
-                else
-                    AddError("Choose the country", "en");
-                result = false;
-            }
-
-            if (request.ProvinceId == 0)
-            {
-                if (lang == "fa")
-                    AddError("استان را انتخاب نمایید", "fa");
-                else
-                    AddError("Choose the province", "en");
-                result = false;
-            }
-
-            if (request.CityId == 0)
-            {
-                if (lang == "fa")
-                    AddError("شهر را انتخاب نمایید", "fa");
-                else
-                    AddError("Choose the city", "en");
-                result = false;
-            }
-
-            if (string.IsNullOrEmpty(request.Address))
-            {
-                if (lang == "fa")
-                    AddError("آدرس باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Address can not be null", "en");
                 result = false;
             }
 
