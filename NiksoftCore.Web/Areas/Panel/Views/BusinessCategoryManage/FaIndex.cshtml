@@ -31,7 +31,12 @@
             <tr>
                 <td>@(pager.StartIndex + pageNumber)</td>
                 <td>@item.Title</td>
-                <td>@item.Parent.Title</td>
+                <td>
+                    @if (item.Parent != null)
+                    {
+                        @item.Parent.Title
+                    }
+                </td>
                 <td>
                     <img src="@item.Image" style="max-height: 80px;" />
                 </td>

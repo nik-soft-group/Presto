@@ -20,4 +20,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
+using NiksoftCore.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +22,14 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
     {
         private readonly UserManager<DataModel.User> userManager;
         public IITCFService iITCFServ { get; set; }
+        private readonly IWebHostEnvironment hosting;
 
-        public BusinessCategoryManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
+        public BusinessCategoryManage(IConfiguration Configuration, IWebHostEnvironment hostingEnvironment,
+            UserManager<DataModel.User> userManager) : base(Configuration)
         {
             this.userManager = userManager;
             iITCFServ = new ITCFService(Configuration);
+            hosting = hostingEnvironment;
         }
 
         public IActionResult Index([FromQuery] string lang, int part)
@@ -63,13 +68,13 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             else
                 ViewBag.PageTitle = "Create Business Category";
 
-            var request = new BusinessCategory();
+            var request = new BusinessCategoryRequest();
             DropDownBinder(request);
             return View(GetViewName(lang, "Create"), request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, BusinessCategory request)
+        public async Task<IActionResult> Create([FromQuery] string lang,[FromForm] BusinessCategoryRequest request)
         {
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -83,7 +88,35 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 return View(GetViewName(lang, "Create"), request);
             }
 
-            iITCFServ.IBusinessCategoryServ.Add(request);
+            var Image = await NikTools.SaveFileAsync(new SaveFileRequest
+            {
+                File = request.ImageFile,
+                RootPath = hosting.ContentRootPath + "/" + Config.GetSection("FileRoot:BusinessFile").Value
+            });
+
+            if (!Image.Success)
+            {
+                DropDownBinder(request);
+                Messages.Add(new NikMessage
+                {
+                    Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                    Type = MessageType.Error,
+                    Language = "Fa"
+                });
+                ViewBag.Messages = Messages;
+                return View(GetViewName(lang, "Create"), request);
+            }
+
+            var newCat = new BusinessCategory
+            {
+                Title = request.Title,
+                Description = request.Description,
+                Icone = request.Icone,
+                Image = Image.Path,
+                ParentId = request.ParentId == 0 ? null : request.ParentId
+            };
+
+            iITCFServ.IBusinessCategoryServ.Add(newCat);
             await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
             return Redirect("/Panel/BusinessCategoryManage");
 
@@ -102,13 +135,21 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             else
                 ViewBag.PageTitle = "Update Business Category";
 
-            var request = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
+            var catItem = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
+            var request = new BusinessCategoryRequest
+            {
+                Title = catItem.Title,
+                Description = catItem.Description,
+                Icone = catItem.Icone,
+                Image = catItem.Image,
+                ParentId = catItem.ParentId
+            };
             DropDownBinder(request);
             return View(GetViewName(lang, "Edit"), request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery] string lang, BusinessCategory request)
+        public async Task<IActionResult> Edit([FromQuery] string lang, [FromForm] BusinessCategoryRequest request)
         {
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -130,11 +171,39 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 return View(GetViewName(lang, "Create"), request);
             }
 
+            string imageEdit = string.Empty;
+            if (request.ImageFile != null && request.ImageFile.Length > 0)
+            {
+                var Image = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.ImageFile,
+                    RootPath = hosting.ContentRootPath + Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!Image.Success)
+                {
+                    DropDownBinder(request);
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "Create"), request);
+                }
+
+                imageEdit = Image.Path;
+            }
+
+            
+
             var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == request.Id);
             theContent.Title = request.Title;
             theContent.Description = request.Description;
             theContent.Icone = request.Icone;
-            theContent.Image = request.Image;
+            if (!string.IsNullOrEmpty(imageEdit))
+                theContent.Image = imageEdit;
             theContent.ParentId = request.ParentId;
             await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
 
@@ -158,7 +227,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             return Redirect("/Panel/IndParkManage");
         }
 
-        private void DropDownBinder(BusinessCategory request)
+        private void DropDownBinder(BusinessCategoryRequest request)
         {
             var categories = iITCFServ.IBusinessCategoryServ.GetPart(x => true, 0, 200);
             ViewBag.Country = new SelectList(categories, "Id", "Title", request?.ParentId);
@@ -170,7 +239,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             //ViewBag.Province = new SelectList(provinces, "Id", "Title", request?.CountryId);
         }
 
-        private bool FormVlide(string lang, BusinessCategory request)
+        private bool FormVlide(string lang, BusinessCategoryRequest request)
         {
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))

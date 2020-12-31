@@ -1,5 +1,5 @@
 ﻿
-@model NiksoftCore.ITCF.Service.BusinessCategory
+@model NiksoftCore.ViewModel.BusinessCategoryRequest
 @{
     ViewData["Title"] = "ایجاد دسته بندی";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
@@ -14,7 +14,7 @@
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/BusinessCategoryManage/Create" method="post">
+<form action="/Panel/BusinessCategoryManage/Create" method="post" enctype="multipart/form-data">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -30,9 +30,10 @@
                     <span asp-validation-for="ParentId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <div class="fallback">
-                        <input id="image" name="file" type="file" multiple="multiple">
-                    </div>
+                    <label for="ImageFile" class="btn btn-warning">
+                        انتخاب فایل
+                        <input asp-for="ImageFile" type="file" class="d-none" />
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="txtDesc" class="control-label">توضیحات</label>

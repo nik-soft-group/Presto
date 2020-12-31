@@ -82,12 +82,11 @@ namespace NiksoftCore.SystemBase.Controllers.General.FileManager
             }
 
             List<string> uploads = new List<string>();
-            string path = "wwwroot/" + fileRoot;
 
             if (request.File.Length > 0)
             {
                 var fileName = Path.GetFileName(request.File.FileName);
-                var folderPath = Path.Combine(hosting.ContentRootPath, path, fileName);
+                var folderPath = Path.Combine(hosting.ContentRootPath, fileRoot, fileName);
 
                 using (var stream = System.IO.File.Create(folderPath))
                 {
