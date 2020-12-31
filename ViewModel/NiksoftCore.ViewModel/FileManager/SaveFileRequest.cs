@@ -6,5 +6,6 @@ namespace NiksoftCore.ViewModel
     {
         public IFormFile File { get; set; }
         public string RootPath { get; set; }
+        public string UnitPath { get; set; }
     }
 }

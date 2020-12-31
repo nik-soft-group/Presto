@@ -1,20 +1,20 @@
 ﻿
-@model NiksoftCore.ITCF.Service.IndustrialPark
+@model NiksoftCore.ViewModel.BusinessCategoryRequest
 @{
-    ViewData["Title"] = "ایجاد شهرک صنعتی";
+    ViewData["Title"] = "ایجاد دسته بندی";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/IndParkManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/BusinessCategoryManage" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/IndParkManage/Edit" method="post">
+<form action="/Panel/BusinessCategoryManage/Edit" method="post" enctype="multipart/form-data">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -23,33 +23,27 @@
                     @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
                 </div>
                 <div class="form-group">
-                    <label for="CountryId" class="control-label">کشور</label>
-                    <select class="form-control m-b" asp-for="CountryId" asp-items="ViewBag.Country">
+                    <label for="ParentId" class="control-label">دسته بالاتر</label>
+                    <select class="form-control m-b" asp-for="ParentId" asp-items="ViewBag.Parents">
                         <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
-                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="ddlProvince" class="control-label">استان</label>
-                    <select class="form-control m-b" id="ddlProvince" name="ProvinceId">
-                        <option selected="selected" value="0">انتخاب کنید</option>
-                    </select>
+                    <label for="txtIcon" class="control-label">آیکن</label>
+                    @Html.TextBoxFor(m => m.Icone, new { placeholder = "آیکن", @class = "form-control", @id = "txtIcon" })
                 </div>
                 <div class="form-group">
-                    <label for="ddlCity" class="control-label">شهر</label>
-                    <select class="form-control m-b" id="ddlCity" name="CityId">
-                        <option selected="selected" value="0">انتخاب کنید</option>
-                    </select>
+                    <label for="ImageFile" class="btn btn-warning">
+                        انتخاب فایل
+                        <input asp-for="ImageFile" type="file" class="d-none" />
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label for="txtAddress" class="control-label">آدرس</label>
-                    @Html.TextAreaFor(m => m.Address, new { placeholder = "آدرس", @class = "form-control", @id = "txtAddress", rows = "3" })
+                    <label for="txtDesc" class="control-label">توضیحات</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات", @class = "form-control", @id = "txtDesc", rows = "3" })
                 </div>
-                <div class="form-group">
-                    <label for="txtLocation" class="control-label">نقشه گوگل</label>
-                    @Html.TextAreaFor(m => m.Location, new { placeholder = "نقشه", @class = "form-control", @id = "txtLocation", rows = "3" })
-                </div>
-                @Html.HiddenFor(m => m.Id, new { @value = Model.Id })
+                @Html.HiddenFor(m => m.Id);
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>
@@ -60,32 +54,8 @@
 
 
 <script>
-    var ddls = {
-        country: 0,
-        province: 0,
-        city: 0
-    }
 
     $(document).ready(function () {
-        $('#CountryId').change(function () {
-            getProvince(this.value);
-        });
-
-        $('#ddlProvince').change(function () {
-            getCity(this.value);
-        });
-
-        ddls.country = $('#CountryId').val();
-        ddls.province = @Model.ProvinceId ;
-        ddls.city = @Model.CityId ;
-
-        if (ddls.country > 0) {
-            getProvince(ddls.country);
-        }
-
-        if (ddls.province > 0) {
-            getCity(ddls.province);
-        }
 
         @if (Messages != null)
         {
@@ -114,48 +84,4 @@
 
 
     });
-
-    function getProvince(cId) {
-        callApi({
-            url: '/api/base/AddressApi/GetProvince',
-            data: { countryId: cId },
-            success: function (response) {
-                if (response.status == 200) {
-                    dropdownBinder({
-                        ddl: '#ddlProvince',
-                        data: response.data
-                    });
-
-                    if (ddls.province > 0) {
-                        setItemDropdown({
-                            ddl: '#ddlProvince',
-                            value: ddls.province
-                        });
-                    }
-                }
-            }
-        });
-    }
-
-    function getCity(pId) {
-        callApi({
-            url: '/api/base/AddressApi/GetCity',
-            data: { countryId: 0, provinceId: pId },
-            success: function (response) {
-                if (response.status == 200) {
-                    dropdownBinder({
-                        ddl: '#ddlCity',
-                        data: response.data
-                    });
-
-                    if (ddls.city > 0) {
-                        setItemDropdown({
-                            ddl: '#ddlCity',
-                            value: ddls.city
-                        });
-                    }
-                }
-            }
-        });
-    }
 </script>

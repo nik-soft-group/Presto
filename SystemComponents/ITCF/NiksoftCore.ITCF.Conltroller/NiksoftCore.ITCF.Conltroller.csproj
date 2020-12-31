@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="General\" />
-    <Folder Include="Panel\Business\" />
   </ItemGroup>
 
   <ItemGroup>

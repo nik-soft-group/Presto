@@ -26,12 +26,13 @@ namespace NiksoftCore.Utilities
             if (request.File.Length > 0)
             {
                 var fileName = Path.GetFileName(request.File.FileName);
-                var folderPath = request.RootPath + "/" + fileName;
+                var folderPath = request.RootPath + "/wwwroot/" + request.UnitPath + "/" + fileName;
 
                 using (var stream = System.IO.File.Create(folderPath))
                 {
                     await request.File.CopyToAsync(stream);
-                    result.Path = folderPath;
+                    result.FilePath = request.UnitPath + "/" + fileName;
+                    result.FullPath = folderPath;
                 }
             }
 
@@ -39,6 +40,11 @@ namespace NiksoftCore.Utilities
             result.Message = "Save Successed";
 
             return result;
+        }
+
+        public static void RemoveFile(RemoveFileRequest request)
+        {
+            File.Delete(request.RootPath + "/wwwroot/" + request.FilePath);
         }
     }
 }

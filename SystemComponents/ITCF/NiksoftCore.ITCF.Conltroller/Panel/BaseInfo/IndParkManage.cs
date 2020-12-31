@@ -6,8 +6,6 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
-using NiksoftCore.ViewModel;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -161,14 +159,8 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
 
         private void DropDownBinder(IndustrialPark request)
         {
-            var countries = iITCFServ.iCountryServ.GetPart(x => true, 0, 200);
+            var countries = iITCFServ.iCountryServ.GetAll(x => true);
             ViewBag.Country = new SelectList(countries, "Id", "Title", request?.CountryId);
-
-            //var provinces = iITCFServ.iProvinceServ.GetPart(x => true, 0, 40);
-            //ViewBag.Province = new SelectList(provinces, "Id", "Title", request?.CountryId);
-
-            //var cities = iITCFServ.iProvinceServ.GetPart(x => true, 0, 40);
-            //ViewBag.Province = new SelectList(provinces, "Id", "Title", request?.CountryId);
         }
 
         private bool FormVlide(string lang, IndustrialPark request)

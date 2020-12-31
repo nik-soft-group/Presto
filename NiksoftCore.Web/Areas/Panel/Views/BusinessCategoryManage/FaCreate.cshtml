@@ -30,6 +30,10 @@
                     <span asp-validation-for="ParentId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label for="txtIcon" class="control-label">آیکن</label>
+                    @Html.TextBoxFor(m => m.Icone, new { placeholder = "آیکن", @class = "form-control", @id = "txtIcon" })
+                </div>
+                <div class="form-group">
                     <label for="ImageFile" class="btn btn-warning">
                         انتخاب فایل
                         <input asp-for="ImageFile" type="file" class="d-none" />

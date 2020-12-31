@@ -8,10 +8,7 @@ using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
@@ -88,23 +85,30 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 return View(GetViewName(lang, "Create"), request);
             }
 
-            var Image = await NikTools.SaveFileAsync(new SaveFileRequest
+            string Image = string.Empty;
+            if (request.ImageFile != null && request.ImageFile.Length > 0)
             {
-                File = request.ImageFile,
-                RootPath = hosting.ContentRootPath + "/" + Config.GetSection("FileRoot:BusinessFile").Value
-            });
-
-            if (!Image.Success)
-            {
-                DropDownBinder(request);
-                Messages.Add(new NikMessage
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
                 {
-                    Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
-                    Type = MessageType.Error,
-                    Language = "Fa"
+                    File = request.ImageFile,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
                 });
-                ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+
+                if (!SaveImage.Success)
+                {
+                    DropDownBinder(request);
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "Create"), request);
+                }
+
+                Image = SaveImage.FilePath;
             }
 
             var newCat = new BusinessCategory
@@ -112,7 +116,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 Title = request.Title,
                 Description = request.Description,
                 Icone = request.Icone,
-                Image = Image.Path,
+                Image = Image,
                 ParentId = request.ParentId == 0 ? null : request.ParentId
             };
 
@@ -138,6 +142,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             var catItem = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
             var request = new BusinessCategoryRequest
             {
+                Id = catItem.Id,
                 Title = catItem.Title,
                 Description = catItem.Description,
                 Icone = catItem.Icone,
@@ -177,7 +182,8 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                 var Image = await NikTools.SaveFileAsync(new SaveFileRequest
                 {
                     File = request.ImageFile,
-                    RootPath = hosting.ContentRootPath + Config.GetSection("FileRoot:BusinessFile").Value
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
                 });
 
                 if (!Image.Success)
@@ -193,7 +199,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
                     return View(GetViewName(lang, "Create"), request);
                 }
 
-                imageEdit = Image.Path;
+                imageEdit = Image.FilePath;
             }
 
             
@@ -204,7 +210,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             theContent.Icone = request.Icone;
             if (!string.IsNullOrEmpty(imageEdit))
                 theContent.Image = imageEdit;
-            theContent.ParentId = request.ParentId;
+            theContent.ParentId = request.ParentId == 0 ? null : request.ParentId;
             await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
 
             return Redirect("/Panel/BusinessCategoryManage");
@@ -214,6 +220,15 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
         public async Task<IActionResult> Remove(int Id)
         {
             var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
+            if (!string.IsNullOrEmpty(theContent.Image))
+            {
+                NikTools.RemoveFile(new RemoveFileRequest
+                {
+                    RootPath = hosting.ContentRootPath,
+                    FilePath = theContent.Image
+                });
+            }
+            
             iITCFServ.IBusinessCategoryServ.Remove(theContent);
             await iITCFServ.IBusinessCategoryServ.SaveChangesAsync();
             return Redirect("/Panel/BusinessCategoryManage");
@@ -229,8 +244,14 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
 
         private void DropDownBinder(BusinessCategoryRequest request)
         {
-            var categories = iITCFServ.IBusinessCategoryServ.GetPart(x => true, 0, 200);
-            ViewBag.Country = new SelectList(categories, "Id", "Title", request?.ParentId);
+            var query1 = iITCFServ.IBusinessCategoryServ.ExpressionMaker();
+            query1.Add(x => true);
+            if (request.Id != 0)
+            {
+                query1.Add(x => x.Id != request.Id);
+            }
+            var categories = iITCFServ.IBusinessCategoryServ.GetAll(query1);
+            ViewBag.Parents = new SelectList(categories, "Id", "Title", request?.ParentId);
 
             //var provinces = iITCFServ.iProvinceServ.GetPart(x => true, 0, 40);
             //ViewBag.Province = new SelectList(provinces, "Id", "Title", request?.CountryId);
