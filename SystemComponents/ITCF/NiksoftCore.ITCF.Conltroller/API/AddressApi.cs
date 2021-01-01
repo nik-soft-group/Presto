@@ -95,5 +95,34 @@ namespace NiksoftCore.ITCF.Conltroller.API
         }
 
 
+        [HttpPost]
+        //[Authorize(Policy = "AccessToken")]
+        public async Task<IActionResult> GetIndustrialPark([FromForm] int cityId)
+        {
+            if (cityId == 0)
+            {
+                return Ok(new
+                {
+                    status = 500,
+                    message = "خطا در مقادیر ورودی"
+                });
+            }
+
+            var parks = iITCFServ.IIndustrialParkServ.GetAll(x => x.CityId == cityId, y => new {
+                y.Id,
+                y.Title,
+                y.CountryId
+            }).ToList();
+
+            return Ok(new
+            {
+                status = 200,
+                message = "دریافت موفق",
+                count = parks.Count,
+                data = parks
+            });
+        }
+
+
     }
 }

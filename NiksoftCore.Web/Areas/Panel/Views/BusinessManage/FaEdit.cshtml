@@ -1,33 +1,58 @@
 ﻿
-@model NiksoftCore.ITCF.Service.IndustrialPark
+@model NiksoftCore.ITCF.Service.BusinessRequest
 @{
-    ViewData["Title"] = "ویرایش شهرک صنعتی";
+    ViewData["Title"] = "ویرایش کسب و کار";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/IndParkManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/BusinessManage" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/IndParkManage/Edit" method="post">
+<form action="/Panel/BusinessManage/Edit" method="post">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtTitle" class="control-label">عنوان</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    <label for="CoName" class="control-label">نام شرکت/تولیدی</label>
+                    @Html.TextBoxFor(m => m.CoName, new { placeholder = "نام شرکت/تولیدی", @class = "form-control", @id = "CoName" })
+                </div>
+                <div class="form-group">
+                    <label for="Tel" class="control-label">تلفن</label>
+                    @Html.TextBoxFor(m => m.Tel, new { placeholder = "تلفن", @class = "form-control", @id = "Tel" })
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="control-label">ایمیل</label>
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "ایمیل", @class = "form-control", @id = "Email" })
+                </div>
+                <div class="form-group">
+                    <label for="Website" class="control-label">وب سایت</label>
+                    @Html.TextBoxFor(m => m.Website, new { placeholder = "ایمیل", @class = "form-control", @id = "Website" })
+                </div>
+                <div class="form-group">
+                    <label for="CatgoryId" class="control-label">دسته بندی</label>
+                    <select class="form-control m-b" asp-for="CatgoryId" asp-items="ViewBag.Categories">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BusinessType" class="control-label">نوع کسب و کار</label>
+                    <select class="form-control m-b" asp-for="BusinessType">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                        <option selected="selected" value="1">تولیدی / کارخانه</option>
+                        <option selected="selected" value="2">خدماتی / واسطه‌ای</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="CountryId" class="control-label">کشور</label>
                     <select class="form-control m-b" asp-for="CountryId" asp-items="ViewBag.Country">
                         <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
-                    <span asp-validation-for="CountryId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="ddlProvince" class="control-label">استان</label>
@@ -42,6 +67,12 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="IndustrialParkId" class="control-label">منطقه صنعتی</label>
+                    <select class="form-control m-b" asp-for="IndustrialParkId" asp-items="ViewBag.Parks">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="txtAddress" class="control-label">آدرس</label>
                     @Html.TextAreaFor(m => m.Address, new { placeholder = "آدرس", @class = "form-control", @id = "txtAddress", rows = "3" })
                 </div>
@@ -49,7 +80,7 @@
                     <label for="txtLocation" class="control-label">نقشه گوگل</label>
                     @Html.TextAreaFor(m => m.Location, new { placeholder = "نقشه", @class = "form-control", @id = "txtLocation", rows = "3" })
                 </div>
-                @Html.HiddenFor(m => m.Id, new { @value = Model.Id })
+                @Html.HiddenFor(m => m.Id)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>
@@ -63,7 +94,8 @@
     var ddls = {
         country: 0,
         province: 0,
-        city: 0
+        city: 0,
+        park: 0
     }
 
     $(document).ready(function () {
@@ -75,9 +107,14 @@
             getCity(this.value);
         });
 
+        $('#ddlCity').change(function () {
+            getPark(this.value);
+        });
+
         ddls.country = $('#CountryId').val();
         ddls.province = @Model.ProvinceId ;
         ddls.city = @Model.CityId ;
+        ddls.park = @Model.IndustrialParkId ;
 
         if (ddls.country > 0) {
             getProvince(ddls.country);
@@ -85,6 +122,10 @@
 
         if (ddls.province > 0) {
             getCity(ddls.province);
+        }
+
+        if (ddls.city > 0) {
+            getPark(ddls.park);
         }
 
         @if (Messages != null)
@@ -152,6 +193,28 @@
                         setItemDropdown({
                             ddl: '#ddlCity',
                             value: ddls.city
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function getPark(cId) {
+        callApi({
+            url: '/api/base/AddressApi/GetIndustrialPark',
+            data: { cityId: cId },
+            success: function (response) {
+                if (response.status == 200) {
+                    dropdownBinder({
+                        ddl: '#IndustrialParkId',
+                        data: response.data
+                    });
+
+                    if (ddls.park > 0) {
+                        setItemDropdown({
+                            ddl: '#IndustrialParkId',
+                            value: ddls.park
                         });
                     }
                 }

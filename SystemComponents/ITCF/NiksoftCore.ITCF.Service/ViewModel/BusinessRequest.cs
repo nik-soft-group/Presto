@@ -16,5 +16,6 @@
         public int? IndustrialParkId { get; set; }
         public int CatgoryId { get; set; }
         public int CreatorId { get; set; }
+        public BusinessStatus Status { get; set; }
     }
 }

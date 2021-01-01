@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "ثبت نام";
     Layout = "~/Areas/Auth/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="page-title">
-    <h1 class="text-center">ورود به سامانه</h1>
+    <h1 class="text-center">ثبت نام در سامانه</h1>
 </div>
-@Html.ValidationSummary()
 <form action="/Auth/Account/Register" method="post">
     <div class="registerdiv">
         <div class="row">
@@ -39,8 +39,38 @@
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-dark btn-full btn-br-0">ثبت نام</button>
                 </div>
+                <br />
+                <a href="/Auth/Account/Login">اگر داری کاربری هستید اینجا وارد شوید.</a>
             </div>
         </div>
     </div>
 </form>
 
+<script>
+    $(document).ready(function () {
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>

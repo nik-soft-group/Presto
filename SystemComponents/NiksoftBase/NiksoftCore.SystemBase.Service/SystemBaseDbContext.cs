@@ -23,6 +23,9 @@ namespace NiksoftCore.SystemBase.Service
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<SystemFile> SystemFiles { get; set; }
+        public DbSet<ContentCategory> ContentCategories { get; set; }
+        public DbSet<GeneralContent> GeneralContents { get; set; }
+        public DbSet<ContentFile> ContentFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +37,9 @@ namespace NiksoftCore.SystemBase.Service
             builder.ApplyConfiguration(new ProvinceMap());
             builder.ApplyConfiguration(new CityMap());
             builder.ApplyConfiguration(new SystemFileMap());
+            builder.ApplyConfiguration(new ContentCategoryMap());
+            builder.ApplyConfiguration(new GeneralContentMap());
+            builder.ApplyConfiguration(new ContentFileMap());
         }
     }
 }

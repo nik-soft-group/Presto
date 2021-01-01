@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,8 @@ using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 {
+    [Area("Panel")]
+    [Authorize]
     public class BusinessManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
@@ -64,6 +67,10 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 ViewBag.PageTitle = "Create Business Category";
 
             var request = new BusinessRequest();
+            request.ProvinceId = 0;
+            request.IndustrialParkId = 0;
+            request.CatgoryId = 0;
+            request.CountryId = 1;
             DropDownBinder(request);
             return View(GetViewName(lang, "Create"), request);
         }
@@ -98,7 +105,8 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 Location = request.Location,
                 IndustrialParkId = request.IndustrialParkId,
                 CatgoryId = request.CatgoryId,
-                CreatorId = theUser.Id
+                CreatorId = theUser.Id,
+                Status = BusinessStatus.RegisterRequest
             };
 
             iITCFServ.IBusinessServ.Add(newCat);
@@ -209,7 +217,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             ViewBag.Parks = new SelectList(IndustrialParks, "Id", "Title", request?.IndustrialParkId);
 
             var categories = iITCFServ.IBusinessCategoryServ.GetAll(x => true);
-            ViewBag.categories = new SelectList(IndustrialParks, "Id", "Title", request?.CatgoryId);
+            ViewBag.Categories = new SelectList(categories, "Id", "Title", request?.CatgoryId);
         }
 
         private bool FormVlide(string lang, BusinessRequest request)
@@ -221,6 +229,60 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                     AddError("نام شرکت/تولیدی باید مقدار داشته باشد", "fa");
                 else
                     AddError("Company name can not be null", "en");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.Tel))
+            {
+                if (lang == "fa")
+                    AddError("شماره تماس باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Company Tel can not be null", "en");
+                result = false;
+            }
+
+            if (request.CountryId == 0)
+            {
+                if (lang == "fa")
+                    AddError("کشور باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Country can not be null", "en");
+                result = false;
+            }
+
+            if (request.CountryId == 1 && (request.ProvinceId == null || request.ProvinceId == 0))
+            {
+                if (lang == "fa")
+                    AddError("استان باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Province can not be null", "en");
+                result = false;
+            }
+
+            if (request.CityId == 0)
+            {
+                if (lang == "fa")
+                    AddError("شهر باید مقدار داشته باشد", "fa");
+                else
+                    AddError("City can not be null", "en");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.Address))
+            {
+                if (lang == "fa")
+                    AddError("آدرس باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Address can not be null", "en");
+                result = false;
+            }
+
+            if (request.CatgoryId == 0)
+            {
+                if (lang == "fa")
+                    AddError("دسته بندی باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Category can not be null", "en");
                 result = false;
             }
 

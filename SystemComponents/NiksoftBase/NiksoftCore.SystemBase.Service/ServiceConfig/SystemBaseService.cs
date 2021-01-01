@@ -10,6 +10,9 @@
         IProvinceService iProvinceServ { get; set; }
         ICityService iCityServ { get; set; }
         ISystemFileService iSystemFileServ { get; set; }
+        IContentCategoryService iContentCategoryServ { get; set; }
+        IGeneralContentService iGeneralContentServ { get; set; }
+        IContentFileService iContentFileServ { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
@@ -22,6 +25,9 @@
         public IProvinceService iProvinceServ { get; set; }
         public ICityService iCityServ { get; set; }
         public ISystemFileService iSystemFileServ { get; set; }
+        public IContentCategoryService iContentCategoryServ { get; set; }
+        public IGeneralContentService iGeneralContentServ { get; set; }
+        public IContentFileService iContentFileServ { get; set; }
 
         public SystemBaseService(string connection)
         {
@@ -34,6 +40,9 @@
             iProvinceServ = new ProvinceService(uow);
             iCityServ = new CityService(uow);
             iSystemFileServ = new SystemFileService(uow);
+            iContentCategoryServ = new ContentCategoryService(uow);
+            iGeneralContentServ = new GeneralContentService(uow);
+            iContentFileServ = new ContentFileService(uow);
         }
 
 
