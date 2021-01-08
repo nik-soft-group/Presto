@@ -11,6 +11,8 @@ namespace NiksoftCore.ITCF.Service
         ICountryService iCountryServ { get; set; }
         IProvinceService iProvinceServ { get; set; }
         ICityService iCityServ { get; set; }
+        IIntroductionGroupService iIntroductionGroupServ { get; set; }
+        IIntroductionService iIntroductionServ { get; set; }
     }
 
     public class ITCFService : IITCFService
@@ -22,6 +24,9 @@ namespace NiksoftCore.ITCF.Service
         public ICountryService iCountryServ { get; set; }
         public IProvinceService iProvinceServ { get; set; }
         public ICityService iCityServ { get; set; }
+        public IIntroductionGroupService iIntroductionGroupServ { get; set; }
+        public IIntroductionService iIntroductionServ { get; set; }
+        
 
         public ITCFService(IConfiguration Configuration)
         {
@@ -33,6 +38,8 @@ namespace NiksoftCore.ITCF.Service
             iCountryServ = new CountryService(uow);
             iProvinceServ = new ProvinceService(uow);
             iCityServ = new CityService(uow);
+            iIntroductionGroupServ = new IntroductionGroupService(uow);
+            iIntroductionServ = new IntroductionService(uow);
         }
 
 

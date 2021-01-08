@@ -22,6 +22,9 @@ namespace NiksoftCore.ITCF.Service
         public DbSet<Country> Countries { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<IntroductionGroup> introductionGroups { get; set; }
+        public DbSet<Introduction> Introductions { get; set; }
+        
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -33,6 +36,8 @@ namespace NiksoftCore.ITCF.Service
             builder.ApplyConfiguration(new CountryMap());
             builder.ApplyConfiguration(new ProvinceMap());
             builder.ApplyConfiguration(new CityMap());
+            builder.ApplyConfiguration(new IntroductionGroupMap());
+            builder.ApplyConfiguration(new IntroductionMap());
 
         }
     }

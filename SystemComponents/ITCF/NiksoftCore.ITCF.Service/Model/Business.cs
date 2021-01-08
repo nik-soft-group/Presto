@@ -1,4 +1,6 @@
-﻿namespace NiksoftCore.ITCF.Service
+﻿using System.Collections.Generic;
+
+namespace NiksoftCore.ITCF.Service
 {
     public class Business
     {
@@ -23,5 +25,7 @@
         public virtual City City { get; set; }
         public virtual BusinessCategory Category { get; set; }
         public virtual IndustrialPark IndustrialPark { get; set; }
+
+        public virtual ICollection<Introduction> Introductions { get; set; }
     }
 }
