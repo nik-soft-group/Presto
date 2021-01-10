@@ -3,16 +3,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace NiksoftCore.ITCF.Service
 {
-    public class IntroductionMap : IEntityTypeConfiguration<Introduction>
+    public class ProductGroupMap : IEntityTypeConfiguration<ProductGroup>
     {
-        public void Configure(EntityTypeBuilder<Introduction> builder)
+        public void Configure(EntityTypeBuilder<ProductGroup> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.ToTable("ITCF_Introductions");
+            builder.ToTable("ITCF_ProductGroups");
 
             builder.HasOne(x => x.Business)
-                .WithMany(x => x.Introductions)
+                .WithMany(x => x.ProductGroups)
                 .HasForeignKey(x => x.BusinessId).IsRequired(false);
+
         }
     }
 }

@@ -53,12 +53,12 @@ namespace NiksoftCore.DataAccess
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)
         {
-            return await TEntity.Where(predicate).FirstOrDefaultAsync();
+            return await TEntity.Where(predicate).Skip(0).Take(1).FirstOrDefaultAsync();
         }
 
         public T Find(Expression<Func<T, bool>> predicate)
         {
-            return TEntity.Where(predicate).FirstOrDefault();
+            return TEntity.Where(predicate).Skip(0).Take(1).FirstOrDefault();
         }
 
         public virtual IList<T> GetPartOptional(List<Expression<Func<T, bool>>> predicate, int startIndex, int size)

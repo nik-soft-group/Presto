@@ -60,5 +60,43 @@ namespace NiksoftCore.ITCF.Service
                     }
             }
         }
+
+        public static string GetUnitKey(int unit)
+        {
+            switch (unit)
+            {
+                case 1:
+                    return "unit1";
+                case 2:
+                    return "unit2";
+                case 3:
+                    return "unit3";
+                case 4:
+                    return "unit4";
+                case 5:
+                    return "unit5";
+                default:
+                    return "";
+            }
+        }
+
+        public static string GetUnitTitle(int unit)
+        {
+            switch (unit)
+            {
+                case 1:
+                    return "تصویر و متن جایگاه اول";
+                case 2:
+                    return "تصاویر و متن های جایگاه دوم";
+                case 3:
+                    return "محتوای جایگاه سوم";
+                case 4:
+                    return "unit4";
+                case 5:
+                    return "unit5";
+                default:
+                    return "";
+            }
+        }
     }
 }

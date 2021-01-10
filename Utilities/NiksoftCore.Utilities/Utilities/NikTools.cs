@@ -1,12 +1,22 @@
 ﻿using NiksoftCore.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.Utilities
 {
     public static class NikTools
     {
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         public static async Task<SaveFileResponse> SaveFileAsync(SaveFileRequest request)
         {
             var result = new SaveFileResponse();
@@ -27,12 +37,13 @@ namespace NiksoftCore.Utilities
             if (request.File.Length > 0)
             {
                 var fileName = Path.GetFileName(request.File.FileName);
-                var folderPath = request.RootPath + "/wwwroot/" + request.UnitPath + "/" + fileName;
+                var newName = RandomString(6) + "_" + fileName.Replace(" ", "");
+                var folderPath = request.RootPath + "/wwwroot/" + request.UnitPath + "/" + newName;
 
                 using (var stream = System.IO.File.Create(folderPath))
                 {
                     await request.File.CopyToAsync(stream);
-                    result.FilePath = request.UnitPath + "/" + fileName;
+                    result.FilePath = request.UnitPath + "/" + newName;
                     result.FullPath = folderPath;
                 }
             }
@@ -73,6 +84,14 @@ namespace NiksoftCore.Utilities
             return persianStr;
         }
 
-
+        public static string GetExtention(this string fileName)
+        {
+            var arrList = fileName.Split('.');
+            if (arrList.Length < 2)
+            {
+                return "";
+            }
+            return arrList[arrList.Length - 1];
+        }
     }
 }
