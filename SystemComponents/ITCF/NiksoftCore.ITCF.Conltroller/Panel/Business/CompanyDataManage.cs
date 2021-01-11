@@ -131,6 +131,18 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             else
                 lang = defaultLang.ShortName.ToLower();
 
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
             var request = new IntroductionRequest();
             request.BusinessId = theBusiness.Id;
 
@@ -149,6 +161,16 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             }
 
             ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
 
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -220,6 +242,16 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             else
                 lang = defaultLang.ShortName.ToLower();
 
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(2);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
             var request = new IntroductionRequest();
             request.BusinessId = theBusiness.Id;
 
@@ -238,6 +270,16 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             }
 
             ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(2);
+            else
+                ViewBag.PageTitle = "Company Content Management";
 
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -309,6 +351,16 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             else
                 lang = defaultLang.ShortName.ToLower();
 
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(3);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
             var request = new IntroductionRequest();
             request.BusinessId = theBusiness.Id;
 
@@ -327,6 +379,16 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             }
 
             ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(3);
+            else
+                ViewBag.PageTitle = "Company Content Management";
 
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
@@ -381,6 +443,166 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditPart([FromQuery] string lang, int Id)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var item = iITCFServ.iIntroductionServ.Find(x => x.Id == Id);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == item.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            var request = new IntroductionRequest
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Description = item.Description,
+                ImageFile = item.ImageFile,
+                VideoFile = item.VideoFile,
+                SoundFile = item.SoundFile,
+                KeyValue = item.KeyValue,
+                BusinessId = item.BusinessId,
+                UserId = item.UserId,
+                CreateDate = item.CreateDate
+            };
+
+            return View(GetViewName(lang, "EditPart"), request);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPart([FromQuery] string lang, [FromForm] IntroductionRequest request)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var item = iITCFServ.iIntroductionServ.Find(x => x.Id == request.Id);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == request.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+            if (item.KeyValue == "unit1" || item.KeyValue == "unit2")
+            {
+                if (!FormVlideUnit1(lang, request))
+                {
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "EditPart"), request);
+                }
+
+                string Image = string.Empty;
+                if (request.Image != null && request.Image.Length > 0)
+                {
+                    var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                    {
+                        File = request.Image,
+                        RootPath = hosting.ContentRootPath,
+                        UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                    });
+
+                    if (!SaveImage.Success)
+                    {
+                        Messages.Add(new NikMessage
+                        {
+                            Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                            Type = MessageType.Error,
+                            Language = "Fa"
+                        });
+                        ViewBag.Messages = Messages;
+                        return View(GetViewName(lang, "EditPart"), request);
+                    }
+
+                    Image = SaveImage.FilePath;
+                }
+
+                if (!string.IsNullOrEmpty(Image))
+                    item.ImageFile = Image;
+
+            }
+            else
+            {
+                if (!FormVlideUnit3(lang, request))
+                {
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "EditPart"), request);
+                }
+
+                string video = string.Empty;
+                if (request.Video != null && request.Video.Length > 0)
+                {
+                    var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                    {
+                        File = request.Video,
+                        RootPath = hosting.ContentRootPath,
+                        UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                    });
+
+                    if (!SaveImage.Success)
+                    {
+                        Messages.Add(new NikMessage
+                        {
+                            Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                            Type = MessageType.Error,
+                            Language = "Fa"
+                        });
+                        ViewBag.Messages = Messages;
+                        return View(GetViewName(lang, "EditPart"), request);
+                    }
+
+                    video = SaveImage.FilePath;
+                }
+
+                if (!string.IsNullOrEmpty(video))
+                    item.VideoFile = video;
+            }
+
+
+            
+
+            item.Title = request.Title;
+            item.Description = request.Description;
+            
+            await iITCFServ.iIntroductionServ.SaveChangesAsync();
+            return Redirect("/Panel/CompanyDataManage/IntroList/?bid=" + request.BusinessId + "&unit=" + Tools.GetUnitNum(item.KeyValue));
+
+        }
+
         public async Task<IActionResult> Remove(int Id, int bid, int unit)
         {
             var theContent = iITCFServ.iIntroductionServ.Find(x => x.Id == Id);
@@ -428,7 +650,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 result = false;
             }
 
-            if (string.IsNullOrEmpty(request.Title))
+            if (string.IsNullOrEmpty(request.Description))
             {
                 if (lang == "fa")
                     AddError("توضیحات باید مقدار داشته باشد", "fa");
@@ -437,15 +659,15 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 result = false;
             }
 
-            if (request.Image == null)
+            if (request.Id == 0 && request.Image == null)
             {
                 if (lang == "fa")
                     AddError("تصویر باید مقدار داشته باشد", "fa");
                 else
                     AddError("Title can not be null", "en");
                 result = false;
-            } 
-            else if (request.Image.Length > 512000)
+            }
+            else if (request.Id == 0 && request.Image.Length > 512000)
             {
                 if (lang == "fa")
                     AddError("حجم تصویر نباید بیشتر از 500 KB باشد", "fa");
@@ -460,7 +682,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
         private bool FormVlideUnit3(string lang, IntroductionRequest request)
         {
             bool result = true;
-            if (request.Video == null)
+            if (request.Video == null && request.Id == 0)
             {
                 if (lang == "fa")
                     AddError("ویدیو باید مقدار داشته باشد", "fa");
@@ -468,7 +690,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                     AddError("Title can not be null", "en");
                 result = false;
             }
-            else if (request.Video.FileName.GetExtention() != "mp4")
+            else if (request.Id == 0 && request.Video.FileName.GetExtention() != "mp4")
             {
                 if (lang == "fa")
                     AddError("فرمت فایل صحیح نیست", "fa");
@@ -476,7 +698,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                     AddError("Title can not be null", "en");
                 result = false;
             }
-            else if (request.Video == null && request.Video.Length > 2242880)
+            else if (request.Id == 0 && request.Video.Length > 2242880)
             {
                 if (lang == "fa")
                     AddError("حجم ویدیو نباید بیشتر از 5 MB باشد", "fa");
@@ -489,6 +711,147 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
             return result;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductCategories([FromQuery] string lang, int part, int bid)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == bid && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            ViewBag.Company = theBusiness;
+
+            if (lang == "fa")
+                ViewBag.PageTitle = "دسته بندی محصولات";
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+            var total = iITCFServ.iProductGroupServ.Count(x => x.BusinessId == bid);
+            var pager = new Pagination(total, 20, part);
+            ViewBag.Pager = pager;
+
+            ViewBag.Contents = iITCFServ.iProductGroupServ.GetAll(x => x.BusinessId == bid).ToList();
+
+            return View(GetViewName(lang, "ProductCategories"));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateGroup([FromQuery] string lang, int bid)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == bid && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = "ایجاد دسته بندی";
+            else
+                ViewBag.PageTitle = "Create Business Category";
+
+            var request = new ProductGroupRequest();
+            request.BusinessId = bid;
+            return View(GetViewName(lang, "CreateGroup"), request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateGroup([FromQuery] string lang, ProductGroupRequest request)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == request.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (!FormGroup(lang, request))
+            {
+                ViewBag.Messages = Messages;
+                return View(GetViewName(lang, "CreateGroup"), request);
+            }
+
+            string Image = string.Empty;
+            if (request.ImageFile != null && request.ImageFile.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.ImageFile,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "CreateGroup"), request);
+                }
+
+                Image = SaveImage.FilePath;
+            }
+
+            var newItem = new ProductGroup
+            {
+                Title = request.Title,
+                Image = Image,
+                BusinessId = request.BusinessId
+            };
+
+            iITCFServ.iProductGroupServ.Add(newItem);
+            await iITCFServ.iProductGroupServ.SaveChangesAsync();
+            return Redirect("/Panel/CompanyDataManage/ProductCategories/?bid=" + request.BusinessId);
+        }
+
+        private bool FormGroup(string lang, ProductGroupRequest request)
+        {
+            bool result = true;
+            if (string.IsNullOrEmpty(request.Title))
+            {
+                if (lang == "fa")
+                    AddError("عنوان باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Title can not be null", "en");
+                result = false;
+            }
+
+            if (request.Image != null && request.Image.Length > 512000)
+            {
+                if (lang == "fa")
+                    AddError("حجم تصویر نباید بیشتر از 500 KB باشد", "fa");
+                else
+                    AddError("Title can not be null", "en");
+                result = false;
+            }
+
+            return result;
+        }
+
+
 
     }
 }

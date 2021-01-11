@@ -1,14 +1,15 @@
 ﻿@using NiksoftCore.ITCF.Service;
 @model NiksoftCore.ITCF.Service.IntroductionRequest
 @{
-    ViewData["Title"] = "ایجاد تصویر";
+    ViewData["Title"] = "محتوای بخش اول";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
     var business = (Business)ViewBag.Company;
 }
+<h4>@business.CoName</h4>
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/IntroList/?bid=@business.Id&unit=1" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/CompanyDataManage/IntroList/?bid=@business.Id&unit=1" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>

@@ -6,6 +6,8 @@
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
     var business = (Business)ViewBag.Company;
 }
+
+<h4>@business.CoName</h4>
 <div class="text-right">
     <div class="btn-group">
         <a href="/Panel/CompanyDataManage/IntroList/?bid=@business.Id&unit=2" class="btn btn-outline-info btn-sm">

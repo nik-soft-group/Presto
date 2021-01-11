@@ -64,3 +64,4 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 #Nuget packages folder
 packages/
+/NiksoftCore.Web/wwwroot/files/*
