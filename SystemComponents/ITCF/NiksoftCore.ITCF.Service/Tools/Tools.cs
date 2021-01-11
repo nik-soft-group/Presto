@@ -80,6 +80,25 @@ namespace NiksoftCore.ITCF.Service
             }
         }
 
+        public static int GetUnitNum(string key)
+        {
+            switch (key)
+            {
+                case "unit1":
+                    return 1;
+                case "unit2":
+                    return 2;
+                case "unit3":
+                    return 3;
+                case "unit4":
+                    return 4;
+                case "unit5":
+                    return 5;
+                default:
+                    return 0;
+            }
+        }
+
         public static string GetUnitTitle(int unit)
         {
             switch (unit)
