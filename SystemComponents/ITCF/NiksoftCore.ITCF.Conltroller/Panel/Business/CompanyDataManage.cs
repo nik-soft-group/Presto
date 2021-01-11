@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 {
     [Area("Panel")]
+    [Authorize(Roles = "NikAdmin,Admin,Business")]
     public class CompanyDataManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;

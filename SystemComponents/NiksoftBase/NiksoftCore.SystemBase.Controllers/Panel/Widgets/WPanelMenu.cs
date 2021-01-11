@@ -32,12 +32,46 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
             if (User.Identity.IsAuthenticated)
             {
                 var thisUser = await userManager.GetUserAsync(HttpContext.User);
+                var userRoles = await userManager.GetRolesAsync(thisUser);
 
+                var menus = ISystemBaseServ.iPanelMenuService.GetPart(x => x.Enabled && x.ParentId == null, 0, 50).ToList();
+                List<PanelMenu> permits = new List<PanelMenu>();
+                foreach (var menu in menus)
+                {
+                    if (string.IsNullOrEmpty(menu.Roles))
+                    {
+                        permits.Add(menu);
+                    }
+                    else
+                    {
+                        if (menu.Roles.Contains(","))
+                        {
+                            var readies = menu.Roles.Split(',');
+                            //bool oneAdd = false;
+                            foreach (var item in readies)
+                            {
+                                if (userRoles.Contains(item))
+                                {
+                                    permits.Add(menu);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (userRoles.Contains(menu.Roles))
+                            {
+                                permits.Add(menu);
+                            }
+                        }
 
-                ViewBag.Menus = ISystemBaseServ.iPanelMenuService.GetPart(x => x.Enabled && x.ParentId == null, 0, 50).ToList();
+                    }
+                }
+
+                ViewBag.Menus = permits;
             }
 
-            
+
             return View();
         }
 

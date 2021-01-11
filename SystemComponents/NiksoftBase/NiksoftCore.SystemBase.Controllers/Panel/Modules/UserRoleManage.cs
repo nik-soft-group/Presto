@@ -3,19 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
-using NiksoftCore.SystemBase.Service;
 using NiksoftCore.ViewModel;
 using NiksoftCore.ViewModel.User;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 {
     [Area("Panel")]
-    [Authorize]
+    [Authorize(Roles = "NikAdmin")]
     public class UserRoleManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;

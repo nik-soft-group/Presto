@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 {
     [Area("Panel")]
-    [Authorize]
+    [Authorize(Roles = "NikAdmin")]
     public class PanelMenuManage : NikController
     {
 

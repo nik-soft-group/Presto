@@ -97,9 +97,9 @@ namespace NiksoftCore.ITCF.Conltroller.API
 
         [HttpPost]
         //[Authorize(Policy = "AccessToken")]
-        public async Task<IActionResult> GetIndustrialPark([FromForm] int cityId)
+        public async Task<IActionResult> GetIndustrialPark([FromForm] int cityId, [FromForm] int provId)
         {
-            if (cityId == 0)
+            if (provId == 0 && cityId == 0)
             {
                 return Ok(new
                 {
@@ -108,7 +108,19 @@ namespace NiksoftCore.ITCF.Conltroller.API
                 });
             }
 
-            var parks = iITCFServ.IIndustrialParkServ.GetAll(x => x.CityId == cityId, y => new {
+            var query = iITCFServ.IIndustrialParkServ.ExpressionMaker();
+            query.Add(x => true);
+            if (cityId != 0)
+            {
+                query.Add(x => x.CityId == cityId);
+            }
+
+            if (provId != 0)
+            {
+                query.Add(x => x.ProvinceId == provId);
+            }
+
+            var parks = iITCFServ.IIndustrialParkServ.GetAll(query, y => new {
                 y.Id,
                 y.Title,
                 y.CountryId

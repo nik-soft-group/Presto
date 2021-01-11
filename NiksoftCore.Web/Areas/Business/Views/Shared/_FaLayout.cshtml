@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>بازرگانی مرکز تجارت بین الملل</title>
+    <meta name="description" content="مرکز تجارت بین الملل" />
+    <meta name="author" content="فکر برتر" />
+    <link rel="shortcut icon" href="img/fav.png" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/css/bootstrap-rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/rs-plugin/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/rs-plugin/css/layers.css">
+    <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/rs-plugin/css/navigation.css">
+</head>
+<body>
+    <div id="page">
+        <header>
+            <div class="top-header">
+                <div class="container">
+                    <ul class="contacts">
+                        <li><i class="fa fa-phone"></i>54982000 21 098</li>
+                        <li><a href="mailto:info@fekrebartar.ir"><i class="fa fa-envelope"></i>info@fekrebartar.ir</a></li>
+                    </ul>
+
+                    <ul class="socials">
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bottom-header">
+                <div class="container">
+                    <span class="mobile-navigation-toggle hidden-md hidden-lg">
+                        <span class="menui top-menu"></span>
+                        <span class="menui mid-menu"></span>
+                        <span class="menui bottom-menu"></span>
+                    </span>
+
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="~/templates/UiTemplate/FbBusiness/img/logo-1-1.png" />
+                        </a>
+                    </div>
+
+                    <nav class="main-nav">
+                        <ul class="menu">
+                            <li class="menu-item menu-item-has-children current-menu-parent">
+                                <a href="/Business">خانه</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">مناطق اقتصادی</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="about.html">شهرک های صنعتی</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="coming-soon.html">دسته بندی ها</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-has-children">
+                                <a href="#">محصولات</a>
+                            </li>
+                            <li class="menu-item menu-item-has-children">
+                                <a href="#">خدمات بازرگانی</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="blog.html">معرفی خدمات</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="single-gallery.html">قوانین و مقررات</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-has-children">
+                                <a href="#">ورود/ثبت نام</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="/">ورود</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="/">ثبت نام</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <ul class="actions">
+                        <li class="custom-select">
+                            <span class="default"><i class="fa fa-globe"></i><span class="content">Fa</span></span>
+                            <ul class="select-options dismiss">
+                                <li>FA</li>
+                                <li>EN</li>
+                                <li>AR</li>
+                            </ul>
+                        </li>
+                        <li class="search-trigger">
+                            <i class="icon fa fa-search dismiss"></i>
+                            <div class="search-box dismiss">
+                                <form class="search-form dismiss" action="javascript:void(0)">
+                                    <div class="input-line dismiss">
+                                        <input type="text" class="search-input dismiss" placeholder="Type and Hit Enter">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        <footer>
+            <div class="top-footer">
+                <div class="container">
+                    <div class="row isotope">
+                        <div class="col-md-3 col-sm-6 col-xs-12 isotope-item">
+                            <div class="widget widget_contact">
+                                <h4 class="widget-title">اطلاعات تماس</h4>
+                                <div class="widget-body">
+                                    <ul class="contact-info clean-list">
+                                        <li>
+                                            <span class="title">آدرس:</span>
+                                            <p>ونک، خیابان خدامی، خیابان آفتاب، نبش کوچه</p>
+                                            <p>هشتم، پلاک 34، ساختمان فکرتر</p>
+                                        </li>
+                                        <li>
+                                            <span class="title">تلفن:</span>
+                                            <p>54982000 21 098 - شرکت</p>
+                                        </li>
+                                        <li>
+                                            <span class="title">ایمیل:</span>
+                                            <p><a href="mailto:info@fekrebartar.ir">info@fekrebartar.ir</a></p>
+                                        </li>
+                                        <li>
+                                            <span class="title">ما را دنبال کنید: </span>
+                                            <ul class="socials clean-list">
+                                                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-pinterest-square"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-behance-square"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12 isotope-item">
+                            <div class="widget widget_instagram">
+                                <h4 class="widget-title">اینستاگرام</h4>
+                                <div class="widget-body">
+                                    <ul class="instagram-feed clean-list" data-instagram="6" data-instagram-username="paul_garrat"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12 isotope-item">
+                            <!--<div class="widget widget_recent_posts">
+                                <h4 class="widget-title">آخرین پست ها</h4>
+                                <div class="widget-body">
+                                </div>
+                            </div>-->
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12 isotope-item">
+                            <div class="widget widget_subscribe">
+                                <h4 class="widget-title">خبرنامه</h4>
+                                <div class="widget-body">
+                                    <p>ارسال آخرین تحولات و خدمات</p>
+                                    <form class="subscribe-form" action="javascript:void(0)">
+                                        <input class="input-line text-left" type="text" placeholder="info@email">
+                                        <input class="submit-btn" type="submit" value="ثبت ایمیل">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-footer">
+                <div class="container">
+                    <p class="alignleft align-left copyright">
+                        تمامی حقوف اثر متعلق به شرکت فکربرتر می باشد.
+                    </p>
+
+                    <p class="alignright align-right copyright">
+                        ساخته شده توسط <a href="http://nisksoftgroup.ir">www.nisksoftgroup.ir</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/jquery.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/modernizr.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/nouislider.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/isotope.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/slick.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/options.js"></script>
+</body>
+</html>

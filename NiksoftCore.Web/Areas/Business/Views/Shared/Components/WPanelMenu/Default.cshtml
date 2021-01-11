@@ -1,0 +1,39 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var menus = (List<PanelMenu>)ViewBag.Menus;
+}
+<ul>
+    @foreach (var item in menus)
+    {
+        @if (item.Childs.Count > 0)
+        {
+            <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect">
+                    @Html.Raw(item.Icon)
+                    <span> @item.Title </span>
+                    <span class="float-right">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="list-unstyled">
+                    @foreach (var subitem in item.Childs)
+                    {
+                        <li><a href="@subitem.Link">@subitem.Title</a></li>
+                    }
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@item.Link" class="waves-effect">
+                    @Html.Raw(item.Icon)
+                    <span> @item.Title</span>
+                </a>
+            </li>
+        }
+
+    }
+</ul>
+
+

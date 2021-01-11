@@ -22,7 +22,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Widgets
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
             var theRoles = await userManager.IsInRoleAsync(theUser, "User");
-            ViewBag.AllowView = true;
+            ViewBag.AllowView = false;
             ViewBag.BusinessCount = 0;
             if (theRoles)
             {

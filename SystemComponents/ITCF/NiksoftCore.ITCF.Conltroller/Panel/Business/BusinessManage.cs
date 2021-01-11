@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 {
     [Area("Panel")]
-    [Authorize]
+    [Authorize(Roles = "NikAdmin,Admin,User")]
     public class BusinessManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
@@ -79,6 +79,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
         public async Task<IActionResult> Create([FromQuery] string lang, [FromForm] BusinessRequest request)
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
@@ -103,7 +104,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 CityId = request.CityId,
                 Address = request.Address,
                 Location = request.Location,
-                IndustrialParkId = request.IndustrialParkId,
+                IndustrialParkId = request.IndustrialParkId == 0 ? null : request.IndustrialParkId,
                 CatgoryId = request.CatgoryId,
                 CreatorId = theUser.Id,
                 Status = BusinessStatus.RegisterRequest
@@ -185,7 +186,8 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             theContent.CityId = request.CityId;
             theContent.Address = request.Address;
             theContent.Location = request.Location;
-            theContent.IndustrialParkId = request.IndustrialParkId;
+            theContent.IndustrialParkId = request.IndustrialParkId == 0 ? null : request.IndustrialParkId;
+            theContent.Status = theContent.Status == BusinessStatus.EditConfirme ? BusinessStatus.RegisterConfirme : theContent.Status;
             await iITCFServ.IBusinessServ.SaveChangesAsync();
 
             return Redirect("/Panel/BusinessManage");
@@ -204,6 +206,14 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
         {
             var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == Id);
             //theContent.Enabled = !theContent.Enabled;
+            await iITCFServ.IBusinessServ.SaveChangesAsync();
+            return Redirect("/Panel/BusinessManage");
+        }
+
+        public async Task<IActionResult> EditRequest(int Id)
+        {
+            var theContent = iITCFServ.IBusinessServ.Find(x => x.Id == Id);
+            theContent.Status = BusinessStatus.EditRequest;
             await iITCFServ.IBusinessServ.SaveChangesAsync();
             return Redirect("/Panel/BusinessManage");
         }

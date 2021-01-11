@@ -10,6 +10,7 @@ namespace NiksoftCore.SystemBase.Service
         public string Link { get; set; }
         public string Icon { get; set; }
         public string Controller { get; set; }
+        public string Roles { get; set; }
         public bool Enabled { get; set; }
         public int Ordering { get; set; }
         public int? ParentId { get; set; }

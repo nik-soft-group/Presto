@@ -6,11 +6,11 @@
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
 }
-<div class="text-right">
+<!--<div class="text-right">
     <div class="btn-group">
         <a href="/Panel/AdminBusinessManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
     </div>
-</div>
+</div>-->
 
 <br />
 <div class="table-responsive">
@@ -45,8 +45,8 @@
                         }
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#detailes">جزئیات</button>
-                        <div id="detailes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
+                        <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#@item.Id">جزئیات</button>
+                        <div id="@item.Id" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -83,28 +83,21 @@
                         </div>
                     </td>
                     <td>
+                        @Tools.GetStatusName(item.Status, "fa")
+                    </td>
+                    <td>
                         @if (item.Status == BusinessStatus.RegisterConfirme)
                         {
                             <a href="/Panel/AdminBusinessManage/Confirm/@item.Id" class="btn btn-outline-success btn-sm">
-                                <i class="fas fa-check"></i>
+                                تایید
                             </a>
                         }
                         else
                         {
                             <a href="/Panel/AdminBusinessManage/Confirm/@item.Id" class="btn btn-outline-warning btn-sm">
-                                <i class="fas fa-times"></i>
+                               تایید
                             </a>
                         }
-                    </td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <a href="/Panel/AdminBusinessManage/Edit?Id=@item.Id" class="btn btn-outline-warning btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="/Panel/AdminBusinessManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </div>
                     </td>
                 </tr>
             }

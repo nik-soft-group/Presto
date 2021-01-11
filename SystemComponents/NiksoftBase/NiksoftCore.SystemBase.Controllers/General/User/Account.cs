@@ -27,15 +27,16 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         [HttpGet, AllowAnonymous]
         public IActionResult Register([FromQuery] string lang)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Panel");
+            }
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            if (User.Identity.IsAuthenticated)
-            {
-                return Redirect("/home");
-            }
             ViewBag.Messages = Messages;
             UserRegisterRequest model = new UserRegisterRequest();
             return View(GetViewName(lang, "Register"), model);
@@ -45,6 +46,11 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> Register([FromQuery] string lang, UserRegisterRequest request)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Panel");
+            }
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
@@ -85,7 +91,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             if (request.Password != request.ConfirmPassword)
             {
                 if (lang == "fa")
-                    AddError("تکرار رمز عبور با رمز عبور مطابقت ندارد", "fa");
+                    AddError("تکرار رمز عبور با رمز عبور مطابق نیست", "fa");
                 else
                     AddError("Password and confirm password is not same", "en");
             }
@@ -95,12 +101,6 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             if (Messages.Count(x => x.Type == ViewModel.MessageType.Error) > 0)
             {
                 return View(GetViewName(lang, "Register"), request);
-            }
-
-
-            if (User.Identity.IsAuthenticated)
-            {
-                return Redirect("/home");
             }
 
             request.PhoneNumber = request.PhoneNumber.PersianToEnglish();
@@ -148,7 +148,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                     {
                         AddError("This user already exist", "en");
                     }
-                    
+
                     ViewBag.Messages = Messages;
                     //ModelState.AddModelError("message", "Email already exists.");
                     return View(GetViewName(lang, "Register"), request);
@@ -163,15 +163,15 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         [AllowAnonymous]
         public IActionResult Login([FromQuery] string lang)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Panel");
+            }
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
                 lang = defaultLang.ShortName.ToLower();
-
-            if (User.Identity.IsAuthenticated)
-            {
-                return Redirect("/home");
-            }
 
             LoginRequest model = new LoginRequest();
             return View(GetViewName(lang, "Login"), model);
@@ -181,15 +181,15 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromQuery] string lang, LoginRequest model)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Panel");
+            }
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
                 lang = defaultLang.ShortName.ToLower();
-
-            if (User.Identity.IsAuthenticated)
-            {
-                return Redirect("/home");
-            }
 
             model.Username = model.Username.PersianToEnglish();
 
@@ -200,7 +200,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 {
                     if (lang == "fa")
                     {
-                        AddError("ین نام کابری هنوز تایید نشده است", "fa");
+                        AddError("این نام کابری هنوز تایید نشده است", "fa");
                         //ModelState.AddModelError("message", "این نام کابری هنوز تایید نشده است");
                     }
                     else
@@ -235,6 +235,12 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                     ViewBag.Messages = Messages;
                     return View(GetViewName(lang, "Login"), model);
 
+                }
+
+                var hasUserRole = await userManager.IsInRoleAsync(user, "User");
+                if (!hasUserRole)
+                {
+                    await userManager.AddToRoleAsync(user, "User");
                 }
 
                 var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);

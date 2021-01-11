@@ -38,7 +38,7 @@ namespace NiksoftCore.ITCF.Service
                     }
                     else
                     {
-                        return "در انتظار تایید خواست ویرایش";
+                        return "در انتظار تایید درخواست ویرایش";
                     }
                 case BusinessStatus.EditConfirme:
                     if (lang == "en")

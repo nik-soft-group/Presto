@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 {
     [Area("Panel")]
+    [Authorize(Roles = "NikAdmin,Admin")]
     public class AdminBusinessManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
@@ -43,7 +45,9 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             else
                 ViewBag.PageTitle = "Business Management";
 
-            ViewBag.Contents = iITCFServ.IBusinessServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
+            ViewBag.Contents = iITCFServ.IBusinessServ.GetPart(x => x.Status == BusinessStatus.RegisterRequest ||
+            x.Status == BusinessStatus.EditRequest
+            , pager.StartIndex, pager.PageSize).ToList();
 
             return View(GetViewName(lang, "Index"));
         }
@@ -198,13 +202,19 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
         public async Task<IActionResult> Confirm(int Id)
         {
             var theContent = iITCFServ.IBusinessServ.Find(x => x.Id == Id);
+            var theUser = userManager.Users.Where(x => x.Id == theContent.CreatorId).First();
+            var hasRole = await userManager.IsInRoleAsync(theUser, "Business");
             if (theContent.Status == BusinessStatus.RegisterRequest)
             {
                 theContent.Status = BusinessStatus.RegisterConfirme;
+                if (!hasRole)
+                {
+                    await userManager.AddToRoleAsync(theUser, "Business");
+                }
             }
-            else
+            else if(theContent.Status == BusinessStatus.EditRequest)
             {
-                theContent.Status = BusinessStatus.RegisterRequest;
+                theContent.Status = BusinessStatus.EditConfirme;
             }
 
             await iITCFServ.IBusinessServ.SaveChangesAsync();

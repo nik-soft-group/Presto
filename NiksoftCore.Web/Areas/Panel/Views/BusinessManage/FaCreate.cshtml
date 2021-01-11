@@ -104,11 +104,12 @@
 
         $('#ddlProvince').change(function () {
             getCity(this.value);
+            getPark(0, this.value);
         });
 
-        $('#ddlCity').change(function () {
-            getPark(this.value);
-        });
+        //$('#ddlCity').change(function () {
+        //    getPark(this.value);
+        //});
 
         ddls.country = $('#CountryId').val();
         ddls.province = @Model.ProvinceId ;
@@ -199,10 +200,10 @@
         });
     }
 
-    function getPark(cId) {
+    function getPark(cId, pId) {
         callApi({
             url: '/api/base/AddressApi/GetIndustrialPark',
-            data: { cityId: cId },
+            data: { cityId: cId, provId: pId },
             success: function (response) {
                 if (response.status == 200) {
                     dropdownBinder({
