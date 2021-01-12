@@ -3325,6 +3325,15 @@ ul.page-numbers li .current {
   color: #be4a39;
 }
 
+.map-frame iframe {
+  height: 200px;
+}
+
+.map-frame {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 /* ---------------- Testimonials ------------------ */
 .testimonials {
   background: url(../img/testimonials-section-bg.jpg);

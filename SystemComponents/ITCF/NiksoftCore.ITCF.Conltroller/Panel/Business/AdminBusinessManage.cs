@@ -45,7 +45,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             else
                 ViewBag.PageTitle = "Business Management";
 
-            ViewBag.Contents = iITCFServ.IBusinessServ.GetPart(x => x.Status == BusinessStatus.RegisterRequest ||
+            ViewBag.Contents = iITCFServ.IBusinessServ.GetPart(x => true ||
             x.Status == BusinessStatus.EditRequest
             , pager.StartIndex, pager.PageSize).ToList();
 
@@ -206,15 +206,19 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             var hasRole = await userManager.IsInRoleAsync(theUser, "Business");
             if (theContent.Status == BusinessStatus.RegisterRequest)
             {
-                theContent.Status = BusinessStatus.RegisterConfirme;
+                theContent.Status = BusinessStatus.RegisterConfirm;
                 if (!hasRole)
                 {
                     await userManager.AddToRoleAsync(theUser, "Business");
                 }
             }
-            else if(theContent.Status == BusinessStatus.EditRequest)
+            else if (theContent.Status == BusinessStatus.EditRequest)
             {
-                theContent.Status = BusinessStatus.EditConfirme;
+                theContent.Status = BusinessStatus.EditConfirm;
+            }
+            else if (theContent.Status == BusinessStatus.ShowRequest)
+            {
+                theContent.Status = BusinessStatus.ConfirmShow;
             }
 
             await iITCFServ.IBusinessServ.SaveChangesAsync();

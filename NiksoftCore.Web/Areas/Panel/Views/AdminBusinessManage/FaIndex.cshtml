@@ -86,7 +86,7 @@
                         @Tools.GetStatusName(item.Status, "fa")
                     </td>
                     <td>
-                        @if (item.Status == BusinessStatus.RegisterConfirme)
+                        @if (Tools.AcceptBtn(item.Status))
                         {
                             <a href="/Panel/AdminBusinessManage/Confirm/@item.Id" class="btn btn-outline-success btn-sm">
                                 تایید
@@ -95,7 +95,7 @@
                         else
                         {
                             <a href="/Panel/AdminBusinessManage/Confirm/@item.Id" class="btn btn-outline-warning btn-sm">
-                               تایید
+                               عدم تایید
                             </a>
                         }
                     </td>

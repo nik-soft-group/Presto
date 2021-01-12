@@ -22,7 +22,7 @@ namespace NiksoftCore.ITCF.Service
                         return "در انتظار تایید";
                     }
                     
-                case BusinessStatus.RegisterConfirme:
+                case BusinessStatus.RegisterConfirm:
                     if (lang == "en")
                     {
                         return "Confirmed";
@@ -40,7 +40,7 @@ namespace NiksoftCore.ITCF.Service
                     {
                         return "در انتظار تایید درخواست ویرایش";
                     }
-                case BusinessStatus.EditConfirme:
+                case BusinessStatus.EditConfirm:
                     if (lang == "en")
                     {
                         return "Edit request Confirmed";
@@ -48,6 +48,33 @@ namespace NiksoftCore.ITCF.Service
                     else
                     {
                         return "تایید ویرایش";
+                    }
+                case BusinessStatus.ShowRequest:
+                    if (lang == "en")
+                    {
+                        return "Request to show";
+                    }
+                    else
+                    {
+                        return "درخواست نمایش سایت";
+                    }
+                case BusinessStatus.ConfirmShow:
+                    if (lang == "en")
+                    {
+                        return "Show in site";
+                    }
+                    else
+                    {
+                        return "نمایش در سایت";
+                    }
+                case BusinessStatus.Disabled:
+                    if (lang == "en")
+                    {
+                        return "Disabled";
+                    }
+                    else
+                    {
+                        return "مردود شده";
                     }
                 default:
                     if (lang == "en")
@@ -116,6 +143,35 @@ namespace NiksoftCore.ITCF.Service
                 default:
                     return "";
             }
+        }
+
+        public static bool AcceptBtn(BusinessStatus status)
+        {
+            if (status == BusinessStatus.RegisterRequest)
+            {
+                return true;
+            }
+            if (status == BusinessStatus.RegisterConfirm)
+            {
+                return false;
+            }
+            if (status == BusinessStatus.EditRequest)
+            {
+                return true;
+            }
+            if (status == BusinessStatus.EditConfirm)
+            {
+                return false;
+            }
+            if (status == BusinessStatus.ShowRequest)
+            {
+                return true;
+            }
+            if (status == BusinessStatus.ConfirmShow)
+            {
+                return false;
+            }
+            return false;
         }
     }
 }

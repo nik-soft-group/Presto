@@ -227,29 +227,7 @@
 
             <section class="features-section">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="feature-md">
-                                <img src="~/templates/UiTemplate/FbBusiness/img/setak1.jpg" alt="feature img">
-                                <h5>ستاک</h5>
-                                <p>به لطف خدا هم اکنون ستاک با سبد کالای 4000 محصول و بیش از 50 عامل فروش در سراسر کشور برای قطعات پیش ساخته و فعال بودن واحدهای ماشین سازی و قالبسازی و مرکز توزیع تجهیزات صنعتی و پیشتاز در کیفیت ، و در مسیر پیشرفت مشغول فعالیت میباشد .</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="feature-md">
-                                <img src="~/templates/UiTemplate/FbBusiness/img/muticoco.jpg" alt="feature img">
-                                <h5>مولتی کوکو</h5>
-                                <p>صنايع قهوه پارت سازان با استفاده از تکنولوژی انحصاری، به عنوان تنها کارخانه تولیدکننده قهوه فوری در ایران و بزرگترین تولید کننده در سطح خاورمیانه،</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="feature-md">
-                                <img src="~/templates/UiTemplate/FbBusiness/img/beheshti.jpg" alt="feature img">
-                                <h5>فرش بهشتی</h5>
-                                <p>این مجموعه هم‌اکنون در ۴ شعبه در سطح شهر تهران و دو شعبه در شمال ایران واقع در شهرهای بابلسر و ساری، میزبان مشتریان عزیز خود می‌باشد و امید است در سال‌های پیش رو این ارتباط در جای جای ایران به شکل وسیعی شکل بگیرد.</p>
-                            </div>
-                        </div>
-                    </div>
+                    @await Component.InvokeAsync("WCompanies")
                 </div>
             </section>
 
@@ -353,43 +331,7 @@
                     </div>
 
                     <div class="slick-carousel team-members" data-speed="600" data-arrows="false" data-dots="true" data-infinite="false" data-items-desktop="4">
-                        <div class="row carousel-items">
-                            <div class="col-md-3 carousel-item">
-                                <div class="team-member">
-                                    <h6 class="name">شهرک صنعتی چرم شهر</h6>
-                                    <img class="avatar" src="~/templates/UiTemplate/FbBusiness/img/team-member-1.png" alt="team-member">
-                                    <p class="description">تهران - ورامین</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3 carousel-item">
-                                <div class="team-member">
-                                    <h6 class="name">شهرک صنعتی چرم شهر</h6>
-                                    <img class="avatar" src="~/templates/UiTemplate/FbBusiness/img/team-member-1.png" alt="team-member">
-                                    <p class="description">تهران - ورامین</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3 carousel-item">
-                                <div class="team-member">
-                                    <h6 class="name">شهرک صنعتی چرم شهر</h6>
-                                    <img class="avatar" src="~/templates/UiTemplate/FbBusiness/img/team-member-1.png" alt="team-member">
-                                    <p class="description">تهران - ورامین</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3 carousel-item">
-                                <div class="team-member">
-                                    <h6 class="name">شهرک صنعتی چرم شهر</h6>
-                                    <img class="avatar" src="~/templates/UiTemplate/FbBusiness/img/team-member-1.png" alt="team-member">
-                                    <p class="description">تهران - ورامین</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3 carousel-item">
-                                <div class="team-member">
-                                    <h6 class="name">شهرک صنعتی چرم شهر</h6>
-                                    <img class="avatar" src="~/templates/UiTemplate/FbBusiness/img/team-member-1.png" alt="team-member">
-                                    <p class="description">تهران - ورامین</p>
-                                </div>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("WIndustrialPark")
                     </div>
                 </div>
             </section>

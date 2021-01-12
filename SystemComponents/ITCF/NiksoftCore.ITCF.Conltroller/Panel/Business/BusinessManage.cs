@@ -187,7 +187,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             theContent.Address = request.Address;
             theContent.Location = request.Location;
             theContent.IndustrialParkId = request.IndustrialParkId == 0 ? null : request.IndustrialParkId;
-            theContent.Status = theContent.Status == BusinessStatus.EditConfirme ? BusinessStatus.RegisterConfirme : theContent.Status;
+            theContent.Status = theContent.Status == BusinessStatus.EditConfirm ? BusinessStatus.RegisterConfirm : theContent.Status;
             await iITCFServ.IBusinessServ.SaveChangesAsync();
 
             return Redirect("/Panel/BusinessManage");
@@ -214,6 +214,14 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
         {
             var theContent = iITCFServ.IBusinessServ.Find(x => x.Id == Id);
             theContent.Status = BusinessStatus.EditRequest;
+            await iITCFServ.IBusinessServ.SaveChangesAsync();
+            return Redirect("/Panel/BusinessManage");
+        }
+
+        public async Task<IActionResult> ShowRequest(int Id)
+        {
+            var theContent = iITCFServ.IBusinessServ.Find(x => x.Id == Id);
+            theContent.Status = BusinessStatus.ShowRequest;
             await iITCFServ.IBusinessServ.SaveChangesAsync();
             return Redirect("/Panel/BusinessManage");
         }
@@ -298,5 +306,6 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
             return result;
         }
+
     }
 }

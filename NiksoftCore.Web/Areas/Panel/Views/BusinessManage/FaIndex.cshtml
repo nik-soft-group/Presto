@@ -86,10 +86,10 @@
                         @Tools.GetStatusName(item.Status, "fa")
                     </td>
                     <td>
-                        @if (item.Status == BusinessStatus.RegisterRequest || item.Status == BusinessStatus.EditConfirme)
+                        @if (item.Status == BusinessStatus.RegisterRequest || item.Status == BusinessStatus.EditConfirm)
                         {
                             <div class="btn-group btn-group-sm">
-                                @if (item.Status == BusinessStatus.EditConfirme || item.Status == BusinessStatus.RegisterRequest)
+                                @if (item.Status == BusinessStatus.EditConfirm || item.Status == BusinessStatus.RegisterRequest)
                                 {
                                     <a href="/Panel/BusinessManage/Edit?Id=@item.Id" class="btn btn-outline-warning btn-sm">
                                         <i class="fas fa-edit"></i>
@@ -108,10 +108,16 @@
                         else
                         {
                             <div class="btn-group-vertical btn-group-sm">
-                                @if (item.Status != BusinessStatus.EditRequest)
+                                @if (item.Status == BusinessStatus.EditConfirm || item.Status == BusinessStatus.RegisterConfirm)
                                 {
                                     <a href="/Panel/BusinessManage/EditRequest?Id=@item.Id" class="btn btn-outline-info btn-sm">
                                         درخواست تغییر
+                                    </a>
+                                }
+                                @if (item.Status != BusinessStatus.ConfirmShow && item.Status != BusinessStatus.ShowRequest)
+                                {
+                                    <a href="/Panel/BusinessManage/ShowRequest/@item.Id" class="btn btn-outline-primary btn-sm">
+                                        نمایش در سایت
                                     </a>
                                 }
                                 <a href="/Panel/CompanyDataManage/?bid=@item.Id" class="btn btn-outline-success btn-sm">

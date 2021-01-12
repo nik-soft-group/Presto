@@ -3,8 +3,11 @@
     public enum BusinessStatus
     {
         RegisterRequest = 1,
-        RegisterConfirme = 2,
+        RegisterConfirm = 2,
         EditRequest = 3,
-        EditConfirme = 4
+        EditConfirm = 4,
+        ShowRequest = 5,
+        ConfirmShow = 6,
+        Disabled = 7
     }
 }
