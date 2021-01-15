@@ -132,6 +132,8 @@
                 var e = $(this),
                     a = e.find(".carousel-items");
                 a.slick({
+					rtl: true,
+					draggable: true,
                     focusOnSelect: !0,
                     speed: e.hasAttr("data-speed") ? e.data("speed") : 600,
                     slidesToShow: e.hasAttr("data-items-desktop") ? e.data("items-desktop") : 4,

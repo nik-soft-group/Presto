@@ -31,3 +31,11 @@ function showMessage(sets) {
         timeout: 4000
     }).show();
 }
+
+$(document).ready(function(){
+	tinymce.init({
+        selector: '.text-editor',
+		directionality : 'rtl',
+		height : "500"
+    });
+});

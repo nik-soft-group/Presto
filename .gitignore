@@ -65,3 +65,4 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 /NiksoftCore.Web/wwwroot/files/*
+/NiksoftCore.Web/wwwroot/templates/UiTemplate/NikFace/rtl/images/*

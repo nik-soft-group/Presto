@@ -9,6 +9,7 @@ namespace NiksoftCore.SystemBase.Service
         public string Description { get; set; }
         public string Icon { get; set; }
         public string Image { get; set; }
+        public string KeyValue { get; set; }
         public int? ParentId { get; set; }
 
         public virtual ContentCategory Parent { get; set; }

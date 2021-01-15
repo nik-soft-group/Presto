@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NiksoftCore.SystemBase.Service
 {
@@ -15,6 +11,7 @@ namespace NiksoftCore.SystemBase.Service
         public string Footer { get; set; }
         public string Icon { get; set; }
         public string Image { get; set; }
+        public string KeyValue { get; set; }
         public int CategoryId { get; set; }
 
         public virtual ContentCategory ContentCategory { get; set; }
