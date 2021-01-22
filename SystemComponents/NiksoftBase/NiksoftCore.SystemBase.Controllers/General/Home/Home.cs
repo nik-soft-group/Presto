@@ -21,6 +21,9 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
 
         public IActionResult Index([FromQuery] string lang)
         {
+            if (string.IsNullOrEmpty(lang))
+                lang = defaultLang.ShortName;
+
             return View(GetViewName(lang, "Index"));
         }
 
