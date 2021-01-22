@@ -1,0 +1,41 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+    var sliderText = (string)ViewBag.SliderText;
+}
+
+
+<section class="home slider" id="home">
+    <div class="home-content">
+        <div class="container">
+            <h1>
+                @Html.Raw(sliderText)
+            </h1>
+            <div class="social">
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i>  </a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i>  </a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i>  </a>
+                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i>  </a>
+                <a href="#"><i class="fa fa-behance" aria-hidden="true"></i>  </a>
+                <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i>  </a>
+            </div>
+            <a class="home-down bounce" href="#about"><i class="fa fa-angle-down"></i></a>
+        </div>
+    </div>
+    <div class="home-slider">
+        <div id="slides">
+            <div class="slides-container">
+                @foreach (var item in contents)
+                {
+                    <img src="/@item.Image" alt="">
+                }
+            </div>
+        </div>
+    </div>
+    <svg class="diagonal home-left" width="21%" height="170" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <path d="M0 100 L100 100 L0 10 Z"></path>
+    </svg>
+    <svg class="diagonal home-right" width="80%" height="170" viewBox="0 0 100 102" preserveAspectRatio="none">
+        <path d="M0 100 L100 100 L100 10 Z"></path>
+    </svg>
+</section>

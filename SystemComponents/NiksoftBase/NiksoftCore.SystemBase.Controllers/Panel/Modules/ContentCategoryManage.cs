@@ -38,10 +38,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
 
 
-            if (lang == "fa")
-                ViewBag.PageTitle = "مدیریت دسته بندی ها";
-            else
-                ViewBag.PageTitle = "Business Category Management";
+            ViewBag.PageTitle = "Content Categories";
+
 
             ViewBag.Contents = ISystemBaseServ.iContentCategoryServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
 
@@ -56,10 +54,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد دسته بندی";
-            else
-                ViewBag.PageTitle = "Create Business Category";
+            ViewBag.PageTitle = "Create Category";
+
 
             var request = new ContentCategoryRequest();
             DropDownBinder(request);
@@ -96,7 +92,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     DropDownBinder(request);
                     Messages.Add(new NikMessage
                     {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Message = "Upload failed, try agin",
                         Type = MessageType.Error,
                         Language = "Fa"
                     });
@@ -131,10 +127,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            if (lang == "fa")
-                ViewBag.PageTitle = "بروزرسانی دسته بندی";
-            else
-                ViewBag.PageTitle = "Update Business Category";
+            ViewBag.PageTitle = "Edit Category";
+
 
             var theItem = ISystemBaseServ.iContentCategoryServ.Find(x => x.Id == Id);
             var request = new ContentCategoryRequest
@@ -161,10 +155,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
             if (request.Id < 1)
             {
-                if (lang == "fa")
-                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
-                else
-                    AddError("Edit feild, please try agan", "en");
+                AddError("Edit failed, please try agan", "en");
+
             }
 
             if (!FormVlide(lang, request))
@@ -189,7 +181,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     DropDownBinder(request);
                     Messages.Add(new NikMessage
                     {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Message = "Upload failed, try agin",
                         Type = MessageType.Error,
                         Language = "Fa"
                     });
@@ -258,10 +250,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                if (lang == "fa")
-                    AddError("عنوان باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Title can not be null", "en");
+                AddError("Title can not be null", "en");
                 result = false;
             }
 

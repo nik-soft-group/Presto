@@ -1,0 +1,44 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var about = (GeneralContent)ViewBag.About;
+    var icons = (List<GeneralContent>)ViewBag.Icons;
+}
+
+<div class="container">
+    <!-- about image -->
+    <div class="col-md-4 col-sm-12 about-image top_30">
+        <div class="row">
+            <img src="/@about.Image" alt="">
+        </div>
+    </div>
+    <!-- about text -->
+    <div class="col-md-7 col-md-offset-1 col-sm-12 about-text">
+        <div class="section-title dleft bottom_30">
+            <br>
+            <h2>@about.Title</h2>
+        </div>
+        <div>
+            @Html.Raw(about.BodyText)
+        </div>
+        <p>
+            <a href="/Auth/Account/Login">Login/Register</a>
+        </p>
+    </div>
+
+    <!-- work areas -->
+    <div class="owl-carousel work-areas top_120 bottom_120">
+        @foreach (var item in icons)
+        {
+            <div class="area col-md-12 item">
+                <div class="icon">
+                    @Html.Raw(item.Icon)
+                </div>
+                <div class="text">
+                    <h6>@item.Title</h6>
+                    <p>@item.Header</p>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

@@ -4359,6 +4359,11 @@ body.fixed-left-void {
     right: auto;
   }
   
+  .dropdown-menu.dropdown-menu-left {
+    left: auto;
+    right: 0;
+  }
+  
   .navbar-left .dropdown-menu {
     right: 0;
     left: auto;

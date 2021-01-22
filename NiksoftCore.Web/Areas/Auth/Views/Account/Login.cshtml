@@ -1,13 +1,13 @@
 ﻿@model NiksoftCore.ViewModel.User.LoginRequest
 @{
-    ViewData["Title"] = "ورود";
-    Layout = "~/Areas/Auth/Views/Shared/_FaLayout.cshtml";
+    ViewData["Title"] = "login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <div class="container">
     <div class="page-title">
-        <h1 class="text-center">Sign IN</h1>
+        <h1 class="text-center">Sign In</h1>
     </div>
 
     @Html.ValidationSummary()
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-dark btn-full btn-br-0">login</button>
+                        <button type="submit" class="btn btn-dark btn-full btn-br-0">Sign In</button>
                     </div>
                     <p>
                         <a href="/Auth/Account/Register" class="">Not yet registered? Join our community</a>

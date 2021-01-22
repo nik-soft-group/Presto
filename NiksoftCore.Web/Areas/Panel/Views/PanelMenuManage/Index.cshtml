@@ -1,7 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Admin Panel - Panel Menus";
+    ViewData["Title"] = "Menu Management";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var contents = (List<NiksoftCore.SystemBase.Service.PanelMenu>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
 }
 <div class="text-right">
     <div class="btn-group">
@@ -17,16 +19,17 @@
                 <th class="text-primary text-center" width="30px">#</th>
                 <th class="text-primary text-center">Title</th>
                 <th class="text-primary text-center">Link</th>
-                <th class="text-primary text-center">Items</th>
+                <th class="text-primary text-center">Icon</th>
                 <th class="text-primary text-center" width="50px">Status</th>
-                <th class="text-primary text-center" width="100px">Oprations</th>
+                <th class="text-primary text-center" width="100px">Operations</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in contents)
             {
+                pageNumber++;
                 <tr>
-                    <td>@item.Id</td>
+                    <td>@(pager.StartIndex + pageNumber)</td>
                     <td>@item.Title</td>
                     <td>@item.Link</td>
                     <td>
@@ -63,4 +66,35 @@
             }
         </tbody>
     </table>
+    <div class="pager">
+        @if (pager.TotalSize > pager.PageSize)
+        {
+            <ul class="pagination m-b-5">
+                <li class="page-item">
+                    <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= pager.GetTotalParts(); i++)
+                {
+                    if (pager.Part == i)
+                    {
+                        <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                    }
+
+                }
+                <li class="page-item">
+                    <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+        }
+
+    </div>
 </div>

@@ -12,11 +12,19 @@
     <link rel="shortcut icon" href="~/templates/dashboard/NikFace/images/favicon.png">
     <link rel="stylesheet" href="~/templates/dashboard/NikFace/plugins/morris/morris.css">
     <link href="~/templates/dashboard/NikFace/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/templates/dashboard/NikFace/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="~/lib/noty/noty.css" rel="stylesheet">
+    <link href="~/lib/noty/themes/sunset.css" rel="stylesheet">
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/fontawesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/brands.css" rel="stylesheet" type="text/css">
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/solid.css" rel="stylesheet" type="text/css">
+    <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/regular.min.css" rel="stylesheet" type="text/css">
     <link href="~/templates/dashboard/NikFace/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="ltr-body fixed-left">
-
+    <script src="~/templates/dashboard/NikFace/js/jquery.min.js"></script>
+    <script src="~/lib/noty/noty.js" type="text/javascript"></script>
+    <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="~/js/BaseSystem.js"></script>
     <div id="wrapper">
         <div class="topbar">
             <div class="topbar-left">
@@ -93,12 +101,12 @@
                             <a href="#" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                 <img src="~/templates/dashboard/NikFace/images/users/avatar-1.jpg" alt="user-img" class="rounded-circle">
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
+                            <ul class="dropdown-menu dropdown-menu-left">
                                 <li><a href="javascript:void(0)" class="dropdown-item"> Profile</a></li>
                                 <li><a href="javascript:void(0)" class="dropdown-item"><span class="badge badge-success float-right">5</span> Settings </a></li>
                                 <li><a href="javascript:void(0)" class="dropdown-item"> Lock screen</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="javascript:void(0)" class="dropdown-item"> Logout</a></li>
+                                <li><a href="/Auth/Account/Logout" class="dropdown-item"> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -111,9 +119,10 @@
                 <div id="sidebar-menu">
                     <ul>
                         <li>
-                            <a href="/Panel" class="waves-effect"><i class="mdi mdi-home"></i><span> dashboard </span></a>
+                            <a href="/Panel" class="waves-effect"><i class="mdi mdi-home"></i><span> Dashboard </span></a>
                         </li>
                     </ul>
+                    @await Component.InvokeAsync("WPanelMenu")
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -141,9 +150,6 @@
 
         </div>
     </div>
-
-    <script src="~/templates/dashboard/NikFace/js/jquery.min.js"></script>
-    <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="~/templates/dashboard/NikFace/js/popper.min.js"></script>
     <script src="~/templates/dashboard/NikFace/js/bootstrap.min.js"></script>
     <script src="~/templates/dashboard/NikFace/js/modernizr.min.js"></script>
@@ -157,9 +163,9 @@
     <script src="~/templates/dashboard/NikFace/js/jquery.scrollTo.min.js"></script>
     <script src="~/templates/dashboard/NikFace/plugins/morris/morris.min.js"></script>
     <script src="~/templates/dashboard/NikFace/plugins/raphael/raphael-min.js"></script>
-    <script src="~/templates/dashboard/NikFace/pages/dashborad.js"></script>
+    @*<script src="~/templates/dashboard/NikFace/pages/dashborad.js"></script>*@
     <script src="~/templates/dashboard/NikFace/js/app.js"></script>
-    <script src="~/templates/dashboard/NikFace/js/BaseSystem.js"></script>
+
     @RenderSection("Scripts", required: false)
 
 </body>

@@ -24,6 +24,7 @@ function setItemDropdown(sets) {
 
 function showMessage(sets) {
     new Noty({
+        layout: 'topLeft',
         text: sets.text,
         type: sets.type,
         theme: 'sunset',
@@ -35,7 +36,7 @@ function showMessage(sets) {
 $(document).ready(function(){
 	tinymce.init({
         selector: '.text-editor',
-		directionality : 'rtl',
+		directionality : 'ltr',
 		height : "500"
     });
 });

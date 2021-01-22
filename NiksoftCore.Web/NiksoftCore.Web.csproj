@@ -188,6 +188,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Auth\Views\Shared\" />
     <Folder Include="wwwroot\files\business\" />
     <Folder Include="wwwroot\lib\noty\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />
