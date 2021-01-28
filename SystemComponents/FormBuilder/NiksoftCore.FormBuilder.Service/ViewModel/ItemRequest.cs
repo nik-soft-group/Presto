@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace NiksoftCore.FormBuilder.Service
+﻿namespace NiksoftCore.FormBuilder.Service
 {
-    public class ListItem
+    public class ItemRequest
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -10,8 +8,5 @@ namespace NiksoftCore.FormBuilder.Service
         public int OrderId { get; set; }
         public bool Enabled { get; set; }
         public int ControlId { get; set; }
-
-        public virtual FormControl FormControl { get; set; }
-        public virtual ICollection<FormControl> Childs { get; set; }
     }
 }

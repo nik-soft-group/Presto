@@ -12,7 +12,7 @@ namespace NiksoftCore.FormBuilder.Service
 
             builder.HasOne(x => x.FormCategroy)
                 .WithMany(x => x.Forms)
-                .HasForeignKey(x => x.CateoryId)
+                .HasForeignKey(x => x.CategoryId)
                 .IsRequired(true);
         }
     }

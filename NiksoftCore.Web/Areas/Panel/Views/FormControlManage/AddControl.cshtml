@@ -1,0 +1,113 @@
+﻿@using NiksoftCore.FormBuilder.Service
+@model FormControlRequest
+@{
+    ViewData["Title"] = "Create categories";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/FormControlManage?FormId=@Model.FormId" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/FormControlManage/AddControl" method="post" enctype="multipart/form-data">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="txtLabel" class="control-label">Label</label>
+                    @Html.TextBoxFor(m => m.Label, new { placeholder = "Lable", @class = "form-control", @id = "txtLabel" })
+                </div>
+                <div class="form-group">
+                    <label for="txtIcon" class="control-label">Key</label>
+                    @Html.TextBoxFor(m => m.KeyValue, new { placeholder = "Key", @class = "form-control", @id = "txtIcon" })
+                </div>
+                <div class="form-group">
+                    <label for="ControlType" class="control-label">Control Type</label>
+                    <select class="form-control m-b" asp-for="ControlType" asp-items="ViewBag.ControlTypes">
+                        <option selected="selected" value="0">select type</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 t2" style="display: none">
+                        <div class="form-group">
+                            <label for="txtSize" class="control-label">Area Rows</label>
+                            @Html.TextBoxFor(m => m.Size, new { placeholder = "1", @class = "form-control", @id = "txtSize" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtRows" class="control-label">Rows</label>
+                            @Html.TextBoxFor(m => m.RowId, new { placeholder = "1", @class = "form-control", @id = "txtRows" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtColumns" class="control-label">Columns</label>
+                            @Html.TextBoxFor(m => m.ColumnId, new { placeholder = "1", @class = "form-control", @id = "txtColumns" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtDesc" class="control-label">Description</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Description", @class = "form-control", @id = "txtDesc", rows = "3" })
+                </div>
+                @Html.HiddenFor(m => m.FormId)
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $('#ControlType').on('change', function () {
+        var itemType = $(this).val();
+        if (itemType == 2) {
+            $('.t2').show();
+        } else {
+            $('.t2').hide();
+        }
+    });
+
+    $(document).ready(function () {
+        var itemType = @Model.ControlType.GetControlNo();
+        if (itemType == 2) {
+            $('.t2').show();
+        }
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

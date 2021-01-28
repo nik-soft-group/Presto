@@ -6,17 +6,17 @@ using System.Linq.Expressions;
 
 namespace NiksoftCore.FormBuilder.Service
 {
-    public interface IFormCategroyService : IDataService<FormCategroy>
+    public interface IFormCategoryService : IDataService<FormCategory>
     {
     }
 
-    public class FormCategroyService : DataService<FormCategroy>, IFormCategroyService
+    public class FormCategoryService : DataService<FormCategory>, IFormCategoryService
     {
-        public FormCategroyService(IFbUnitOfWork uow) : base(uow)
+        public FormCategoryService(IFbUnitOfWork uow) : base(uow)
         {
         }
 
-        public override IList<FormCategroy> GetPartOptional(List<Expression<Func<FormCategroy, bool>>> predicate, int startIndex, int pageSize)
+        public override IList<FormCategory> GetPartOptional(List<Expression<Func<FormCategory, bool>>> predicate, int startIndex, int pageSize)
         {
             var query = TEntity.Where(predicate[0]);
             for (int i = 1; i < predicate.Count; i++)

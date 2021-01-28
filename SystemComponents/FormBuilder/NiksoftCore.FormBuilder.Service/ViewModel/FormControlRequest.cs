@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using NiksoftCore.ViewModel;
 
 namespace NiksoftCore.FormBuilder.Service
 {
-    public class FormControl
+    public class FormControlRequest
     {
         public int Id { get; set; }
         public int RowId { get; set; }
@@ -15,10 +15,5 @@ namespace NiksoftCore.FormBuilder.Service
         public ControlType ControlType { get; set; }
         public string ReferenceId { get; set; }
         public int? ParentId { get; set; }
-
-        public virtual Form Form { get; set; }
-        public virtual ListItem Parent { get; set; }
-        public virtual ICollection<ListItem> ListItems { get; set; }
-        public virtual ICollection<FormAnswer> FormAnswers { get; set; }
     }
 }

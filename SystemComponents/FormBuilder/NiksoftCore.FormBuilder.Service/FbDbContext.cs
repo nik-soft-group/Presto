@@ -15,7 +15,7 @@ namespace NiksoftCore.FormBuilder.Service
             optionsBuilder.UseLazyLoadingProxies();
         }
 
-        public DbSet<FormCategroy> FormCategroies { get; set; }
+        public DbSet<FormCategory> FormCategories { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<FormControl> formControls { get; set; }
         public DbSet<ListItem> ListItems { get; set; }
@@ -25,7 +25,7 @@ namespace NiksoftCore.FormBuilder.Service
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new FormCategroyMap());
+            builder.ApplyConfiguration(new FormCategoryMap());
             builder.ApplyConfiguration(new FormMap());
             builder.ApplyConfiguration(new FormControlMap());
             builder.ApplyConfiguration(new ListItemMap());

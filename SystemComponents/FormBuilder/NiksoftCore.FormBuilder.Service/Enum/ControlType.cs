@@ -2,11 +2,12 @@
 {
     public enum ControlType
     {
-        Text = 1,
-        DropDownList = 2,
-        CheckBoxList = 3,
-        RadioButtonList = 4,
-        FileUpload = 5,
-        ExtenalText = 6
+        TextBox = 1,
+        TextArea = 2,
+        DropDownList = 3,
+        CheckBoxList = 4,
+        RadioButtonList = 5,
+        FileUpload = 6,
+        ExtenalText = 7
     }
 }

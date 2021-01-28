@@ -181,6 +181,8 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\NiksoftCore.DataAccess\NiksoftCore.DataAccess.csproj" />
     <ProjectReference Include="..\DataAccess\NiksoftCore.DataModel\NiksoftCore.DataModel.csproj" />
+    <ProjectReference Include="..\SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Controller\NiksoftCore.FormBuilder.Controller.csproj" />
+    <ProjectReference Include="..\SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Controllers\NiksoftCore.SystemBase.Controllers.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
     <ProjectReference Include="..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
@@ -190,6 +192,7 @@
   <ItemGroup>
     <Folder Include="Areas\Auth\Views\Shared\" />
     <Folder Include="wwwroot\files\business\" />
+    <Folder Include="wwwroot\files\forms\" />
     <Folder Include="wwwroot\lib\noty\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />
   </ItemGroup>

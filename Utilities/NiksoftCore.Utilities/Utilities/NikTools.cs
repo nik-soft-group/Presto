@@ -93,5 +93,16 @@ namespace NiksoftCore.Utilities
             }
             return arrList[arrList.Length - 1];
         }
+
+        public static string GetBootstrapCol(this int cols)
+        {
+            if (12 % cols != 0)
+            {
+                return "col-sm-12";
+            }
+            int colNo = 12 / cols;
+            return "col-sm-" + colNo;
+
+        }
     }
 }

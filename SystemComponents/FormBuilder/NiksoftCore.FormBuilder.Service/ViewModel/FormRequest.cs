@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace NiksoftCore.FormBuilder.Service
 {
-    public class Form
+    public class FormRequest
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -15,11 +15,8 @@ namespace NiksoftCore.FormBuilder.Service
         public bool IsSavedIP { get; set; }
         public bool IsShare { get; set; }
         public string FileUrl { get; set; }
+        public IFormFile FormFile { get; set; }
         public string ReferenceId { get; set; }
         public int CategoryId { get; set; }
-
-        public virtual FormCategory FormCategroy { get; set; }
-        public virtual ICollection<FormControl> FormControls { get; set; }
-        public virtual ICollection<FormAnswer> FormAnswers { get; set; }
     }
 }

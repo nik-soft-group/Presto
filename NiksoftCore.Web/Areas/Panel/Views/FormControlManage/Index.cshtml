@@ -1,0 +1,70 @@
+﻿@using NiksoftCore.Utilities
+@using NiksoftCore.FormBuilder.Service
+@{
+    ViewData["Title"] = "Form Builder";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var controls = (List<FormControl>)ViewBag.Controls;
+    var thisForm = (Form)ViewBag.Form;
+}
+
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/FormBuilder" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+<br />
+
+<div class="from-design">
+    <div class="form-template">
+        @for (var cc1 = 1; cc1 <= thisForm.Rows; cc1++)
+        {
+            <div class="row">
+                @for (var cc2 = 1; cc2 <= thisForm.Columns; cc2++)
+                {
+                    var theControl = controls.Find(x => x.RowId == cc1 && x.ColumnId == cc2);
+                    <div @Html.Raw("class=" + thisForm.Columns.GetBootstrapCol())>
+                        <div class="card text-center shadow">
+                            <div class="card-heading">
+                                <h4 class="card-title text-primary mb-0">
+                                    row: <span class="badge badge-warning">@cc1</span> - col: <span class="badge badge-warning">@cc2</span>
+                                    @if (theControl != null)
+                                    {
+                                        <span class="text-danger">@theControl.ControlType.GetControlName()</span>
+                                    }
+                                </h4>
+                            </div>
+                            <div class="card-body text-primary p-t-10">
+                                @if (theControl != null)
+                                {
+                                    <p>@theControl.Label</p>
+                                    <div class="btn-group-sm">
+                                        <a href="/Panel/FormControlManage/AddControl?Id=@theControl.Id&row=@cc1&col=@cc2&formId=@thisForm.Id" class="btn btn-outline-success btn-sm">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
+                                        <a href="/Panel/FormControlManage/RemoveControl?Id=@theControl.Id" class="btn btn-outline-danger btn-sm">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                        @if (theControl.ControlType.ShowListItemBtn())
+                                        {
+                                            <a href="/Panel/FormControlManage/ListItems?ControlId=@theControl.Id" class="btn btn-outline-info btn-sm">
+                                                <i class="fa fa-list"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a href="/Panel/FormControlManage/AddControl?Id=0&row=@cc1&col=@cc2&formId=@thisForm.Id" class="btn btn-outline-warning btn-full">
+                                        Add Control
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

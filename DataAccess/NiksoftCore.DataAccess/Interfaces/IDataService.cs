@@ -17,21 +17,23 @@ namespace NiksoftCore.DataAccess
 
         int Count(Expression<Func<T, bool>> predicate);
 
+        int Count(List<Expression<Func<T, bool>>> predicates);
+
         Task<T> FindAsync(Expression<Func<T, bool>> predicate);
 
         T Find(Expression<Func<T, bool>> predicate);
 
-        IList<T> GetPartOptional(List<Expression<Func<T, bool>>> predicate, int startIndex, int size);
+        IList<T> GetPartOptional(List<Expression<Func<T, bool>>> predicates, int startIndex, int size);
 
         IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size);
 
         IList<T> GetAll(Expression<Func<T, bool>> predicate);
 
-        IList<T> GetAll(List<Expression<Func<T, bool>>> predicate);
+        IList<T> GetAll(List<Expression<Func<T, bool>>> predicates);
 
         IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem);
 
-        IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicate, Expression<Func<T, TResult>> selectItem);
+        IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicates, Expression<Func<T, TResult>> selectItem);
 
         List<Expression<Func<T, bool>>> ExpressionMaker();
 

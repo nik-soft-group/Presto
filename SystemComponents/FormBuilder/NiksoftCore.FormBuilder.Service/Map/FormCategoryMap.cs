@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace NiksoftCore.FormBuilder.Service
 {
-    public class FormCategroyMap : IEntityTypeConfiguration<FormCategroy>
+    public class FormCategoryMap : IEntityTypeConfiguration<FormCategory>
     {
-        public void Configure(EntityTypeBuilder<FormCategroy> builder)
+        public void Configure(EntityTypeBuilder<FormCategory> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.ToTable("FB_FormCategries");
+            builder.ToTable("FB_FormCategories");
 
             builder.HasOne(x => x.Parent)
                 .WithMany(x => x.Childs)
