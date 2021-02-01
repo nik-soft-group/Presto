@@ -32,6 +32,12 @@
                         <option selected="selected" value="0">select type</option>
                     </select>
                 </div>
+                <div class="form-group t3-5" style="display: none">
+                    <label for="ListControlId" class="control-label">List Controls</label>
+                    <select class="form-control m-b" asp-for="ListControlId" asp-items="ViewBag.ListControls">
+                        <option selected="selected" value="0">select list</option>
+                    </select>
+                </div>
                 <div class="row">
                     <div class="col-sm-4 t2" style="display: none">
                         <div class="form-group">
@@ -73,8 +79,13 @@
         var itemType = $(this).val();
         if (itemType == 2) {
             $('.t2').show();
+            $('.t3-5').hide();
+        } else if (itemType > 2 && itemType < 6) {
+            $('.t2').hide();
+            $('.t3-5').show();
         } else {
             $('.t2').hide();
+            $('.t3-5').hide();
         }
     });
 
@@ -82,6 +93,8 @@
         var itemType = @Model.ControlType.GetControlNo();
         if (itemType == 2) {
             $('.t2').show();
+        } else if (itemType > 2 && itemType < 6) {
+            $('.t3-5').show();
         }
         @if (Messages != null)
         {

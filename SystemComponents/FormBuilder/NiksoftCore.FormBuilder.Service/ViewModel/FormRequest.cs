@@ -10,6 +10,7 @@ namespace NiksoftCore.FormBuilder.Service
         public string KeyValue { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
+        public string Template { get; set; }
         public bool IsPublic { get; set; }
         public bool Enabled { get; set; }
         public bool IsSavedIP { get; set; }

@@ -15,9 +15,9 @@ namespace NiksoftCore.FormBuilder.Service
                 .HasForeignKey(x => x.FormId)
                 .IsRequired(true);
 
-            builder.HasOne(x => x.Parent)
-                .WithMany(x => x.Childs)
-                .HasForeignKey(x => x.ParentId)
+            builder.HasOne(x => x.ListControl)
+                .WithMany(x => x.FormControls)
+                .HasForeignKey(x => x.ListControlId)
                 .IsRequired(false);
         }
     }

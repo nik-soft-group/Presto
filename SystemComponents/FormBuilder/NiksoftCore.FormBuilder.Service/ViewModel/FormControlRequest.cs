@@ -14,6 +14,6 @@ namespace NiksoftCore.FormBuilder.Service
         public int Size { get; set; }
         public ControlType ControlType { get; set; }
         public string ReferenceId { get; set; }
-        public int? ParentId { get; set; }
+        public int ListControlId { get; set; }
     }
 }

@@ -1,10 +1,17 @@
 ﻿@using NiksoftCore.FormBuilder.Service
 @model FormRequest
 @{
-    ViewData["Title"] = "Create categories";
+    ViewData["Title"] = "Create Form";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
+
+<link href="~/css/site.css" rel="stylesheet" />
+<script src="~/js/vue.js" type="text/javascript"></script>
+<script src="~/js/VueUtilities.js" type="text/javascript"></script>
+<script src="~/js/utilities.js" type="text/javascript"></script>
+
+
 <div class="text-right">
     <div class="btn-group">
         <a href="/Panel/FormBuilder" class="btn btn-outline-info btn-sm">
@@ -33,6 +40,57 @@
                     </select>
                 </div>
                 <div class="row">
+                    <div id="app" class="col-sm-4">
+                        <div class="form-group">
+                            <textarea name="Template" class="d-none"></textarea>
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#tempModal">Create Template</button>
+                        </div>
+                        <div class="modal fade" id="tempModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Crate Template</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-template">
+                                            <div class="b-row">
+                                                <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <h5>Row 1</h5>
+                                                    </div>
+                                                    <div class="col-sm-8"></div>
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-outline-info btn-sm">Add Column</button>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <div class="f-cell">
+                                                            <div class="form-group">
+                                                                <label for="ccount">Size</label>
+                                                                <select id="ccount" class="form-control">
+                                                                    <option value="2">2</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-info">Add Row</button>
+                                        <button type="button" class="btn btn-outline-primary">Save changes</button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="txtRows" class="control-label">Rows</label>
@@ -94,6 +152,43 @@
             }
         }
 
+        getInstance({
+            el: '#app',
+            mixins: [utilities],
+            data: {
+                bUri: 'http://localhost:54600/api/SejamAuthStep/',
+                template: {
+                    rows: [{
+                        OrderId: 1,
+                        Columns: [{
+                            Size: 3
+                        }]
+                    }]
+                }
+            },
+            created: function () {
+
+            },
+            methods: {
+                smsCodeRequest: function () {
+                    let request = {
+                        NCode: this.form.ssn,
+                        TrackCode: this.form.trackingCode
+                    };
+
+                    var self = this;
+                    this.loadJson(this.bUri + "StepOne", request)
+                        .then((apiResults) => {
+                            if (apiResults.status === 0) {
+                                //self.showMessage({ message: 'ارسال با موفقیت انجام شد', type: 'success' });
+                            } else {
+                                //self.showMessage({ message: apiResults.message, type: 'error' });
+                            }
+                            this.pager.step++;
+                        });
+                }
+            }
+        }, 0);
 
     });
 </script>

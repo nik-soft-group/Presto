@@ -68,7 +68,7 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
                 request.Size = item.Size;
                 request.ControlType = item.ControlType;
                 request.ReferenceId = item.ReferenceId;
-                request.ParentId = item.ParentId;
+                request.ListControlId = item.ListControlId == null ? 0 : item.ListControlId.Value;
             }
             else
             {
@@ -122,7 +122,7 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             item.Size = request.Size;
             item.ControlType = request.ControlType;
             item.ReferenceId = request.ReferenceId;
-            item.ParentId = request.ParentId;
+            item.ListControlId = request.ListControlId == 0 ? null : request.ListControlId;
 
             if (request.Id == 0)
             {
@@ -133,6 +133,7 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             return Redirect("/Panel/FormControlManage?FormId=" + request.FormId);
 
         }
+
 
         public async Task<IActionResult> RemoveControl(int Id)
         {
@@ -151,6 +152,158 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             return Redirect("/Panel/FormBuilder");
         }
 
+
+        private void DropDownBinder(FormControlRequest request)
+        {
+            //var categories = iFormBuilderServ.iListItemServ.GetAll(x => x.ControlId == request.Id);
+            //ViewBag.Categories = new SelectList(categories, "Id", "Title", 0);
+            var controlTypes = Enum.GetValues(typeof(ControlType)).Cast<ControlType>().ToList();
+            var readyList = new List<ListItem>();
+            foreach (var item in controlTypes)
+            {
+                readyList.Add(new ListItem
+                {
+                    Id = Convert.ToInt32(item),
+                    Title = item.GetControlName()
+                });
+            }
+            ViewBag.ControlTypes = new SelectList(readyList, "Id", "Title", (int)request.ControlType);
+
+            var listControls = iFormBuilderServ.iListControlServ.GetAll(x => true);
+            ViewBag.ListControls = new SelectList(listControls, "Id", "Title", request.ListControlId);
+        }
+
+        private bool FormVlide(FormControlRequest request)
+        {
+            bool result = true;
+            if (string.IsNullOrEmpty(request.Label))
+            {
+                AddError("Label can not be empty", "en");
+                result = false;
+            }
+
+
+
+            return result;
+        }
+
+        //--------------------------------list control-------------------------------
+        [HttpGet]
+        public IActionResult ListControls(ListControlGridRequest request)
+        {
+            if (!string.IsNullOrEmpty(request.lang))
+                request.lang = request.lang.ToLower();
+            else
+                request.lang = defaultLang.ShortName.ToLower();
+
+            bool rearchMode = false;
+
+            var query = iFormBuilderServ.iListControlServ.ExpressionMaker();
+            query.Add(x => true);
+            if (!string.IsNullOrEmpty(request.Title))
+            {
+                query.Add(x => x.Title.Contains(request.Title));
+                rearchMode = true;
+            }
+
+            ViewBag.PageTitle = "List Of Contents";
+
+            ViewBag.Search = rearchMode;
+
+            var total = iFormBuilderServ.iListControlServ.Count(query);
+            var pager = new Pagination(total, 20, request.part);
+            ViewBag.Pager = pager;
+
+            ViewBag.Contents = iFormBuilderServ.iListControlServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            return View(GetViewName(request.lang, "ListControls"));
+        }
+
+        [HttpGet]
+        public IActionResult ListControlCreate([FromQuery] string lang, int Id)
+        {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            ViewBag.PageTitle = "Create Form";
+            var request = new ListControlRequest();
+            if (Id > 0)
+            {
+                var item = iFormBuilderServ.iListControlServ.Find(x => x.Id == Id);
+                request.Id = item.Id;
+                request.Title = item.Title;
+                request.Description = item.Description;
+                request.ParentId = item.ParentId != null ? item.ParentId.Value : 0;
+            }
+            else
+            {
+                request.ParentId = 0;
+            }
+
+
+
+            return View(GetViewName(lang, "ListControlCreate"), request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ListControlCreate([FromQuery] string lang, [FromForm] ListControlRequest request)
+        {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (!ValidListControl(request))
+            {
+                ViewBag.Messages = Messages;
+                return View(GetViewName(lang, "ListItemCreate"), request);
+            }
+
+            ListControl item;
+
+            if (request.Id > 0)
+            {
+                item = iFormBuilderServ.iListControlServ.Find(x => x.Id == request.Id);
+            }
+            else
+            {
+                item = new ListControl();
+                
+            }
+
+            item.Title = request.Title;
+            item.Description = request.Description;
+            item.ParentId = request.ParentId == 0 ? null : request.ParentId;
+
+            if (request.Id == 0)
+            {
+                iFormBuilderServ.iListControlServ.Add(item);
+            }
+
+            await iFormBuilderServ.iListControlServ.SaveChangesAsync();
+            return Redirect("/Panel/FormControlManage/ListControls");
+
+        }
+
+        private bool ValidListControl(ListControlRequest request)
+        {
+            bool result = true;
+            if (string.IsNullOrEmpty(request.Title))
+            {
+                AddError("Title can not be empty", "en");
+                result = false;
+            }
+
+
+
+            return result;
+        }
+
+
+        //--------------------------------list items-------------------------------
+
+
         [HttpGet]
         public IActionResult ListItems(ListItemRequest request)
         {
@@ -159,13 +312,13 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             else
                 request.lang = defaultLang.ShortName.ToLower();
 
-            var theControl = iFormBuilderServ.iFormControlServ.Find(x => x.Id == request.ControlId);
-            ViewBag.Control = theControl;
+            var theList = iFormBuilderServ.iListControlServ.Find(x => x.Id == request.ListControlId);
+            ViewBag.ListControl = theList;
 
             bool rearchMode = false;
 
             var query = iFormBuilderServ.iListItemServ.ExpressionMaker();
-            query.Add(x => x.ControlId == request.ControlId);
+            query.Add(x => x.ListControlId == request.ListControlId);
             if (!string.IsNullOrEmpty(request.Title))
             {
                 query.Add(x => x.Title.Contains(request.Title));
@@ -178,21 +331,21 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
 
-            ViewBag.PageTitle = theControl.Label;
+            ViewBag.PageTitle = theList.Title;
 
             ViewBag.Contents = iFormBuilderServ.iListItemServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
             return View(GetViewName(request.lang, "ListItems"));
         }
 
         [HttpGet]
-        public IActionResult ListItemCreate([FromQuery] string lang, int Id, int ControlId)
+        public IActionResult ListItemCreate([FromQuery] string lang, int Id, int ListControlId)
         {
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            ViewBag.PageTitle = "Create Form";
+            ViewBag.PageTitle = "Create List Item";
             var request = new ItemRequest();
             if (Id > 0)
             {
@@ -202,11 +355,11 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
                 request.KeyValue = item.KeyValue;
                 request.OrderId = item.OrderId;
                 request.Enabled = item.Enabled;
-                request.ControlId = item.ControlId;
+                request.ListControlId = item.ListControlId;
             }
             else
             {
-                request.ControlId = ControlId;
+                request.ListControlId = ListControlId;
             }
 
 
@@ -237,10 +390,10 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             else
             {
                 item = new ListItem();
-                var max = iFormBuilderServ.iListItemServ.Count(x => x.ControlId == request.ControlId);
+                var max = iFormBuilderServ.iListItemServ.Count(x => x.ListControlId == request.ListControlId);
                 item.OrderId = max + 1;
                 item.Enabled = true;
-                item.ControlId = request.ControlId;
+                item.ListControlId = request.ListControlId;
             }
 
             item.Title = request.Title;
@@ -252,7 +405,7 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             }
 
             await iFormBuilderServ.iFormServ.SaveChangesAsync();
-            return Redirect("/Panel/FormControlManage/ListItems?ControlId=" + request.ControlId);
+            return Redirect("/Panel/FormControlManage/ListItems?ListControlId=" + request.ListControlId);
 
         }
 
@@ -271,35 +424,5 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
         }
 
 
-        private void DropDownBinder(FormControlRequest request)
-        {
-            //var categories = iFormBuilderServ.iListItemServ.GetAll(x => x.ControlId == request.Id);
-            //ViewBag.Categories = new SelectList(categories, "Id", "Title", 0);
-            var controlTypes = Enum.GetValues(typeof(ControlType)).Cast<ControlType>().ToList();
-            var readyList = new List<ListItem>();
-            foreach (var item in controlTypes)
-            {
-                readyList.Add(new ListItem
-                {
-                    Id = Convert.ToInt32(item),
-                    Title = item.GetControlName()
-                });
-            }
-            ViewBag.ControlTypes = new SelectList(readyList, "Id", "Title", (int)request.ControlType);
-        }
-
-        private bool FormVlide(FormControlRequest request)
-        {
-            bool result = true;
-            if (string.IsNullOrEmpty(request.Label))
-            {
-                AddError("Label can not be empty", "en");
-                result = false;
-            }
-
-
-
-            return result;
-        }
     }
 }

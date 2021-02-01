@@ -1,12 +1,11 @@
 ﻿@using NiksoftCore.FormBuilder.Service
-@model ListItemRequest
+@model ListControlGridRequest
 @{
-    ViewData["Title"] = "Control Items";
+    ViewData["Title"] = "List Of Contents";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
-    var contents = (List<ListItem>)ViewBag.Contents;
+    var contents = (List<ListControl>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
-    var control = (ListControl)ViewBag.ListControl;
     var isSearch = (bool)ViewBag.Search;
     var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
     var accBtn = isSearch ? "aria-expanded='true'" : "";
@@ -14,12 +13,9 @@
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/FormControlManage/ListItemCreate?ListControlId=@control.Id" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+        <a href="/Panel/FormControlManage/ListControlCreate" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
         <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
             <i class="fa fa-search"></i>
-        </a>
-        <a href="/Panel/FormControlManage/ListControls" class="btn btn-outline-primary btn-sm">
-            <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 </div>
@@ -34,7 +30,6 @@
                         @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
                     </div>
                 </div>
-                @Html.HiddenFor(m => m.ListControlId)
                 <div class="col-sm-3" style="padding-top: 29px;">
                     <button type="submit" class="btn btn-outline-info">
                         <i class="fa fa-search"></i>
@@ -52,10 +47,8 @@
             <tr>
                 <th class="text-primary text-center" width="30px">#</th>
                 <th class="text-primary text-center">Title</th>
-                <th class="text-primary text-center">List Title</th>
-                <th class="text-primary text-center">Key</th>
-                <th class="text-primary text-center">Status</th>
-                <th class="text-primary text-center">Ordering</th>
+                <th class="text-primary text-center">Description</th>
+                <th class="text-primary text-center">Items</th>
                 <th class="text-primary text-center" width="100px">Operations</th>
             </tr>
         </thead>
@@ -66,44 +59,17 @@
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
                     <td>@item.Title</td>
-                    <td>@item.ListControl.Title</td>
-                    <td>
-                        @item.KeyValue
-                    </td>
-                    <td>
-                        @if (item.Enabled)
-                        {
-                            <a href="/Panel/FormControlManage/EnableItem/@item.Id" class="btn btn-outline-success btn-sm">
-                                <i class="fa fa-check"></i>
-                            </a>
-                        }
-                        else
-                        {
-                            <a href="/Panel/FormControlManage/EnableItem/@item.Id" class="btn btn-outline-danger btn-sm">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        }
-                    </td>
+                    <td>@item.Description</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            @if (pageNumber != 1 && contents.Count > 1)
-                            {
-                                <a href="/Panel/FormControlManage/ItemSorteUp?Id=@item.Id" class="btn btn-outline-info btn-sm">
-                                    <i class="fa fa-arrow-up"></i>
-                                </a>
-                            }
-
-                            @if (pageNumber != contents.Count && contents.Count > 1)
-                            {
-                                <a href="/Panel/FormControlManage/ItemSorteDown?Id=@item.Id" class="btn btn-outline-info btn-sm">
-                                    <i class="fa fa-arrow-down"></i>
-                                </a>
-                            }
+                            <a href="/Panel/FormControlManage/ListItems?ListControlId=@item.Id" class="btn btn-outline-info btn-sm">
+                                Items <span class="badge badge-warning">@item.ListItems.Count</span>
+                            </a>
                         </div>
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/FormControlManage/ListItemCreate?Id=@item.Id&ControlId=@control.Id" class="btn btn-outline-warning btn-sm">
+                            <a href="/Panel/FormControlManage/ListControlCreate?Id=@item.Id" class="btn btn-outline-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <a href="/Panel/FormControlManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">

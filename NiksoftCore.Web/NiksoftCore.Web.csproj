@@ -6,12 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Auth\Views\Shared\**" />
     <Compile Remove="Areas\Panel\Controllers\**" />
     <Compile Remove="Controllers\**" />
+    <Content Remove="Areas\Auth\Views\Shared\**" />
     <Content Remove="Areas\Panel\Controllers\**" />
     <Content Remove="Controllers\**" />
+    <EmbeddedResource Remove="Areas\Auth\Views\Shared\**" />
     <EmbeddedResource Remove="Areas\Panel\Controllers\**" />
     <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Areas\Auth\Views\Shared\**" />
     <None Remove="Areas\Panel\Controllers\**" />
     <None Remove="Controllers\**" />
   </ItemGroup>
@@ -190,7 +194,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Auth\Views\Shared\" />
     <Folder Include="wwwroot\files\business\" />
     <Folder Include="wwwroot\files\forms\" />
     <Folder Include="wwwroot\lib\noty\" />

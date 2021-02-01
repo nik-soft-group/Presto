@@ -18,6 +18,7 @@ namespace NiksoftCore.FormBuilder.Service
         public DbSet<FormCategory> FormCategories { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<FormControl> formControls { get; set; }
+        public DbSet<ListControl> ListControls { get; set; }
         public DbSet<ListItem> ListItems { get; set; }
         public DbSet<FormAnswer> FormAnswers { get; set; }
 
@@ -28,6 +29,7 @@ namespace NiksoftCore.FormBuilder.Service
             builder.ApplyConfiguration(new FormCategoryMap());
             builder.ApplyConfiguration(new FormMap());
             builder.ApplyConfiguration(new FormControlMap());
+            builder.ApplyConfiguration(new ListControlMap());
             builder.ApplyConfiguration(new ListItemMap());
             builder.ApplyConfiguration(new FormAnswerMap());
 

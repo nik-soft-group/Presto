@@ -14,11 +14,10 @@ namespace NiksoftCore.FormBuilder.Service
         public int Size { get; set; }
         public ControlType ControlType { get; set; }
         public string ReferenceId { get; set; }
-        public int? ParentId { get; set; }
+        public int? ListControlId { get; set; }
 
         public virtual Form Form { get; set; }
-        public virtual ListItem Parent { get; set; }
-        public virtual ICollection<ListItem> ListItems { get; set; }
+        public virtual ListControl ListControl { get; set; }
         public virtual ICollection<FormAnswer> FormAnswers { get; set; }
     }
 }

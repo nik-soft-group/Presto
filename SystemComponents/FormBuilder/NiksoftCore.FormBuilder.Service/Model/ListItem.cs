@@ -9,9 +9,9 @@ namespace NiksoftCore.FormBuilder.Service
         public string KeyValue { get; set; }
         public int OrderId { get; set; }
         public bool Enabled { get; set; }
-        public int ControlId { get; set; }
+        public int ListControlId { get; set; }
 
-        public virtual FormControl FormControl { get; set; }
-        public virtual ICollection<FormControl> Childs { get; set; }
+        public virtual ListControl ListControl { get; set; }
+        public virtual ICollection<ListControl> Childs { get; set; }
     }
 }

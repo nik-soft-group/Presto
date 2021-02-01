@@ -1,5 +1,5 @@
 ﻿@using NiksoftCore.FormBuilder.Service
-@model ItemRequest
+@model ListControlRequest
 @{
     ViewData["Title"] = "Create categories";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
@@ -7,14 +7,14 @@
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/FormControlManage/ListItems?ListControlId=@Model.ListControlId" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/FormControlManage/ListControls" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/FormControlManage/ListItemCreate" method="post" enctype="multipart/form-data">
+<form action="/Panel/FormControlManage/ListControlCreate" method="post" enctype="multipart/form-data">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -23,11 +23,10 @@
                     @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
                 </div>
                 <div class="form-group">
-                    <label for="txtIcon" class="control-label">Key</label>
-                    @Html.TextBoxFor(m => m.KeyValue, new { placeholder = "Key", @class = "form-control", @id = "txtIcon" })
+                    <label for="txtDesc" class="control-label">Description</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Text", @class = "form-control", @id = "txtDesc", rows = "3" })
                 </div>
                 @Html.HiddenFor(m => m.Id)
-                @Html.HiddenFor(m => m.ListControlId)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>

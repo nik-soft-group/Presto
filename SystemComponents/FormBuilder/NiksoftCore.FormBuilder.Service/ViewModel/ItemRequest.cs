@@ -7,6 +7,6 @@
         public string KeyValue { get; set; }
         public int OrderId { get; set; }
         public bool Enabled { get; set; }
-        public int ControlId { get; set; }
+        public int ListControlId { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace NiksoftCore.FormBuilder.Service
 {
-    public class ListItemRequest : BaseRequest
+    public class ListControlGridRequest : BaseRequest
     {
         public string Title { get; set; }
-        public int ListControlId { get; set; }
+        public int ParentId { get; set; }
     }
 }

@@ -10,9 +10,9 @@ namespace NiksoftCore.FormBuilder.Service
             builder.HasKey(x => x.Id);
             builder.ToTable("FB_ListItems");
 
-            builder.HasOne(x => x.FormControl)
+            builder.HasOne(x => x.ListControl)
                 .WithMany(x => x.ListItems)
-                .HasForeignKey(x => x.ControlId)
+                .HasForeignKey(x => x.ListControlId)
                 .IsRequired(true);
         }
     }
